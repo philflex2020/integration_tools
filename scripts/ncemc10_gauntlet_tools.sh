@@ -11,7 +11,7 @@ cfgNodes_gauntlet=(
     "site_controller:hybridos@10.10.1.28" 
        "fleetmanager:hybridos@10.10.1.156" 
               "twins:hybridos@10.10.1.27"
-         "powercloud:hybridos@10.10.1.20"
+         "powercloud:hybridos@10.10.1.40"
          "twins_test:root@172.30.0.20"
 )
 
@@ -32,10 +32,32 @@ cfgAllNodes=(
 )
 
 
+#show rpms
+cfgRpms=(
+"common|cloud_sync"
+"common|ftd"
+"common|fims"
+"common|dts"
+"common|dbi"
+"common|events"
+"common|modbus_interface"
+"common|dnp3_interface"
+"common|web_server"
+"common|influx"
+"common|metrics"
+"common|mongod"
+"ess_controller|ess_controller"
+"ess_controller|ess_controller_pm"
+"site_controller|site_controller"
+"site_controller|site_controller_pm"
+"twins|twins"
+"twins|twins_pm"
+)
 
 #/usr/lib/systemd/system
 cfgService=(
 "common|cloud_sync"
+"common|fims"
 "common|ftd"
 "common|dts"
 "common|dbi"
@@ -54,7 +76,7 @@ cfgService=(
 )
 
 cfgMaps=(    
-"ess_controller|modbus_client|bms_1_modbus_client.json|twins:1500"
+"ess_controller|modbus_client|bms_1_modbus_client.json|fleetmanager:1500"
 "ess_controller|modbus_client|bms_2_modbus_client.json|twins:1501"
 "ess_controller|modbus_client|pcs_1_modbus_client.json|twins:1502"
 "ess_controller|modbus_client|pcs_2_modbus_client.json|twins:1503"
@@ -87,6 +109,7 @@ cfgVars=(
      "active_power|ess_controller|/ess_2/controls/ess_2|ActivePowerSetpoint"
      "active_power|ess_controller|/ess_2/components/pcs_registers_fast|active_power"
      "active_power|site_controller|/components/flexgen_ess_02_hs|active_power_setpoint"
+     "reactive_power|ess_controller|/ess_1/controls/ess_1|ReactivePowerSetpoint"
 )
 
 cfgSrc=gauntlet

@@ -52,6 +52,8 @@ cfgY="\e[33m"
 cfgB="\e[34m"
 cfgW="\e[97m"
 cfgE="\e[0m"
+
+
 function getPull()
 {
   #cfgDest=gauntlet
@@ -100,6 +102,12 @@ function nodeUser()
     done
 }
 
+## get the ssh login information
+## note that this works to allow a ssh "jump"
+# ssh -t hybridos@10.10.1.29 ssh hybridos@10.10.1.28
+# but it wot work for scp
+#
+
 function nodeSSH()
 {
     for i in ${cfgNodes[@]} 
@@ -128,6 +136,69 @@ function nodeMaps()
     fi
     done
 }
+#ssh hybridos@10.10.1.29 "timeout 5 /usr/local/bin/fims_listen > /home/hybridos/fims_out.txt"         
+function logFims()
+{
+    if [ $# -lt 2 ] 
+    then
+      echo " collecting fims into $1"
+      for cn in ${cfgAllNodes[@]}
+      do
+         echo "pullFims $cn $1"
+         pullFims "$cn" "$1"
+      done
+      return
+    fi
+    ddd=`date +%F%T`
+
+    #dest=`getPull $1 $2`
+    #echo " pulling fims for [$1] into [$2] dest = [$dest]"
+    #dest=/home/config/pull/$2/$1
+    #mkdir -p $dest/fims_pull
+    ip=`nodeSSH $1`
+    if [ "$ip" != "" ]
+    then
+      ssh $ip  "mkdir -p /home/hybridos/fims_data && timeout 5 /usr/local/bin/fims_listen > /home/hybridos/fims_data/fims_out.txt&"         
+      echo "fims collection started waiting 5 seconds"
+      #return
+    else
+      echo "node $1 unknown"
+    fi
+
+}
+
+function pullFims()
+{
+    if [ $# -lt 2 ] 
+    then
+      echo " collecting all fims into $1"
+      for cn in ${cfgAllNodes[@]}
+      do
+         echo "pullFims $cn $1"
+         pullFims "$cn" "$1"
+      done
+      return
+    fi
+    ddd=`date +%F%T`
+
+    dest=`getPull $1 $2`
+    dest=${dest}/fims_data
+    echo " pulling fims for [$1] into [$2] dest = [$dest]"
+    #dest=/home/config/pull/$2/$1
+    mkdir -p $dest
+    ip=`nodeSSH $1`
+    if [ "$ip" != "" ]
+    then
+      fdata=`ssh $ip  "cat /home/hybridos/fims_data/fims_out.txt"`
+      echo $fdata > $dest/fims_data.txt
+
+      #return
+    else
+      echo "node $1 unknown"
+    fi
+
+}
+
 
 # $1 node name $2 dest id
 function pullConfigs()
@@ -245,8 +316,8 @@ function showConfigs()
       done
       return
     fi
-    dest=getPull $1 $2
-    orig=getPull $1 $3
+    dest=`getPull $1 $2`
+    orig=`getPull $1 $3``
 
     #dest=/home/config/pull/$2/$1
     #orig=/home/config/pull/$3/$1
@@ -267,8 +338,8 @@ function testConfigs()
     ddd=`date +%F%T`
     #dest=/home/config/pull/$2/$1
     #orig=/home/config/pull/$3/$1
-    dest=getPull $1 $2
-    orig=getPull $1 $3
+    dest=`getPull $1 $2`
+    orig=`getPull $1 $3``
     files=`find $dest -name "*.json" `
     for f in $files 
     do
@@ -328,7 +399,26 @@ function showConfigMaps()
 # ust needs a var name   
 function showVar()
 {
-  ##vlist=()
+  if [ $# -eq 0 ]
+  then
+    vlist=()
+    for i in ${cfgVars[@]} 
+    do 
+      #echo $i
+      var=`echo $i | cut -d '|' -f1`
+      #echo "var = $var"
+      vadd=`echo ${vlist[@]} | grep $var`
+      #echo "vadd = $vadd"
+
+      if [ "$vadd" == "" ]
+      then
+        echo "==> $var"
+        vlist+=($var)
+      fi
+    done
+    return 
+  fi
+
   for i in ${cfgVars[@]} 
   do 
     #echo $i
@@ -397,9 +487,12 @@ function showDestIds()
 }
 cfgR=""
 cfgGR=""
-cfgB="" #0x27[34m"
+cfgB="" 
+#0x27[34m
 cfgW=""
-cfgE="" #ESC[39m"
+cfgE="" 
+#ESC[39m
+
 function cfgHelp()
 {
     echo
@@ -419,9 +512,12 @@ function cfgHelp()
     echo " (sv) showVar name                 -- show selected var (in Progress)"
     
     echo 
-    echo " (pull) pullConfigs destid        -- pull configs to a specified dest"
-    echo " (pulln) pullConfigs node destid  -- pull configs to a specified dest"
+    echo " (pull) pullConfigs destid         -- pull configs to a specified dest"
+    echo " (pulln) pullConfigs node destid   -- pull configs to a specified dest"
     echo " (fips) fixIps [node] destid       -- fixIps for this destination"
+    echo    
+    echo " (lf) logFims [node] destid        -- start a 5 second log of fims"
+    echo " (pf) pullFims [node] destid       -- pull the fimsLog"
     echo    
     echo " showConfigs [node] destid         -- show configs from specified dest"
     echo " diffConfigs node dest orig        -- check configs in dest against origs "
@@ -511,6 +607,35 @@ function cfgMenu()
         echo " no dest id given"
       fi
       ;;
+
+      "lf") 
+      if [ "$node" != "" ]
+      then
+        echo " >>> start 5 second fims log [$node]"
+        if [ "$data" != "" ]
+        then
+          cfgDtime="$data"
+        fi        
+        logFims "$node" "$data"     
+      else
+        echo " no dest id given"
+      fi
+      ;;
+
+      "pf") 
+      if [ "$node" != "" ]
+      then
+        echo " >>> collect 5 second fims log [$node]"
+        if [ "$data" != "" ]
+        then
+          cfgDtime="$data"
+        fi
+        pullFims "$node" "$data"     
+      else
+        echo " no dest id given"
+      fi
+      ;;
+
       "pulln") 
       if [ "$node" != "" ]
       then
