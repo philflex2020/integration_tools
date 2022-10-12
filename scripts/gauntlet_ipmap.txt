@@ -1,0 +1,38 @@
+
+# ncemc10 interface ip remapping gauntlet
+# ess_controller 10.10.1.29
+modbus_client bms_1_modbus_client.json 10.10.1.27:1500
+modbus_client bms_2_modbus_client.json 10.10.1.27:1501
+modbus_client pcs_1_modbus_client.json 10.10.1.27:1502
+modbus_client pcs_2_modbus_client.json 10.10.1.27:1503
+modbus_server ncemc_ess_modbus_server.json 10.10.1.28:1510
+# fleetmanager 10.10.1.156
+modbus_client acromag.json 10.10.1.27:1504
+dnp3_client   rtac_dnp3_client.json 10.10.1.27:20001
+dnp3_client   randolph_dnp3_client.json 10.10.1.27:20002
+dnp3_server   ncemc_fleetmanager_dnp3_server.json 10.10.1.156:20001
+# powercloud 172.30.0.24
+# site_controller 10.10.1.28
+#** TODO modbus_client acromag.json 10.10.1.27:1504
+#** TODO modbus_client acuvim.json 10.10.1.27:1505
+#** TODO modbus_client apcups.json 10.10.1.27:1506
+modbus_client flexgen_ess_1_modbus_client.json 10.10.1.29:1510
+#** TODO modbus_client flexgen_ess_2_modbus_client.json 172.30.0.21:1511
+modbus_client sel_3530.json 10.10.1.27:1507
+modbus_client sel_735.json 10.10.1.27:1508
+modbus_client modbus_loopback_client.json 10.10.1.29:1509
+modbus_server modbus_loopback_server.json 10.10.1.29:1510
+dnp3_client   rtac_dnp3_client.json 10.10.1.156:20001
+dnp3_server   fleetmanager_dnp3_server.json 10.10.1.156:20001
+#twins  10.10.1.27
+modbus_server bms_1_modbus_server.json 10.10.1.27:1500
+modbus_server bms_2_modbus_server.json 10.10.1.27:1501
+modbus_server pcs_1_modbus_server.json 10.10.1.27:1502
+modbus_server pcs_2_modbus_server.json 10.10.1.27:1503
+modbus_server sel_351_1_server.json 10.10.1.27:1504
+modbus_server sel_3530_server.json 10.10.1.29:1507
+modbus_server sel_735_server.json 10.10.1.29:1508
+dnp3_server   randolph_rtac_dnp3_server.json 10.10.1.29:20001
+#** TODO modbus_server acromag_server.json 10.10.1.27:1504
+#** TODO modbus_server acuvim_server.json 10.10.1.27:1505
+#** TODO modbus_server apcups_server.json 10.10.1.27:1506

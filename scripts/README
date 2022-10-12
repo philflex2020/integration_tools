@@ -1,0 +1,3 @@
+This is the location for all the config helper scripts.
+This scripts will manipulate the actual configs to run in site/gaultlet/docker as needed.
+
