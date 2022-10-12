@@ -46,16 +46,26 @@
 
 # getPulldir 
 # home/config/$system/$target/$date/$node 
-
+cfgR="\e[31m"
+cfgGR="\e[32m"
+cfgY="\e[33m"
+cfgB="\e[34m"
+cfgW="\e[97m"
+cfgE="\e[0m"
 function getPull()
 {
   #cfgDest=gauntlet
   #cfgSysId=NCEMC10
   dest=/home/config/pull/$cfgSysId/$cfgDest
+  if [ $# -ge 1 ] 
+  then
+    dest=/home/config/pull/$cfgSysId/$cfgDest/$1
+  fi
   if [ $# -ge 2 ] 
   then
     dest=/home/config/pull/$cfgSysId/$cfgDest/$2/$1
   fi
+  
   echo $dest
 }
 
@@ -315,6 +325,33 @@ function showConfigMaps()
 # Show ports for a selected system
 #"ess_controller|modbus_client|bms_1_modbus_client.json|twins:1500"
 # showPorts twins
+# ust needs a var name   
+function showVar()
+{
+  ##vlist=()
+  for i in ${cfgVars[@]} 
+  do 
+    #echo $i
+    var=`echo $i | cut -d '|' -f1`
+    node=`echo $i | cut -d '|' -f2 `
+    uri=`echo $i | cut -d '|' -f3 `
+    fvar=`echo $i | cut -d '|' -f4 `
+    if [ "$var" == "$1" ]
+    then
+      ip=`nodeSSH $node`
+      if [ "$ip" != "" ]
+      then
+        echo -n " $node $uri/$fvar"
+        vval=`ssh $ip "/usr/local/bin/fims_send -m get -r/xxx -u $uri/$fvar"`
+        echo "  $vval"
+      fi
+    fi
+  done
+}
+
+# Show ports for a selected system
+#"ess_controller|modbus_client|bms_1_modbus_client.json|twins:1500"
+# showPorts twins
 function showPorts()
 {
     plist=()
@@ -358,14 +395,18 @@ function showDestIds()
       fi
     done
 }
-
+cfgR=""
+cfgGR=""
+cfgB="" #0x27[34m"
+cfgW=""
+cfgE="" #ESC[39m"
 function cfgHelp()
 {
     echo
-    echo " System Config Management Tool"
-    echo " System: $cfgSystem      <- PullSource: $cfgTarget "
-    echo "                         -> PullDir: $cfgDtime "
-    echo "                         -> PushDest: $cfgDest "
+    echo " ${cfgB}System Config Management Tool${cfgE}"
+    echo " System: ${cfgB}$cfgSystem${cfgE}      <- PullSource: ${cfgB}$cfgTarget${cfgE} "
+    echo "                         -> PullDir: ${cfgB}$cfgDtime${cfgE} "
+    echo "                         -> PushDest: ${cfgB}$cfgDest${cfgE} "
     echo
     echo " (sd) showIds                     -- show the available destids "    
     echo " (sn) showNodes                   -- shows the system nodes"    
@@ -375,12 +416,17 @@ function cfgHelp()
     echo " (scm) showConfigMaps              -- show modbus and dnp3 files"
     echo " showConfigs [node] destid         -- show modbus and dnp3 files"
     echo 
+    echo " (sv) showVar name                 -- show selected var (in Progress)"
+    
+    echo 
     echo " (pull) pullConfigs destid        -- pull configs to a specified dest"
     echo " (pulln) pullConfigs node destid  -- pull configs to a specified dest"
     echo " (fips) fixIps [node] destid       -- fixIps for this destination"
     echo    
     echo " showConfigs [node] destid         -- show configs from specified dest"
     echo " diffConfigs node dest orig        -- check configs in dest against origs "
+    echo
+    echo " (fs) findString [destid] string   -- find files containing a string (no spaces please)"
 
     echo " pushConfigs [node] destid         -- push configs to a specified dest (in Progress)"
 }
@@ -394,7 +440,8 @@ function cfgMenu()
   while [ $dend -eq 0 ]
   do
     node=''
-    read -p " Enter command :" cmd node
+    data=''
+    read -p " Enter command :" cmd node data
     #echo "you entered [$cmd]"
     case "$cmd" in
       "q") dend=1
@@ -405,10 +452,21 @@ function cfgMenu()
       showNodes
       ;;
 
+      "sv") 
+      echo " >>> values for [$node]"
+      showVar $node
+      ;;
+
       "sd") 
       echo " >>> current destids"
       showDestIds $node
       ;;
+
+      "fs") 
+      echo "# looking for a string"
+      findString $node $data
+      ;;
+ 
       "scm") 
       echo " >>> config maps"
       showConfigMaps
@@ -514,7 +572,7 @@ function fixIps()
          fixIps $cn $1
       done
       return
-    fi
+  fi
   if [ $# -ge 2 ]; then
     plist=(`nodeMaps $1`)
     #echo "${plist[@]}"
@@ -567,6 +625,31 @@ function fixIps()
   fi  
 }
 
+# fs [refid] string
+function findString()
+{
+  dtime="$cfgDtime"
+  if [ $# -lt 1 ]  
+  then
+    echo "#we need a string to find"
+    return
+  fi
+  if [ $# -lt 2 ]  
+  then
+    string="$1"
+  else 
+    string="$2"
+    dtime="$1"
+    cfgDtime="$1"
+  fi
+  dest=`getPull "$dtime"`
+  echo "#using dest $dest  string [$string]"
+  findArr=(`find $dest -name "*.json" | xargs grep -Rl $string `) 
+  for f in ${findArr[@]}
+  do
+    echo "$f"
+  done
+}
 # # ncemc10 interface ip remapping gauntlet
 # # ess_controller 10.10.1.29
 # modbus_client bms_1_modbus_client.json 10.10.1.27:1500

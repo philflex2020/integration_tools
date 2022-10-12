@@ -80,6 +80,15 @@ cfgMaps=(
 "twins|dnp3_server|randolph_rtac_dnp3_server.json|twins:20001"
 )
 
+cfgVars=(
+     "active_power|ess_controller|/ess_1/controls/ess_1|ActivePowerSetpoint"
+     "active_power|ess_controller|/ess_1/components/pcs_registers_fast|active_power"
+     "active_power|site_controller|/components/flexgen_ess_01_hs|active_power_setpoint"
+     "active_power|ess_controller|/ess_2/controls/ess_2|ActivePowerSetpoint"
+     "active_power|ess_controller|/ess_2/components/pcs_registers_fast|active_power"
+     "active_power|site_controller|/components/flexgen_ess_02_hs|active_power_setpoint"
+)
+
 cfgSrc=gauntlet
 cfgDest=gauntlet
 cfgSysId=NCEMC10
@@ -87,6 +96,8 @@ cfgNodes=${cfgNodes_gauntlet[@]}
 
 # pull in the rest of it
 source ./deploy_tools.sh
+cfgMenu
+
 
 # #** TODO modbus_client acromag.json 10.10.1.27:1504
 # #** TODO modbus_client acuvim.json 10.10.1.27:1505
