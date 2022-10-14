@@ -479,7 +479,7 @@ function showConfigMaps()
 #"ess_controller|modbus_client|bms_1_modbus_client.json|twins:1500"
 # showPorts twins
 # ust needs a var name   
-function showVar()
+function runVar()
 {
   if [ $# -eq 0 ]
   then
@@ -736,7 +736,7 @@ function cfgHelp()
     echo " showPullConfigs [node] destid     -- show modbus and dnp3 files"
     echo " showRefConfigs [node] destid      -- show modbus and dnp3 files"
     echo 
-    echo " (sv) showVar name                 -- show selected var (in Progress)"
+    echo " (sv) runVar name                 -- show selected var (in Progress)"
     
     echo 
     echo " (pull) pullConfigs destid         -- pull configs to a specified dest"
@@ -843,7 +843,7 @@ function cfgMenu()
 
       "sv") 
       echo " >>> values for [$node]"
-      showVar $node
+      runVar $node
       ;;
 
       "spd") 
