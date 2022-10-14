@@ -620,15 +620,34 @@ cfgDtime=""
 ## showDestids
 function showPullDestIds()
 {
+    cDtime="$cfgPullDtime"
+    cKey=0
     if [ $# -ge 1 ]
     then
-      cfgDtime=$1
-      cfgPullDtime=$1
+      cKey=$1 
     fi
+    uKey=1
+
+
+    # if [ $# -ge 1 ]
+    # then
+    #   cfgDtime=$1
+    #   cfgPullDtime=$1
+    # fi
 
     dest=`getPullDir `
     echo "destid dir [$dest] [$cfgPullDtime]"
     dirs=(`ls -1 $dest `)
+    for d in ${dirs[@]}
+    do
+      if [ "$uKey" == "$cKey" ]
+      then
+        cDtime=$d
+        cfgPullDtime=$d
+      fi
+      uKey=$((${uKey} +1))
+    done
+
     for d in ${dirs[@]}
     do
       if [ "$d" == "$cfgPullDtime" ]
@@ -643,15 +662,26 @@ function showPullDestIds()
 function showRefDestIds()
 {
     cDtime="$cfgRefDtime"
+    cKey=0
     if [ $# -ge 1 ]
     then
-      cDtime=$1
-      cfgRefDtime=$1
+      cKey=$1 
+      #cDtime=$1
+      #cfgRefDtime=$1
     fi
-
+    uKey=1
     dest=`getRefDir `
     echo "destid dir [$dest] [$cDtime]"
     dirs=(`ls -1 $dest `)
+    for d in ${dirs[@]}
+    do
+      if [ "$uKey" == "$cKey" ]
+      then
+        cDtime=$d
+        cfgRefDtime=$d
+      fi
+      uKey=$((${uKey} +1))
+    done
     for d in ${dirs[@]}
     do
       if [ "$d" == "$cfgRefDtime" ]
