@@ -1048,6 +1048,30 @@ function fixFile()
   return
 
 }
+# checkout git to a ref dir
+#
+#  git_repo
+#  Git branch
+#  destid
+#   setGitRef integration_dev NCEMC/randolph_twins refs:2022-1014_test
+function setGitRef()
+{
+  if [ $# -lt 3 ]  
+  then
+    echo " please supply git repo , branch and destid"
+    return
+  fi
+  pwd=`pwd`
+  dest=`getAnyDir $3`
+  mkdir -p $dest
+  echo " dest = $desc"
+  cd $dest
+
+  git clone git@github.com:flexgen-power/$1
+  cd $1
+  git checkout $1
+  cd $pwd
+}
 
 # fixIps node pullDir
 function fixIps()
