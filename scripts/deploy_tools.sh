@@ -923,7 +923,7 @@ function cfgMenu()
       ;;
       "fips") 
       echo "# fixIps $node"
-      fixIps $node 
+      fixIps $node $data
       ;;
  
       "scm") 
@@ -1075,9 +1075,10 @@ function fixIps()
       port=`echo $ppnode | cut -d ':' -f2` 
       ppip=`nodeSSH $pnode`
       pip=`echo $ppip | cut -d '@' -f2`
-      dest=`getRefDir $1 $2`
+      dest=`getAnyDir $1 $2`
       cfgsrcArr=(`find $dest -name $pfile`) 
-      echo "file = $pfile pnode = $pnode port = $port pip = $pip src = [${cfgsrc[0]}]"
+      echo "file = $pfile pnode = $pnode port = $port pip = $pip src = [${cfgsrcArr[0]}]"
+      echo " dest [$dest]"
       newip=$pip
       newport=$port
       for cfgsrc in "${cfgsrcArr[@]}" 
