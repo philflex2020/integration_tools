@@ -863,7 +863,7 @@ function cfgMenu()
       ;;
 
       "sgref")
-      if [ "$node" == "help "]
+      if [ "$node" == "help" ]
       then
         echo "example >> sgref integration_dev NCEMC/randolph_twins refs:2022-1014_testgit"
       else
