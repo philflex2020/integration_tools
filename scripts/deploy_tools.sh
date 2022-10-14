@@ -1065,6 +1065,7 @@ function setGitRef()
   dest=`getAnyDir $3`
   mkdir -p $dest
   echo " dest = $dest"
+  cd $dest
   cd ../../
   edir=`pwd`
 
