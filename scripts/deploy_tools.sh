@@ -1081,8 +1081,8 @@ function setGitRef()
   fi
   git checkout $2
   cd $pwd
-  echo "copying git configs from $edir/config to $dest " 
-  cp -a $edir/config/* $dest  
+  echo "copying git configs from $edir/$1/config to $dest " 
+  cp -a $edir/$1/config/* $dest  
 }
 
 # fixIps node pullDir
