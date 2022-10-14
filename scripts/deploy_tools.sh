@@ -83,6 +83,27 @@ function getPullDir()
 }
 
 # getPull
+function getRefDir()
+{
+  #cfgDesxt=gauntlet
+  #cfgSite=gauntlet
+  #cfgSysId=NCEMC10
+  dest=/home/config/refs/$cfgRefSystem/$cfgRefSite
+  # add a node 
+  if [ $# -ge 1 ] 
+  then
+    dest=/home/config/pull/$cfgRefSystem/$cfgRefSite/$1
+  fi
+  # add  node and a dir
+  if [ $# -ge 2 ] 
+  then
+    dest=/home/config/pull/$cfgRefSystem/$cfgRefSite/$2/$1
+  fi
+  
+  echo $dest
+}
+
+# getPull
 function getSrcDir()
 {
   #cfgDesxt=gauntlet
@@ -336,7 +357,7 @@ function pushConfigs()
 }
 
 # $1 node name $2 dest id $3 orig id
-function showConfigs()
+function showPullConfigs()
 {
     ddd=`date +%F%T`
     if [ $# -lt 2 ] 
@@ -344,13 +365,41 @@ function showConfigs()
       echo " Show all configs from  $1"
       for cn in ${cfgAllNodes[@]}
       do
-         echo "showConfigs $cn $1"
-         showConfigs $cn $1
+         echo "showPullConfigs $cn $1"
+         showPullConfigs $cn $1
       done
       return
     fi
     dest=`getPullDir $1 $2`
-    orig=`getPullDir $1 $3`
+    #orig=`getPullDir $1 $3`
+
+    #dest=/home/config/pull/$2/$1
+    #orig=/home/config/pull/$3/$1
+    files=`find $dest -name "*.json" `
+    for f in $files 
+    do
+      file=${f#$dest}
+      echo $2/$1$file
+    done
+
+}
+
+# $1 node name $2 dest id $3 orig id
+function showRefConfigs()
+{
+    ddd=`date +%F%T`
+    if [ $# -lt 2 ] 
+    then
+      echo " Show all configs from  $1"
+      for cn in ${cfgAllNodes[@]}
+      do
+         echo "showPullConfigs $cn $1"
+         showPullConfigs $cn $1
+      done
+      return
+    fi
+    dest=`getRefDir $1 $2`
+    #orig=`getPullDir $1 $3`
 
     #dest=/home/config/pull/$2/$1
     #orig=/home/config/pull/$3/$1
@@ -498,11 +547,12 @@ function showPorts()
 
 cfgDtime=""
 ## showDestids
-function showDestIds()
+function showPullDestIds()
 {
     if [ $# -ge 1 ]
     then
       cfgDtime=$1
+      cfgPullDtime=$1
     fi
 
     dest=`getPullDir `
@@ -511,6 +561,29 @@ function showDestIds()
     for d in ${dirs[@]}
     do
       if [ "$d" == "$cfgPullDtime" ]
+      then
+         echo "*=> $d"
+      else
+         echo "    $d"
+      fi
+    done
+}
+
+function showRefDestIds()
+{
+    cDtime="$cfgRefDtime"
+    if [ $# -ge 1 ]
+    then
+      cDtime=$1
+      cfgRefDtime=$1
+    fi
+
+    dest=`getRefDir `
+    echo "destid dir [$dest] [$cDtime]"
+    dirs=(`ls -1 $dest `)
+    for d in ${dirs[@]}
+    do
+      if [ "$d" == "$cfgRefDtime" ]
       then
          echo "*=> $d"
       else
@@ -636,7 +709,8 @@ function cfgHelp()
     #echo "                         -> PushDest: ${cfgB}$cfgSite${cfgE} "
     echo
     echo " (rpms) showRpms                   -- show the System rpms "    
-    echo " (sd) showIds                      -- set/show the available destids "    
+    echo " (spd) showPullIds                 -- set/show the available pull destids "    
+    echo " (srd) showRefIds                  -- set/show the available ref destids "    
     echo " (sn) showNodes                    -- shows the system nodes"    
     echo " (sp) showPorts node               -- show ports require  for a given node"
     
@@ -645,7 +719,8 @@ function cfgHelp()
     echo " (dest) src[Ref/Targ/Pull] id      -- set destid (2022_10_13_1122)"
 
     echo " (scm) showConfigMaps              -- show modbus and dnp3 files"
-    echo " showConfigs [node] destid         -- show modbus and dnp3 files"
+    echo " showPullConfigs [node] destid     -- show modbus and dnp3 files"
+    echo " showRefConfigs [node] destid      -- show modbus and dnp3 files"
     echo 
     echo " (sv) showVar name                 -- show selected var (in Progress)"
     
@@ -757,11 +832,15 @@ function cfgMenu()
       showVar $node
       ;;
 
-      "sd") 
-      echo " >>> current destids"
-      showDestIds $node
+      "spd") 
+      echo " >>> current pull destids"
+      showPullDestIds $node
       ;;
 
+      "srd") 
+      echo " >>> current ref destids"
+      showRefDestIds $node
+      ;;
       "fs") 
       echo "# looking for a string"
       findString $node $data
