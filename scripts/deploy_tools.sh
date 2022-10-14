@@ -521,13 +521,13 @@ function runVar()
       then
         if [ "$fset" == "get" ]
         then
-           echo -n " $node get $uri/$fvar"
-           vval=`ssh $ip "/usr/local/bin/fims_send -m $fset -r/xxx -u $uri/$fvar"`
-        elif [ "$fset" == "set" ]
+          echo -n " $node get $uri/$fvar"
+          vval=`ssh $ip "/usr/local/bin/fims_send -m $fset -r/xxx -u $uri/$fvar"`
+        fi
+        if [ "$fset" == "set" ]
+        then   
            echo -n " $node set $uri $fvar"
            vval=`ssh $ip "/usr/local/bin/fims_send -m $fset -r/xxx -u $uri $fvar"`
-        else
-           vval="method $fset not handled"
         fi
         echo "  $vval"
       fi
