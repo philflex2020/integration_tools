@@ -1,11 +1,12 @@
 #!/bin/sh
 # this defined the base system
 # p wilshire
-# 10_09_2022
+# 10_14_2022
 # 
 cfgSystem=NCEMC10
-cfgTarget=gauntlet
+cfgTarget=docker
 
+# not needed here
 cfgNodes_gauntlet=( 
      "ess_controller:hybridos@10.10.1.29" 
     "site_controller:hybridos@10.10.1.28" 
@@ -90,7 +91,7 @@ cfgMaps=(
 "site_controller|modbus_client|flexgen_ess_1_modbus_client.json|ess_controller:1510"
 "site_controller|modbus_client|sel_3530.json|twins:1507"
 "site_controller|modbus_client|sel_735.json|twins:1508"
-"xxsite_controller|modbus_client|modbus_loopback_client.json|site_ontroller:1509"
+"xxsite_controller|modbus_client|modbus_loopback_client.json|site_controller:1509"
 "xxsite_controller|modbus_server|modbus_loopback_server.json|site_controller:1510"
 "site_controller|dnp3_client|rtac_dnp3_client.json|fleet_manager:20001"
 "site_controller|dnp3_server|fleetmanager_dnp3_server.json|site_controller:20001"
@@ -117,15 +118,10 @@ cfgVars=(
 
 )
 
-cfgSrc=gauntlet
-cfgDest=gauntlet
+cfgSrc=docker
+cfgDest=docker
 cfgSysId=NCEMC10
-cfgNodes=${cfgNodes_gauntlet[@]}
-
-# pull in the rest of it
-source ./deploy_tools.sh
-cfgMenu
-
+cfgNodes=${cfgNodes_docker[@]}
 
 # #** TODO modbus_client acromag.json 10.10.1.27:1504
 # #** TODO modbus_client acuvim.json 10.10.1.27:1505

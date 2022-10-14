@@ -122,9 +122,6 @@ cfgDest=gauntlet
 cfgSysId=NCEMC10
 cfgNodes=${cfgNodes_gauntlet[@]}
 
-# pull in the rest of it
-source ./deploy_tools.sh
-cfgMenu
 
 
 # #** TODO modbus_client acromag.json 10.10.1.27:1504

@@ -917,13 +917,23 @@ function cfgMenu()
         setGitRef $node $data $data1
       fi
       ;;
+
       "site") 
       # TODO recset cfgNodes etc
       echo " >>> set site  $node to $data"
       case "${node:0:1}" in 
         "T"|"t")
           cfgTargSite="$data"
+          fnodes="../sites/$cfgTargSystem/$cfgTargSite/nodes.sh"
+          if [ -f  "$fnodes" ]
+          then
+             echo "found  file [$fnodes] "
+          else
+             echo "no file found [$fnodes]"
+          fi
+          # . $fnodes
         ;;
+        
         "R"|"r")
           cfgRefSite="$data"
         ;;
