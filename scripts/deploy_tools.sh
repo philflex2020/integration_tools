@@ -1065,10 +1065,14 @@ function setGitRef()
   dest=`getAnyDir $3`
   mkdir -p $dest
   echo " dest = $dest"
-  cd $dest
+  cd ../../
+  edir=`pwd`
+
+  cd $edir
   if [ -d $1 ]
   then 
     cd $1
+    git pull -r
 
   else
     git clone git@github.com:flexgen-power/$1
@@ -1076,6 +1080,8 @@ function setGitRef()
   fi
   git checkout $2
   cd $pwd
+  echo "copying git configs from $edir/config to $dest " 
+  cp -a $edir/config/* $dest  
 }
 
 # fixIps node pullDir
