@@ -1074,7 +1074,7 @@ function setGitRef()
     git clone git@github.com:flexgen-power/$1
     cd $1
   fi
-  git checkout $1
+  git checkout $2
   cd $pwd
 }
 
