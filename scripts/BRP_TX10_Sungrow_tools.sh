@@ -1,0 +1,103 @@
+#!/bin/sh
+# this defined the base system
+# p wilshire
+# 10_09_2022
+# 
+cfgSystem=BRP_TX10_Sungrow
+cfgTarget=gauntlet
+​
+cfgNodes_docker=( 
+    "site_controller:root@172.3.27.102" 
+       "fleetmanager:root@172.3.27.150" 
+              "twins:root@172.3.27.202"
+)
+​
+cfgAllNodes=( 
+    "site_controller" 
+       "fleetmanager" 
+              "twins"
+)
+​
+​
+#show rpms
+cfgRpms=(
+"common|cloud_sync"
+"common|ftd"
+"common|fims"
+"common|dts"
+"common|dbi"
+"common|events"
+"common|modbus_interface"
+"common|dnp3_interface"
+"common|web_server"
+"common|influx"
+"common|metrics"
+"common|mongod"
+"site_controller|site_controller"
+"site_controller|site_controller_pm"
+"twins|twins"
+"twins|twins_pm"
+)
+​
+#/usr/lib/systemd/system
+cfgService=(
+"common|cloud_sync"
+"common|fims"
+"common|ftd"
+"common|dts"
+"common|dbi"
+"common|events"
+"common|modbus_client"
+"common|modbus_server"
+"common|dnp3_client"
+"common|dnp3_server"
+"common|web_server"
+"common|influx"
+"common|metrics"
+"common|mongod"
+"site_controller|site_controller"
+"twins|twins"
+)
+​
+cfgMaps=(    
+"site_controller|modbus_client|acuvim_client.json|twins:10000"
+"site_controller|modbus_client|apc_ups_client.json|twins:10001"
+"site_controller|modbus_client|brainbox_client.json|twins:10002"
+"site_controller|modbus_client|sel_651r_client.json|twins:10003"
+"site_controller|modbus_client|sel_735_client.json|twins:10004"
+"site_controller|modbus_client|sel_3530_client.json|twins:10005"
+"site_controller|modbus_client|sungrow_ess_1_client.json|twins:10006"
+"site_controller|modbus_client|sungrow_ess_2_client.json|twins:10007"
+"site_controller|modbus_client|sungrow_ess_3_client.json|twins:10008"
+"site_controller|modbus_client|sungrow_ess_4_client.json|twins:10009"
+"site_controller|dnp3_server|dnp3_server.json|site_controller:20000"
+"twins|modbus_server|acuvim_server.json|twins:10000"
+"twins|modbus_server|apc_ups_server.json|twins:10001"
+"twins|modbus_server|brainbox_server.json|twins:10002"
+"twins|modbus_server|sel_651r_server.json|twins:10003"
+"twins|modbus_server|sel_735_server.json|twins:10004"
+"twins|modbus_server|sel_3530_server.json|twins:10005"
+"twins|modbus_server|sungrow_ess_1_server.json|twins:10006"
+"twins|modbus_server|sungrow_ess_2_server.json|twins:10007"
+"twins|modbus_server|sungrow_ess_3_server.json|twins:10008"
+"twins|modbus_server|sungrow_ess_4_server.json|twins:10009"
+)
+​
+cfgVars=(
+     "active_power|ess_controller|/ess_1/controls/ess_1|ActivePowerSetpoint"
+     "active_power|ess_controller|/ess_1/components/pcs_registers_fast|active_power"
+     "active_power|site_controller|/components/flexgen_ess_01_hs|active_power_setpoint"
+     "active_power|ess_controller|/ess_2/controls/ess_2|ActivePowerSetpoint"
+     "active_power|ess_controller|/ess_2/components/pcs_registers_fast|active_power"
+     "active_power|site_controller|/components/flexgen_ess_02_hs|active_power_setpoint"
+     "reactive_power|ess_controller|/ess_1/controls/ess_1|ReactivePowerSetpoint"
+)
+​
+cfgSrc=docker
+cfgDest=docker
+cfgSysId=BRP_TX100
+cfgNodes=${cfgNodes_docker[@]}
+​
+# pull in the rest of it
+source ./deploy_tools.sh
+cfgMenu

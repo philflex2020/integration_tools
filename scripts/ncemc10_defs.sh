@@ -3,8 +3,8 @@
 # p wilshire
 # 10_09_2022
 # 
-cfgSystem=NCEMC10
-cfgTarget=gauntlet
+#cfgSystem_ncemc_NCEMC10
+#cfgTarget=gauntlet
 
 cfgNodes_gauntlet=( 
      "ess_controller:hybridos@10.10.1.29" 
@@ -22,6 +22,22 @@ cfgNodes_docker=(
               "twins:root@172.30.0.20"
          "powercloud:root@172.30.0.24"
          "twins_test:root@172.30.0.20"
+              "bms_1:root@172.30.0.20"
+              "bms_2:root@172.30.0.20"
+              "pcs_1:root@172.30.0.20"
+              "pcs_2:root@172.30.0.20"
+)
+
+cfgNodes_randolph=( 
+     "ess_controller:hybridos@192.168.112.0.11" 
+    "site_controller:hybridos@192.168.112.22" 
+       "fleetmanager:hybridos@192.168.112.23" 
+              "twins:hybridos@192.168.112.20"
+         "powercloud:hybridos@192.168.112.24"
+     "bms_1:hybridos@192.168.114.0.12" 
+     "bms_2:hybridos@192.168.114.0.13" 
+     "pcs_1:hybridos@192.168.112.0.12" 
+     "pcs_2:hybridos@192.168.112.0.13" 
 )
 
 cfgAllNodes=( 
@@ -31,51 +47,6 @@ cfgAllNodes=(
               "twins"
 )
 
-
-#show rpms
-cfgRpms=(
-"common|cloud_sync|/usr/local/bin/cloud_sync"
-"common|ftd|/usr/local/bin/ftd"
-"common|fims|/usr/local/bin/fims_server"
-"common|dts|/usr/local/bin/dts"
-"common|dbi|/usr/local/bin/dbi"
-"common|events|/usr/local/bin/events"
-"common|modbus_interface|/usr/local/bin/modbus_client"
-"common|dnp3_interface|/usr/local/bin/dnp3_clinet"
-"common|web_server|/usr/local/bin/web_ui"
-"common|influx|/usr/bin/influx"
-"common|metrics|/usr/local/bin/metrics"
-"common|mongod|/usr/bin/mongod"
-"common|ssh|/usr/bin/ssh"
-"common|sshd|/usr/sbin/sshd"
-"ess_controller|ess_controller|/usr/local/bin/ess_controler"
-"ess_controller|ess_controller_pm"
-"site_controller|site_controller|/usr/local/bin/site_controller"
-"site_controller|site_controller_pm"
-"twins|twins|/usr/local/bin/twins"
-"twins|twins_pm"
-)
-
-#/usr/lib/systemd/system
-cfgService=(
-"common|cloud_sync"
-"common|fims"
-"common|ftd"
-"common|dts"
-"common|dbi"
-"common|events"
-"common|modbus_client"
-"common|modbus_server"
-"common|dnp3_client"
-"common|dnp3_server"
-"common|web_server"
-"common|influx"
-"common|metrics"
-"common|mongod"
-"ess_controller|ess_controller"
-"site_controller|site_controller"
-"twins|twins"
-)
 
 cfgMaps=(    
 "ess_controller|modbus_client|bms_1_modbus_client.json|fleetmanager:1500"
@@ -113,22 +84,25 @@ cfgVars=(
      "active_power|site_controller|/components/flexgen_ess_02_hs|active_power_setpoint"
      "reactive_power|ess_controller|/ess_1/controls/ess_1|ReactivePowerSetpoint"
 )
+#declare -A cfgNCEMC10
 
-cfgSrc=gauntlet
-cfgDest=gauntlet
-cfgSysId=NCEMC10
-cfgNodes=${cfgNodes_gauntlet[@]}
+#cfgNCEMC10[name]="NCEMC10"
+cfgNCEMC10_vars="${cfgVars[@]}"
+cfgNCEMC10_maps="${cfgMaps[@]}"
+cfgNCEMC10_nodes="${cfgAllNodes[@]}"
 
-# pull in the rest of it
-source ./deploy_tools.sh
-cfgMenu
+#cfgMaps["NCEMC10"]["vars"]
 
 
-# #** TODO modbus_client acromag.json 10.10.1.27:1504
-# #** TODO modbus_client acuvim.json 10.10.1.27:1505
-# #** TODO modbus_client apcups.json 10.10.1.27:1506
-# #** TODO modbus_client flexgen_ess_2_modbus_client.json 172.30.0.21:1511
-# #** TODO modbus_server acromag_server.json 10.10.1.27:1504
-# #** TODO modbus_server acuvim_server.json 10.10.1.27:1505
-# #** TODO modbus_server apcups_server.json 10.10.1.27:1506
+#echo ${cfgMaps[@]}
+
+cfgMaps="${cfgNCEMC10_maps[@]}"
+
+echo ${cfgMaps[@]}
+
+
+
+
+
+
 

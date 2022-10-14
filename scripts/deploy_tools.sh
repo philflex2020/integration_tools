@@ -8,7 +8,9 @@
 #          "powercloud:hybridos@10.10.1.20"
 #          "twins_test:root@172.30.0.20"
 # )
-
+# reason for being ....
+# One thing that was wiped out of the ess gauntlet configs were the IPs and ports for the ess_controller  clients and servers. So far I've put 10.10.1.27 in the IP of both bms and pcs modbus clients then set ncemc_flexgen_ess_modbus_server to 0.0.0.0. 
+# Does anyone remember if this is right? Were than any funny port remaps?
 # cfgMaps=(    
 # "ess_controller|modbus_client|bms_1_modbus_client.json|twins:1500"
 # "ess_controller|modbus_client|bms_2_modbus_client.json|twins:1501"
@@ -54,18 +56,46 @@ cfgW="\e[97m"
 cfgE="\e[0m"
 
 
-function getPull()
+# new layout 
+##  systems
+##    NCEMC10
+## (sites)  gauntlet
+##          docker
+##          repo
+##            destid
+##               node
+function getPullDir()
 {
-  #cfgDest=gauntlet
+  #cfgDesxt=gauntlet
+  #cfgSite=gauntlet
   #cfgSysId=NCEMC10
-  dest=/home/config/pull/$cfgSysId/$cfgDest
+  dest=/home/config/pull/$cfgPullSystem/$cfgPullSite
   if [ $# -ge 1 ] 
   then
-    dest=/home/config/pull/$cfgSysId/$cfgDest/$1
+    dest=/home/config/pull/$cfgPullSystem/$cfgPullSite/$1
   fi
   if [ $# -ge 2 ] 
   then
-    dest=/home/config/pull/$cfgSysId/$cfgDest/$2/$1
+    dest=/home/config/pull/$cfgPullSystem/$cfgPullSite/$2/$1
+  fi
+  
+  echo $dest
+}
+
+# getPull
+function getSrcDir()
+{
+  #cfgDesxt=gauntlet
+  #cfgSite=gauntlet
+  #cfgSysId=NCEMC10
+  dest=/home/config/pull/$cfgSrcSysId/$cfgSrcSite
+  if [ $# -ge 1 ] 
+  then
+    dest=/home/config/pull/$cfgSrcSysId/$cfgSrcSite/$1
+  fi
+  if [ $# -ge 2 ] 
+  then
+    dest=/home/config/pull/$cfgSrcSysId/$cfgSrcSite/$2/$1
   fi
   
   echo $dest
@@ -180,8 +210,8 @@ function pullFims()
       return
     fi
     ddd=`date +%F%T`
-
-    dest=`getPull $1 $2`
+    #getPull
+    dest=`getPullDir $1 $2`
     dest=${dest}/fims_data
     echo " pulling fims for [$1] into [$2] dest = [$dest]"
     #dest=/home/config/pull/$2/$1
@@ -215,7 +245,8 @@ function pullConfigs()
     fi
     ddd=`date +%F%T`
 
-    dest=`getPull $1 $2`
+    #getPull
+    dest=`getPullDir $1 $2`
     echo " pulling configs for [$1] into [$2] dest = [$dest]"
     #dest=/home/config/pull/$2/$1
     mkdir -p $dest
@@ -269,7 +300,8 @@ function pullDbi()
 function pullrConfigs()
 {
     ddd=`date +%F%T`
-    dest=getPull $1 $2
+    #getPull
+    dest=`getPullDir $1 $2`
     #dest=/home/config/pull/$2/$1
     mkdir -p $dest
     ip=`nodeSSH $1`
@@ -288,7 +320,8 @@ function pullrConfigs()
 # $1 node name $2 dest id
 function pushConfigs()
 {
-    src=getPull $1 $2
+    #getPull
+    src=`getTargDir $1 $2`
     dest=/home/hybridos
     mkdir -p $dest
     ip=`nodeSSH $1`
@@ -316,8 +349,8 @@ function showConfigs()
       done
       return
     fi
-    dest=`getPull $1 $2`
-    orig=`getPull $1 $3``
+    dest=`getPullDir $1 $2`
+    orig=`getPullDir $1 $3`
 
     #dest=/home/config/pull/$2/$1
     #orig=/home/config/pull/$3/$1
@@ -338,8 +371,8 @@ function testConfigs()
     ddd=`date +%F%T`
     #dest=/home/config/pull/$2/$1
     #orig=/home/config/pull/$3/$1
-    dest=`getPull $1 $2`
-    orig=`getPull $1 $3``
+    dest=`getPullDir $1 $2`
+    orig=`getPullDir $1 $3`
     files=`find $dest -name "*.json" `
     for f in $files 
     do
@@ -355,8 +388,8 @@ function diffConfigs()
     ddd=`date +%F%T`
     #dest=/home/config/pull/$2/$1
     #orig=/home/config/pull/$3/$1
-    dest=`getPull $1 $2`
-    orig=`getPull $1 $3`
+    dest=`getPullDir $1 $2`
+    orig=`getSrcDir $1 $3`
 
     files=`find $dest -name "*.json" `
     for f in $files 
@@ -464,7 +497,7 @@ function showPorts()
 }
 
 cfgDtime=""
-
+## showDestids
 function showDestIds()
 {
     if [ $# -ge 1 ]
@@ -472,12 +505,12 @@ function showDestIds()
       cfgDtime=$1
     fi
 
-    dest=`getPull`
-
+    dest=`getPullDir `
+    echo "destid dir [$dest] [$cfgPullDtime]"
     dirs=(`ls -1 $dest `)
     for d in ${dirs[@]}
     do
-      if [ "$d" == "$cfgDtime" ]
+      if [ "$d" == "$cfgPullDtime" ]
       then
          echo "*=> $d"
       else
@@ -485,6 +518,68 @@ function showDestIds()
       fi
     done
 }
+# Show ports for a selected system
+#"ess_controller|modbus_client|bms_1_modbus_client.json|twins:1500"
+# showRpms [twins] default to all
+function showRpms()
+{
+  if [ $# -lt 1 ] 
+  then
+    echo " showing all rpms for "
+    for cn in ${cfgAllNodes[@]}
+    do
+        echo "showRpms $cn "
+        showRpms "$cn"
+    done
+    return
+  fi
+  ip=`nodeSSH $1`
+  vval=(`ssh $ip "rpm -qa"`)
+  #TODO record these somewhere
+  # echo "  ${vval[@]}"
+  
+  for i in ${cfgRpms[@]} 
+  do 
+    #echo $i
+
+    pnode=`echo $i | cut -d '|' -f1`
+    name=`echo $i | cut -d '|' -f2 `
+    efile=`echo $i | cut -d '|' -f3 `
+    if [ "$pnode" == "$1" ] || [ "$pnode" == "common" ]
+    then 
+
+      echo -n  "name [$name] "
+      for j in ${vval[@]}
+      do
+        rf=`echo $j |grep $name`
+        if [ "$rf" != "" ]
+        then
+          echo -n " $j"
+        fi
+      done
+      echo 
+    fi
+
+  #   if [ "$pnode" == "$1" ] || [ "$pnode" == "common" ]
+  #   then 
+  #     ip=`nodeSSH $1`
+  #     if [ "$ip" != "" ] && [ "$efile" != ""]
+  #     then
+  #       echo -n ">>>>>> [$pnode] [$name] [$efile] "
+  #       vval=`ssh $ip "rpm -q --whatprovides \"$efile\""`
+  #       echo "  $vval"
+  #     fi
+  #     if [ "$ip" != "" ] 
+  #     then 
+  #       echo -n " $node $name "
+  #       vval=`ssh $ip "rpm -qa $name"`
+  #       echo "  $vval"
+
+  #     fi
+  #  fi
+  done
+}
+
 cfgR=""
 cfgGR=""
 cfgB="" 
@@ -493,18 +588,61 @@ cfgW=""
 cfgE="" 
 #ESC[39m
 
-function cfgHelp()
+cfgDtime=`date +%F_%T | sed -e 's/://g'`
+
+cfgRefDtime="$cfgDtime"
+cfgTargDtime="$cfgDtime"
+cfgPullDtime="$cfgDtime"
+
+cfgRefBranch="integration_dev:NCEMC10_features/hotfix"
+
+cfgRefSystem=$cfgSystem
+cfgTargSystem="$cfgSystem"
+cfgPullSystem="$cfgSystem"
+
+cfgRefSite="repo"
+cfgTargSite="$cfgSite"
+cfgPullSite=gauntlet
+
+function cfgHelpSites()
 {
+    echo "     (sys)                       (site)               (dest)                (repo)"
+    echo -n " (r)    Ref Source:"
+    echo -n " System:${cfgB}${cfgRefSystem}${cfgE} "
+    echo -n " Site:${cfgB}${cfgRefSite}${cfgE}     " 
+    #"<- PullSource: ${cfgB}$cfgTarget${cfgE} "
+    echo -n " destId:${cfgB}$cfgRefDtime${cfgE} "
+    echo    " Git:${cfgB}$cfgRefBranch${cfgE} "
+
+    echo -n " (t) Target System:"
+    echo -n " System:${cfgB}${cfgTargSystem}${cfgE} "
+    echo -n " Site:${cfgB}${cfgTargSite}${cfgE}     " 
+    #"<- PullSource: ${cfgB}$cfgTarget${cfgE} "
+    #echo -n " destId:${cfgB}$cfgDestDtime${cfgE} "
+    echo
+    echo -n " (p)     Pull Dest:"
+    echo -n " System:${cfgB}${cfgPullSystem}${cfgE} "
+    echo -n " Site:${cfgB}${cfgPullSite}${cfgE}     " 
+    #"<- PullSource: ${cfgB}$cfgTarget${cfgE} "
+    echo " destId:${cfgB}$cfgPullDtime${cfgE} "
+}
+
+function cfgHelp()
+{ 
     echo
     echo " ${cfgB}System Config Management Tool${cfgE}"
-    echo " System: ${cfgB}$cfgSystem${cfgE}      <- PullSource: ${cfgB}$cfgTarget${cfgE} "
-    echo "                         -> PullDir: ${cfgB}$cfgDtime${cfgE} "
-    echo "                         -> PushDest: ${cfgB}$cfgDest${cfgE} "
     echo
-    echo " (sd) showIds                     -- show the available destids "    
-    echo " (sn) showNodes                   -- shows the system nodes"    
-    echo " (sp) showPorts node              -- show ports require  for a given node"
-    echo " (source) src                     -- set pull source (gauntlet/docker/site)"
+    cfgHelpSites
+    #echo "                         -> PushDest: ${cfgB}$cfgSite${cfgE} "
+    echo
+    echo " (rpms) showRpms                   -- show the System rpms "    
+    echo " (sd) showIds                      -- set/show the available destids "    
+    echo " (sn) showNodes                    -- shows the system nodes"    
+    echo " (sp) showPorts node               -- show ports require  for a given node"
+    
+    echo " (sys) src[Ref/Targ/Pull] id       -- set system (NCEMC/TX100 etc)"
+    echo " (site) site[Ref/Targ/Pull] id     -- set site (gauntlet/docker/randolph)"
+    echo " (dest) src[Ref/Targ/Pull] id      -- set destid (2022_10_13_1122)"
 
     echo " (scm) showConfigMaps              -- show modbus and dnp3 files"
     echo " showConfigs [node] destid         -- show modbus and dnp3 files"
@@ -546,6 +684,72 @@ function cfgMenu()
       "sn") 
       echo " >>> system ips"
       showNodes
+      ;;
+
+      "sys") 
+      echo " >>> set system  $node to $data"
+      case "${node:0:1}" in 
+        "T"|"t")
+          #cfgTargSystem="$data"
+          #. ../sites/$cfgTargSystem/$cfgTargSite/nodes.sh
+          . ../sites/$cfgTargSystem/nodes.sh
+          echo  " systems = ${fsystems[@]} "
+
+          ## we have to do more work here
+          #cfgSysId=NCEMC10
+          # cgNodes = nodes for system site combo
+          # esch avaiable system will have a config dir with possible sites
+          #cfgNodes=${cfgNodes_gauntlet[@]}
+          # cfgnodes = system_
+
+        ;;
+        "R"|"r")
+          cfgRefSystem="$data"
+        ;;
+        "P"|"p")
+          cfgPullSystem="$data"
+        ;;
+
+      esac
+      cfgHelpSites
+      ;;
+
+      "site") 
+      # TODO recset cfgNodes etc
+      echo " >>> set site  $node to $data"
+      case "${node:0:1}" in 
+        "T"|"t")
+          cfgTargSite="$data"
+        ;;
+        "R"|"r")
+          cfgRefSite="$data"
+        ;;
+        "P"|"p")
+          cfgPullSite="$data"
+        ;;
+      esac
+      cfgHelpSites
+      ;;
+
+      "dest") 
+      echo " >>> set dest  $node to $data"
+      case "${node:0:1}" in 
+        "T"|"t")
+          cfgTargDtime="$data"
+        ;;
+        "R"|"r")
+          cfgRefDtime="$data"
+        ;;
+        "P"|"p")
+          cfgPullDtime="$data"
+        ;;
+      esac
+      cfgHelpSites
+      ;;
+
+      "rpms") 
+      #echo " >>> system rpms"
+      showRpms $node
       ;;
 
       "sv") 
@@ -604,7 +808,8 @@ function cfgMenu()
         cfgDtime="$node"
         pullConfigs "$node"     
       else
-        echo " no dest id given"
+        echo "using dest id $cfgPullDtime"
+        pullConfigs $cfgPullDtime
       fi
       ;;
 
@@ -639,8 +844,8 @@ function cfgMenu()
       "pulln") 
       if [ "$node" != "" ]
       then
-        echo " >>> pull configs from [$node] into [$cfgDest]"
-        #cfgDest="$node"
+        echo " >>> pull configs from [$node] into [$cfgSite]"
+        #cfgSite="$node"
         pullConfigs "$node" "$cfgDtime"    
       else
         echo " no node given"
@@ -711,7 +916,7 @@ function fixIps()
       port=`echo $ppnode | cut -d ':' -f2` 
       ppip=`nodeSSH $pnode`
       pip=`echo $ppip | cut -d '@' -f2`
-      dest=`getPull $1 $2`
+      dest=`getSrcDir $1 $2`
       cfgsrcArr=(`find $dest -name $pfile`) 
       echo "file = $pfile pnode = $pnode port = $port pip = $pip src = [${cfgsrc[0]}]"
       newip=$pip
@@ -767,7 +972,7 @@ function findString()
     dtime="$1"
     cfgDtime="$1"
   fi
-  dest=`getPull "$dtime"`
+  dest=`getPullDir "$dtime"`
   echo "#using dest $dest  string [$string]"
   findArr=(`find $dest -name "*.json" | xargs grep -Rl $string `) 
   for f in ${findArr[@]}
