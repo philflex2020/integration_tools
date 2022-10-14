@@ -928,12 +928,13 @@ function cfgMenu()
           if [ -f  "$fnodes" ]
           then
              echo "found  file [$fnodes] "
+             . $fnodes
           else
              echo "no file found [$fnodes]"
           fi
           # . $fnodes
         ;;
-        
+
         "R"|"r")
           cfgRefSite="$data"
         ;;
