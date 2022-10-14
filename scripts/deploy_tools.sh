@@ -519,8 +519,16 @@ function showVar()
       ip=`nodeSSH $node`
       if [ "$ip" != "" ]
       then
-        echo -n " $node $uri/$fvar"
-        vval=`ssh $ip "/usr/local/bin/fims_send -m $fset -r/xxx -u $uri/$fvar"`
+        if [ "$fset" == "get" ]
+        then
+           echo -n " $node get $uri/$fvar"
+           vval=`ssh $ip "/usr/local/bin/fims_send -m $fset -r/xxx -u $uri/$fvar"`
+        elif [ "$fset" == "set" ]
+           echo -n " $node set $uri $fvar"
+           vval=`ssh $ip "/usr/local/bin/fims_send -m $fset -r/xxx -u $uri $fvar"`
+        else
+           vval="method $fset not handled"
+        fi
         echo "  $vval"
       fi
     fi
