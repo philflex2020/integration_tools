@@ -82,6 +82,62 @@ function getPullDir()
   echo $dest
 }
 
+# new layout 
+##  systems
+##    NCEMC10
+## (sites)  gauntlet
+##          docker
+##          repo
+##            destid
+##               node
+function getAnyDir()
+{
+  #cfgDesxt=gauntlet
+  #cfgSite=gauntlet
+  #cfgSysId=NCEMC10
+  dest=/home/config/pull/$cfgPullSystem/$cfgPullSite
+  # look for pull in $1
+  if [ $# -ge 1 ] 
+  then
+    case $1 in
+    "pull:"*)
+    p1=$1
+    p1v=${p1#"pull:"}
+    dest=/home/config/pull/$cfgPullSystem/$cfgPullSite/$p1v
+    ;;
+    "refs:"*)
+    p1=$1
+    p1v=${p1#"refs:"}
+    dest=/home/config/refs/$cfgRefSystem/$cfgRefSite/$p1v
+    ;;
+    *)
+    dest=/home/config/pull/$cfgPullSystem/$cfgPullSite/$1
+    ;;
+    esac
+  fi
+  if [ $# -ge 2 ] 
+  then
+    case $2 in
+    "pull:"*)
+    p2=$2
+    p2v=${p2#"pull:"}
+    dest=/home/config/pull/$cfgPullSystem/$cfgPullSite/$p2v/$1
+    ;;
+    "refs:"*)
+    p2=$2
+    p2v=${p2#"refs:"}
+    dest=/home/config/refs/$cfgRefSystem/$cfgRefSite/$p2v/$1
+    ;;
+    *)
+    dest=/home/config/pull/$cfgPullSystem/$cfgPullSite/$2/$1
+    ;;
+    
+    esac
+  fi
+  
+  echo $dest
+}
+
 # getPull
 function getRefDir()
 {
@@ -92,12 +148,12 @@ function getRefDir()
   # add a node 
   if [ $# -ge 1 ] 
   then
-    dest=/home/config/pull/$cfgRefSystem/$cfgRefSite/$1
+    dest=/home/config/refs/$cfgRefSystem/$cfgRefSite/$1
   fi
   # add  node and a dir
   if [ $# -ge 2 ] 
   then
-    dest=/home/config/pull/$cfgRefSystem/$cfgRefSite/$2/$1
+    dest=/home/config/refs/$cfgRefSystem/$cfgRefSite/$2/$1
   fi
   
   echo $dest
@@ -431,14 +487,15 @@ function testConfigs()
 
 }
 
-# $1 node name $2 dest id $3 orig id
+# $1 node name refs:$2 dest id pull:$3 orig id
 function diffConfigs()
 {
     ddd=`date +%F%T`
     #dest=/home/config/pull/$2/$1
     #orig=/home/config/pull/$3/$1
-    dest=`getPullDir $1 $2`
-    orig=`getSrcDir $1 $3`
+    #getAnyDir decodes pull: def:from $x 
+    dest=`getAnyDir $1 $2`
+    orig=`getAnyDir $1 $3`
 
     files=`find $dest -name "*.json" `
     for f in $files 
@@ -859,6 +916,10 @@ function cfgMenu()
       echo "# looking for a string"
       findString $node $data
       ;;
+      "fips") 
+      echo "# fixIps $node"
+      fixIps $node 
+      ;;
  
       "scm") 
       echo " >>> config maps"
@@ -1009,7 +1070,7 @@ function fixIps()
       port=`echo $ppnode | cut -d ':' -f2` 
       ppip=`nodeSSH $pnode`
       pip=`echo $ppip | cut -d '@' -f2`
-      dest=`getSrcDir $1 $2`
+      dest=`getRefDir $1 $2`
       cfgsrcArr=(`find $dest -name $pfile`) 
       echo "file = $pfile pnode = $pnode port = $port pip = $pip src = [${cfgsrc[0]}]"
       newip=$pip
