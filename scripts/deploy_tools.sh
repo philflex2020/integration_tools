@@ -264,7 +264,7 @@ function pullConfigs()
       done
       return
     fi
-    ddd=`date +%F%T`
+    #ddd=`date +%F%T`
 
     #getPull
     dest=`getPullDir $1 $2`

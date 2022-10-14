@@ -122,7 +122,7 @@ cfgNodes=${cfgNodes_gauntlet[@]}
 # pull in the rest of it
 source ./deploy_tools.sh
 cfgPullDtime=`date +%F_%T | sed -e 's/://g'`
-pullConfigs
+pullConfigs "$cfgPullDtime"
 
 
 # #** TODO modbus_client acromag.json 10.10.1.27:1504
