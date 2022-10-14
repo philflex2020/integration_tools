@@ -1064,7 +1064,7 @@ function setGitRef()
   pwd=`pwd`
   dest=`getAnyDir $3`
   mkdir -p $dest
-  echo " dest = $desc"
+  echo " dest = $dest"
   cd $dest
 
   git clone git@github.com:flexgen-power/$1
