@@ -804,7 +804,7 @@ function cfgHelp()
     echo " (pf) pullFims [node] destid       -- pull the fimsLog"
     echo    
     echo " showConfigs [node] destid         -- show configs from specified dest"
-    echo " diffConfigs node dest orig        -- check configs in dest against origs "
+    echo " (dfc) diffConfigs node [pull:|refs:]dest [pull:|refs:]orig   -- check configs in dest against origs "
     echo
     echo " (fs) findString [destid] string   -- find files containing a string (no spaces please)"
 
@@ -821,7 +821,7 @@ function cfgMenu()
   do
     node=''
     data=''
-    read -p " Enter command :" cmd node data
+    read -p " Enter command :" cmd node data data1
     #echo "you entered [$cmd]"
     case "$cmd" in
       "q") dend=1
@@ -896,6 +896,11 @@ function cfgMenu()
       "rpms") 
       #echo " >>> system rpms"
       showRpms $node
+      ;;
+
+      "dfc") 
+      #echo " >>> diffConfigs"
+      diffConfigs $node $data $data1
       ;;
 
       "sv") 
