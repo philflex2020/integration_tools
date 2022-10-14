@@ -112,6 +112,9 @@ cfgVars=(
      "active_power|ess_controller|/ess_2/components/pcs_registers_fast|active_power"
      "active_power|site_controller|/components/flexgen_ess_02_hs|active_power_setpoint"
      "reactive_power|ess_controller|/ess_1/controls/ess_1|ReactivePowerSetpoint"
+     "test_set|ess_controller|/ess_2/test/test_active_power|'{"active_power":3344}'|set"
+     "test_get|ess_controller|/ess_2/test/test_active_power|active_power"
+
 )
 
 cfgSrc=gauntlet

@@ -508,13 +508,19 @@ function showVar()
     node=`echo $i | cut -d '|' -f2 `
     uri=`echo $i | cut -d '|' -f3 `
     fvar=`echo $i | cut -d '|' -f4 `
+    fset=`echo $i | cut -d '|' -f5 `
+    if [ "$fset" == "" ]
+    then
+      fset=get
+    fi
+
     if [ "$var" == "$1" ]
     then
       ip=`nodeSSH $node`
       if [ "$ip" != "" ]
       then
         echo -n " $node $uri/$fvar"
-        vval=`ssh $ip "/usr/local/bin/fims_send -m get -r/xxx -u $uri/$fvar"`
+        vval=`ssh $ip "/usr/local/bin/fims_send -m $fset -r/xxx -u $uri/$fvar"`
         echo "  $vval"
       fi
     fi
