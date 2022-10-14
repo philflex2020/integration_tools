@@ -628,6 +628,12 @@ function showPullDestIds()
     fi
     uKey=1
 
+    if [ "$cKey" == "new" ]
+    then 
+      cfgDtime=`date +%F_%T | sed -e 's/://g'`
+      cfgPullDtime="$cfgDtime"
+    fi
+
 
     # if [ $# -ge 1 ]
     # then
@@ -645,7 +651,7 @@ function showPullDestIds()
         cDtime=$d
         cfgPullDtime=$d
       fi
-      uKey=$((${uKey} +1))
+      uKey=$((${uKey} + 1))
     done
 
     for d in ${dirs[@]}
@@ -669,6 +675,12 @@ function showRefDestIds()
       #cDtime=$1
       #cfgRefDtime=$1
     fi
+    if [ "$cKey" == "new" ]
+    then 
+      cfgDtime=`date +%F_%T | sed -e 's/://g'`
+      cfgRefDtime="$cfgDtime"
+    fi
+
     uKey=1
     dest=`getRefDir `
     echo "destid dir [$dest] [$cDtime]"
@@ -680,7 +692,7 @@ function showRefDestIds()
         cDtime=$d
         cfgRefDtime=$d
       fi
-      uKey=$((${uKey} +1))
+      uKey=$((${uKey} + 1))
     done
     for d in ${dirs[@]}
     do
