@@ -511,7 +511,7 @@ function showVar()
     fset=`echo $i | cut -d '|' -f5 `
     if [ "$fset" == "" ]
     then
-      fset=get
+      fset="get"
     fi
 
     if [ "$var" == "$1" ]
