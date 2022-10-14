@@ -925,6 +925,14 @@ function cfgMenu()
         "T"|"t")
           cfgTargSite="$data"
           fnodes="../sites/$cfgTargSystem/$cfgTargSite/nodes.sh"
+          ftarg="../sites/$cfgTargSystem/system.sh"
+          if [ -f  "$ftarg" ]
+          then
+             echo "found  file [$ftarg] "
+             . $ftarg
+          else
+             echo "no file found [$ftarg]"
+          fi
           if [ -f  "$fnodes" ]
           then
              echo "found  file [$fnodes] "

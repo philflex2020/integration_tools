@@ -6,16 +6,6 @@
 cfgSystem=NCEMC10
 cfgTarget=docker
 
-# not needed here
-cfgNodes_gauntlet=( 
-     "ess_controller:hybridos@10.10.1.29" 
-    "site_controller:hybridos@10.10.1.28" 
-       "fleet_manager:hybridos@10.10.1.156" 
-              "twins:hybridos@10.10.1.27"
-         "powercloud:hybridos@10.10.1.11"
-         "twins_test:root@172.30.0.20"
-)
-
 cfgNodes_docker=( 
      "ess_controller:root@172.30.0.21" 
     "site_controller:root@172.30.0.22" 
@@ -57,26 +47,6 @@ cfgRpms=(
 "twins|twins_pm"
 )
 
-#/usr/lib/systemd/system
-cfgService=(
-"common|cloud_sync"
-"common|fims"
-"common|ftd"
-"common|dts"
-"common|dbi"
-"common|events"
-"common|modbus_client"
-"common|modbus_server"
-"common|dnp3_client"
-"common|dnp3_server"
-"common|web_server"
-"common|influx"
-"common|metrics"
-"common|mongod"
-"ess_controller|ess_controller"
-"site_controller|site_controller"
-"twins|twins"
-)
 
 cfgMaps=(    
 "ess_controller|modbus_client|bms_1_modbus_client.json|fleet_manager:1500"
@@ -105,18 +75,6 @@ cfgMaps=(
 "twins|dnp3_server|randolph_rtac_dnp3_server.json|twins:20001"
 )
 
-cfgVars=(
-     "active_power|ess_controller|/ess_1/controls/ess_1|ActivePowerSetpoint"
-     "active_power|ess_controller|/ess_1/components/pcs_registers_fast|active_power"
-     "active_power|site_controller|/components/flexgen_ess_01_hs|active_power_setpoint"
-     "active_power|ess_controller|/ess_2/controls/ess_2|ActivePowerSetpoint"
-     "active_power|ess_controller|/ess_2/components/pcs_registers_fast|active_power"
-     "active_power|site_controller|/components/flexgen_ess_02_hs|active_power_setpoint"
-     "reactive_power|ess_controller|/ess_1/controls/ess_1|ReactivePowerSetpoint"
-     "test_set|ess_controller|/ess_2/test/test_active_power|'{\"active_power\":3344}'|set"
-     "test_get|ess_controller|/ess_2/test/test_active_power|active_power"
-
-)
 
 cfgSrc=docker
 cfgDest=docker
