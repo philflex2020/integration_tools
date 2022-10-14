@@ -1066,9 +1066,14 @@ function setGitRef()
   mkdir -p $dest
   echo " dest = $dest"
   cd $dest
+  if [ -d $1 ]
+  then 
+    cd $1
 
-  git clone git@github.com:flexgen-power/$1
-  cd $1
+  else
+    git clone git@github.com:flexgen-power/$1
+    cd $1
+  fi
   git checkout $1
   cd $pwd
 }
