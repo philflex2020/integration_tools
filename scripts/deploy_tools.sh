@@ -802,6 +802,8 @@ function cfgHelp()
     echo    
     echo " (lf) logFims [node] destid        -- start a 5 second log of fims"
     echo " (pf) pullFims [node] destid       -- pull the fimsLog"
+    echo 
+    echo " (sgref) setGitRef [repo] [branch] destid -- setup a refs destid from git "
     echo    
     echo " showConfigs [node] destid         -- show configs from specified dest"
     echo " (dfc) diffConfigs node [pull:|refs:]dest [pull:|refs:]orig   -- check configs in dest against origs "
@@ -860,6 +862,14 @@ function cfgMenu()
       cfgHelpSites
       ;;
 
+      "sgref")
+      if [ "$node" == "help "]
+      then
+        echo "example >> sgref integration_dev NCEMC/randolph_twins refs:2022-1014_testgit"
+      else
+        setGitRef $node $data $data1
+      fi
+      ;;
       "site") 
       # TODO recset cfgNodes etc
       echo " >>> set site  $node to $data"
