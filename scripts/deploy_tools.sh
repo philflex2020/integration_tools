@@ -1101,6 +1101,20 @@ function cfgMenu()
 
 }
 
+# fixFiles too
+# man they are all over the place...
+# https://github.com/flexgen-power/cloud_sync/dev/config/config.json
+# https://github.com/flexgen-power/config_powercloud/dev/ftd/ftd.json
+# https://github.com/flexgen-power/config_powercloud/dev/dts/dts.json
+# /usr/local/etc/config/go_logging/cloud_sync/cloud_sync_verbose.json
+# mcp stuff
+# https://github.com/flexgen-power/config_powercloud/dev/mcp/mcp_dts.json
+# /usr/local/etc/config/../config_powercloud/cloud_sync/cloud_sync.json what the heck
+
+#cfgFiles=(    
+#      fleet_manager|ftd|archive|/home/hybridos/powercloud/fleetman01/data
+#      ess_controller|ftd|storage.json|dbName|docker
+#)
 # fixIps file  field  newdata
 function fixFile()
 {

@@ -77,6 +77,14 @@ cfgService=(
 "twins|twins"
 )
 
+# this is other files 
+#     "dbName": "ncemc_01",
+# just find fields and replace 
+cfgFiles=(    
+     "ess_controller|replace|storage.json|dbName|ncemc_01"
+)
+
+# this is for ip addresses 
 cfgMaps=(    
 "ess_controller|modbus_client|bms_1_modbus_client.json|fleet_manager:1500"
 "ess_controller|modbus_client|bms_2_modbus_client.json|twins:1501"

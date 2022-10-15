@@ -72,6 +72,9 @@ cfgMaps=(
 "twins|dnp3_server|randolph_rtac_dnp3_server.json|twins:20001"
 )
 
+cfgFiles=(    
+     "ess_controller|replace|storage.json|dbName|gauntlet"
+)
 
 cfgSrc=gauntlet
 cfgDest=gauntlet

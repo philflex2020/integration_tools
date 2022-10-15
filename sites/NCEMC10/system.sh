@@ -121,6 +121,12 @@ cfgNodes_sample_site=(
 )
 ##          "powercloud:root@172.30.0.24"
 #          "twins_test:root@172.30.0.20"
+# this is other files 
+#     "dbName": "ncemc_01",
+# just find fields and replace 
+cfgFiles=(    
+     "ess_controller|replace|storage.json|dbName|ncemc_01"
+)
 
 cfgMaps_sample_site=(    
 "ess_controller|modbus_client|bms_1_modbus_client.json|bms_1:502"
