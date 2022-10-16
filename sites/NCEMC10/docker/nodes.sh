@@ -78,9 +78,8 @@ cfgMaps=(
 # this is other files 
 #     "dbName": "ncemc_01",
 # just find fields and replace 
-cfgFiles=(    
-     "ess_controller|replace|storage.json|dbName|docker"
-)
+
+
 cfgSrc=docker
 cfgDest=docker
 cfgSysId=NCEMC10

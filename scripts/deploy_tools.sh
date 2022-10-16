@@ -1212,7 +1212,8 @@ function fixIps()
         #echo "file FOUND " 
         # we change the file in place, as long as it is not checked in we'll be OK
         # have to find the exact line with "ip_address"
-
+        # but what if its not on a line on its own
+        # we need to crawl through the file to find the string to replace
         ipADDRArr=`grep \"ip_address\" $cfgsrc`
         ipADDR=$ipADDRArr
         trim="        "
