@@ -1,15 +1,24 @@
+DONE
+fixFile.go 
+  needs to be integrated
+
 TODO
+ssh tunnel perhaps
 
 systemctl
-journalctl
+timeout journalctl
+
+
 df -h
 /var/logs
 /tmp
 ps ax
 top
 decode fims
+   lets use go for this
 
-dbi setup.
+dbi setup/reload.
+   mayb
 
 get /controls etc 
 ess /config/load
@@ -18,7 +27,9 @@ ess /config/load
 
 system config
 
+// see fixfile
 user names
 db names
+
 
 

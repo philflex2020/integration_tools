@@ -397,19 +397,30 @@ function pullrConfigs()
 # $1 node name $2 dest id
 function pushConfigs()
 {
-    #getPull
-    src=`getTargDir $1 $2`
-    dest=/home/hybridos
-    mkdir -p $dest
-    ip=`nodeSSH $1`
-    if [ "$ip" != "" ]
-    then
-      scp -rv $src $ip:$dest/test
-      echo "configs pushed to $ip:$dest"
-      return
-    fi
-    echo "node $1 unknown"
-
+  if [ $# -lt 2 ] 
+  then
+    echo " pushing all configs from $1"
+    for cn in ${cfgAllNodes[@]}
+    do
+      echo "pushConfigs $cn $1"
+      pushConfigs "$cn" "$1"
+    done
+    return
+  fi
+  #getPull
+  # etRefDir
+  src=`getRefDir $1 $2`
+  # getTargDir perhaps
+  dest=/home/hybridos
+  ##mkdir -p $dest
+  ip=`nodeSSH $1`
+  if [ "$ip" != "" ]
+  then
+    scp -rv $src $ip:$dest/test
+    echo "configs pushed to $ip:$dest"
+    return
+  fi
+  echo "node $1 unknown"
 }
 
 # $1 node name $2 dest id $3 orig id
@@ -857,7 +868,7 @@ function cfgHelp()
     echo
     echo " (fs) findString [destid] string   -- find files containing a string (no spaces please)"
 
-    echo " pushConfigs [node] destid         -- push configs to a specified dest (in Progress)"
+    echo " (push) pushConfigs [node] destid   -- push configs to a specified dest (in Progress)"
 }
 
 
@@ -1048,6 +1059,18 @@ function cfgMenu()
       fi
       ;;
 
+      "push") 
+      if [ "$node" != "" ]
+      then
+        echo " >>> push configs to  target [$node]"
+        cfgDtime="$node"
+        pushConfigs "$node"     
+      else
+        echo "using dest id $cfgRefDtime"
+        pushConfigs $cfgRefDtime
+      fi
+      ;;
+
       "lf") 
       if [ "$node" != "" ]
       then
@@ -1126,15 +1149,24 @@ function fixFile()
   file=$1
   field=$2
   newdata=$3
-  xxx=`echo "$field" | grep ','`
-  if [ "$xxx" != "" ]
+  dname=`dirname $file`
+  fname=`basename $file`
+
+  if [ -e /usr/local/bin/fixFile ]
   then
-    newdata=${newdata}, 
+   /usr/local/bin/fixFile -dir "$dname" -key "$field" -val "$newdata" -file "$fname"  
+  else
+    xxx=`echo "$field" | grep ','`
+    if [ "$xxx" != "" ]
+    then
+      newdata=${newdata}, 
+    fi
+    echo " file [$file]"
+    echo " field [$field]"
+    echo " newdata [$newdata]"
+
+    sed -i "s/$field/$newdata/1" $file
   fi
-  echo " file [$file]"
-  echo " field [$field]"
-  echo " newdata [$newdata]"
-  sed -i "s/$field/$newdata/1" $file
   return
 
 }
