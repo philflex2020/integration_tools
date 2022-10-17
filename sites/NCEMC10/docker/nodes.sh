@@ -7,12 +7,12 @@ cfgSystem=NCEMC10
 cfgTarget=docker
 
 cfgNodes_docker=( 
-     "ess_controller:root@172.30.0.21" 
-    "site_controller:root@172.30.0.22" 
-       "fleet_manager:root@172.30.0.23" 
-              "twins:root@172.30.0.20"
-         "powercloud:root@172.30.0.24"
-         "twins_test:root@172.30.0.20"
+     "ess_controller:root@172.30.0.21|/home/config" 
+    "site_controller:root@172.30.0.22|/home/config" 
+      "fleet_manager:root@172.30.0.23|/home/config" 
+              "twins:root@172.30.0.20|/home/config"
+         "powercloud:root@172.30.0.24|/home/config"
+         "twins_test:root@172.30.0.20|/home/config"
 )
 
 cfgAllNodes=( 

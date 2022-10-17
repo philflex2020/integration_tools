@@ -223,7 +223,24 @@ function nodeSSH()
     if [ "$name" == "$1" ] 
     then
       ip=`echo $i | cut -d ':' -f2`
+      ip=`echo $ip | cut -d '|' -f1`
       echo $ip
+      return
+    fi
+    done
+}
+
+
+function destSSH()
+{
+    for i in ${cfgNodes[@]} 
+    do 
+    name=`echo $i | cut -d ':' -f1`
+    if [ "$name" == "$1" ] 
+    then
+      ip=`echo $i | cut -d ':' -f2`
+      dest=`echo $ip | cut -d '|' -f2`
+      echo $dest
       return
     fi
     done
@@ -409,11 +426,19 @@ function pushConfigs()
   fi
   #getPull
   # etRefDir
-  src=`getRefDir $1 $2`
+  if [ $# -lt 2 ]
+  then
+    refdt=$cfgRefDtime
+  else
+    refdt=$2
+  fi 
+  src=`getRefDir $1 $refdt`
   # getTargDir perhaps
   dest=/home/hybridos
   ##mkdir -p $dest
   ip=`nodeSSH $1`
+  dest=`destSSH $1`
+
   if [ "$ip" != "" ]
   then
     scp -rv $src $ip:$dest/test
