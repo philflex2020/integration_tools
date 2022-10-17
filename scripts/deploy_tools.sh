@@ -414,16 +414,16 @@ function pullrConfigs()
 # $1 node name $2 dest id
 function pushConfigs()
 {
-  if [ $# -lt 2 ] 
-  then
-    echo " pushing all configs from $1"
-    for cn in ${cfgAllNodes[@]}
-    do
-      echo "pushConfigs $cn $1"
-      pushConfigs "$cn" "$1"
-    done
-    return
-  fi
+  # if [ $# -lt 2 ] 
+  # then
+  #   echo " pushing all configs from $1"
+  #   for cn in ${cfgAllNodes[@]}
+  #   do
+  #     echo "pushConfigs $cn $1"
+  #     pushConfigs "$cn" "$1"
+  #   done
+  #   return
+  # fi
   #getPull
   # etRefDir
   if [ $# -lt 2 ]
@@ -441,7 +441,8 @@ function pushConfigs()
 
   if [ "$ip" != "" ]
   then
-    scp -rv $src $ip:$dest/test
+    echo "pushing configs from $src to $ip:$dest"
+    scp -r $src $ip:$dest/test
     echo "configs pushed to $ip:$dest"
     return
   fi
