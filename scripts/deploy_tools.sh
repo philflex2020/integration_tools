@@ -830,7 +830,7 @@ cfgPullSystem="$cfgSystem"
 
 cfgRefSite="repo"
 cfgTargSite="$cfgSite"
-cfgPullSite=gauntlet
+#cfgPullSite=gauntlet
 
 function cfgHelpSites()
 {
