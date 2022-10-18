@@ -106,6 +106,152 @@ const (
 	Null
 )
 
+// look for "<string>": pattern
+func GetName(data []byte, sid int) (sidx, eidx, nidx int) {
+	fmt.Printf("GetName sid %v -", sid)
+	if sid < 0 {
+		return -1, 0, 0
+	}
+	idx := sid
+	ln := len(data)
+	state := 0
+	for state != -1 {
+		switch state {
+		case 0: // looking for start quote
+			if data[idx] == byte('"') {
+				state = 1
+				sidx = idx
+			}
+
+		case 1: // check data after quote
+			c := data[idx]
+			// stop on any of these
+			if c == ' ' || c == '\n' || c == ',' || c == '}' || c == ']' || c == '{' || c == '[' || c == 9 || c == ':' {
+				state = 0
+			}
+			// this is the endquote
+			if c == '"' {
+				state = 2
+				eidx = idx
+			}
+
+		case 2: // look for ':'
+			c := data[idx]
+			// stop on any of these
+			if c == ',' || c == '}' || c == ']' || c == '{' || c == '[' {
+				state = 0
+			}
+			// this is the end object
+			if c == ':' {
+				state = 3
+				fmt.Printf("idx  %v sidx %v eidx %v ", idx+1, sidx, eidx)
+				return idx + 1, sidx, eidx
+			}
+
+		case -1:
+			break
+		}
+		idx += 1
+		if idx >= ln {
+			idx = -1
+			return idx, 0, 0
+		}
+	}
+	return idx, 0, 0
+}
+
+// look for next object  skip {[
+func GetNext(data []byte, sid int) (sidx, eidx, nidx int) {
+	//fmt.Printf("GetNext sid %v -", sid)
+	idx := sid
+	sidx = sid
+	ln := len(data)
+	fmt.Printf("GetNext sid %v len %v -", sid, ln)
+
+	state := 0
+	skipobj := 0
+	skiparr := 0
+	for state != -1 {
+		switch state {
+		case 0: // looking for start quote or a '[' or a '{'
+			if data[idx] == byte('"') {
+				state = 10
+				sidx = idx
+			} else if data[idx] == byte('[') {
+				state = 20
+				sidx = idx
+			} else if data[idx] == byte('{') {
+				state = 30
+				sidx = idx
+			} else if data[idx] == byte(',') {
+				state = -1
+				eidx = idx
+				fmt.Printf("#1 idx %v sidx %v eidx %v\n", idx, sidx, eidx)
+
+				return idx, sidx, eidx
+			} else if data[idx] == byte('-') {
+				sidx = idx
+				state = 5
+			} else if data[idx] >= byte('0') && data[idx] <= byte('9') {
+				sidx = idx
+				state = 5
+			}
+
+		case 10: // check data after quote
+			c := data[idx]
+			// this is the endquote
+			if c == '"' {
+				state = 5 // look for comma or '}'
+				eidx = idx
+			}
+
+		case 20: // look for ']'
+			c := data[idx]
+			// stop on any of these
+			if c == '[' {
+				skiparr += 1
+			} else if c == ']' {
+				if skiparr <= 0 {
+					state = 5
+				} else {
+					skiparr -= 1
+				}
+			}
+
+		case 30: // look for '}'
+			c := data[idx]
+			// stop on any of these
+			if c == '{' {
+				skipobj += 1
+			} else if c == '}' {
+				if skipobj <= 0 {
+					state = 5
+				} else {
+					skipobj -= 1
+				}
+			}
+
+		case 5: // check data after object
+			c := data[idx]
+			// stop on any of these
+			if c == ',' || c == '}' {
+				eidx = idx
+				fmt.Printf("#2 sidx %v eidx %v\n", sidx, eidx)
+				return idx, sidx, eidx
+			}
+
+		case -1:
+			break
+		}
+		idx += 1
+		if idx >= ln {
+			idx = -1
+			return idx, 0, 0
+		}
+	}
+	return idx, 0, 0
+}
+
 /*
 Get - Receives data structure, and key path to extract value from.
 Returns:
@@ -119,12 +265,14 @@ If no keys provided it will try to extract closest JSON value (simple ones or ob
 
 */
 func Get(data []byte, keys ...string) (value []byte, dataType int, soff int, offset int, err error) {
-	debug := false
+	debug := true
+	retoff := 0
 	defer func() {
 		if r := recover(); r != nil {
 			err = fmt.Errorf("Unhandled JSON parsing error: %v, %s", r, string(d.Stack()))
 		}
 	}()
+	fmt.Printf(" data ##1 [%p]\n", &data)
 
 	ln := len(data)
 	// if len(keys) == 1 and keys contains "|" as in "assets|ess|variables"
@@ -140,8 +288,10 @@ func Get(data []byte, keys ...string) (value []byte, dataType int, soff int, off
 	if len(keys) > 0 {
 		for ki, k := range keys {
 			if debug {
+				fmt.Printf(" data ##xx [%p] offset %v len %v \n", &data, offset, ln)
+
 				fmt.Printf(" dbgb0 => key [%v] offset %d  ki %d data %v \n",
-					k, offset, ki, string(data[offset])) // string(data[:20]))
+					k, offset, ki, string(data[offset:ln])) // string(data[:20]))
 			}
 			lk := len(k)
 
@@ -169,15 +319,16 @@ func Get(data []byte, keys ...string) (value []byte, dataType int, soff int, off
 			}
 
 			for true {
-				idx := bytes.Index(data[offset:], []byte(k))
-				if debug {
-					fmt.Printf(" ##1 k [%s] idx : %v  offset %d data [%s]\n",
-						k, idx, offset, string(data[offset:]))
+				// idx := bytes.Index(data[offset:], []byte(k))
+				// if debug {
+				// 	fmt.Printf(" ##1 k [%s] idx : %v  offset %d data [%s]\n",
+				// 		k, idx, offset, string(data[offset:]))
 
-					fmt.Printf(" ##2 k [%s] idx %v  ln %d lk %d  ??? %d\n",
-						k, idx, ln, lk, ln-(offset+idx+lk+2))
-				}
-				if idx := bytes.Index(data[offset:], []byte(k)); idx != -1 && (ln-(offset+idx+lk+2)) > 0 {
+				// 	fmt.Printf(" ##2 k [%s] idx %v  ln %d lk %d  ??? %d\n",
+				// 		k, idx, ln, lk, ln-(offset+idx+lk+2))
+				// }
+				//if idx := bytes.Index(data[offset:], []byte(k)); idx != -1 && (ln-(offset+idx+lk+2)) > 0 {
+				if idx, _, _ := GetName(data, offset); idx != -1 && (ln-(offset+idx+lk+2)) > 0 {
 					offset += idx
 					if debug {
 						fmt.Printf(" ##2 k [%s] idx %d lk %d \n", k, idx, lk)
@@ -187,11 +338,11 @@ func Get(data []byte, keys ...string) (value []byte, dataType int, soff int, off
 					// this assumes that there is no space between "string":
 					// fixed using the following code
 					lkx := 1
-					if data[offset+lk] == '"' && data[offset-1] == '"' {
-						for data[offset+lk+lkx] != ':' {
-							lkx += 1
-						}
-					}
+					// if data[offset+lk] == '"' && data[offset-1] == '"' {
+					// 	for data[offset+lk+lkx] != ':' {
+					// 		lkx += 1
+					// 	}
+					// }
 					if data[offset+lk] == '"' && data[offset-1] == '"' && data[offset+lk+lkx] == ':' {
 
 						offset += lk + lkx + 1
@@ -202,8 +353,9 @@ func Get(data []byte, keys ...string) (value []byte, dataType int, soff int, off
 						}
 
 						offset += nO
+						retoff += offset
 						if debug {
-							fmt.Printf(" ##2b  looks good for [%v] running break \n", k)
+							fmt.Printf(" ##2b  looks good for [%v] running break, offset %v \n", k, offset)
 						}
 						break
 					} else {
@@ -286,17 +438,22 @@ func Get(data []byte, keys ...string) (value []byte, dataType int, soff int, off
 	if dataType == Null {
 		value = []byte{}
 	}
-
-	return value, dataType, offset, endOffset, nil
+	retend := retoff + (endOffset - offset)
+	fmt.Printf(" retoff = [%v] retend [%v]\n", retoff, retend)
+	fmt.Printf(" data [%v]\n", string(data[retoff:retend]))
+	fmt.Printf(" data ## ##[%p]\n", &data)
+	fmt.Printf(" offset %v end %v value [%v]\n", offset, endOffset, string(data[offset:endOffset]))
+	return value, dataType, retoff, retend, nil
 }
 
 func main() {
 
 	cfgFile := flag.String("file", "test.json", " input file to use")
-	cfgOutFile := flag.String("output", "dummy", " output file to use")
+	//cfgOutFile := flag.String("output", "dummy", " output file to use")
 	cfgDir := flag.String("dir", "./", " optional dir ")
 	cfgKey := flag.String("key", "ip_address", " key to find")
 	cfgVal := flag.String("val", "127.0.0.1", " new value")
+	cfgPath := flag.String("path", "", " path to object")
 
 	flag.Parse()
 
@@ -307,9 +464,69 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+	fmt.Printf(" data ## ##[%p]\n", &input)
+	idx := 0
+	s := 0
+	n := 0
+	for idx >= 0 {
+		idx, s, n = GetName(input, idx)
+		if idx > 0 {
+			fmt.Printf(" data %p idx %v s %v n %v name [%v] \n", &input, idx, s, n, string(input[s:idx]))
+			//idx = n
+			//fmt.Printf(" next idx %v \n", idx)
+		}
+		//idx, s, n = GetNext(input, idx)
+		if idx > 0 {
+			idx, s, n = GetNext(input, idx)
+			fmt.Printf(" >> idx %v s %v n %v data [%v] \n", idx, s, n, string(input[s:n]))
+		}
+
+	}
+	os.Exit(1)
+
 	//Get(data []byte, keys ...string) (value []byte, dataType int, soff int, offset int, err error) {
 	//temp
-	_, st, soff, off, err := Get(input, *cfgKey)
+	if *cfgPath != "" {
+		key := fmt.Sprintf("%s|%s", *cfgPath, *cfgKey)
+		//temp, st, soff, off, err := Get(input, *cfgKey, *cfgPath)
+		temp, st, soff, off, err := Get(input, key)
+
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		fmt.Printf(" temp [%s] soff %v off %v  data [%v] \n", temp, soff, off, string(input[soff:off]))
+		fmt.Printf(" input [%p]\n", &input)
+
+		newval := []byte(*cfgVal)
+
+		if st == 1 {
+			newval = []byte(strconv.Quote(string(newval)))
+		}
+		newtemp, _ := ReplaceBytes(input, soff, off, newval)
+		if err = ioutil.WriteFile(cfile, newtemp, 0666); err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+	} else {
+		_, st, soff, off, err := Get(input, *cfgKey)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		newval := []byte(*cfgVal)
+
+		if st == 1 {
+			newval = []byte(strconv.Quote(string(newval)))
+		}
+		newtemp, _ := ReplaceBytes(input, soff, off, newval)
+		if err = ioutil.WriteFile(cfile, newtemp, 0666); err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+	}
 
 	//line := 0
 	//instring := string(input)
@@ -317,12 +534,6 @@ func main() {
 	//fmt.Printf(" temp [%v] %T st %v soff [%v] off [%v] err [%v]\n ",
 	//	string(temp), temp, st, soff, off, err)
 	//func ReplaceBytes(data []byte, ix int, iy int, rep []byte) (value []byte, err error) {
-	newval := []byte(*cfgVal)
-
-	if st == 1 {
-		newval = []byte(strconv.Quote(string(newval)))
-	}
-	newtemp, _ := ReplaceBytes(input, soff, off, newval)
 
 	//fmt.Printf(" newtemp [%v] \n ", string(newtemp))
 
@@ -331,16 +542,16 @@ func main() {
 	//              line++
 	//      }
 
-	if *cfgOutFile != "dummy" {
-		if err = ioutil.WriteFile(*cfgOutFile, newtemp, 0666); err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-	} else {
-		if err = ioutil.WriteFile(cfile, newtemp, 0666); err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
+	// if *cfgOutFile != "dummy" {
+	// 	if err = ioutil.WriteFile(*cfgOutFile, newtemp, 0666); err != nil {
+	// 		fmt.Println(err)
+	// 		os.Exit(1)
+	// 	}
+	// } else {
+	// 	if err = ioutil.WriteFile(cfile, newtemp, 0666); err != nil {
+	// 		fmt.Println(err)
+	// 		os.Exit(1)
+	// 	}
 
-	}
+	// }
 }
