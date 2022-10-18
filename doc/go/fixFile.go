@@ -107,13 +107,14 @@ const (
 )
 
 // look for "<string>": pattern
-func GetName(data []byte, sid int) (sidx, eidx, nidx int) {
-	fmt.Printf("GetName sid %v -", sid)
+func GetName(data []byte, sid, ln int) (sidx, eidx, nidx, pidx int) {
+	//fmt.Printf("GetName sid %v -", sid)
 	if sid < 0 {
-		return -1, 0, 0
+		return -1, 0, 0, 0
 	}
 	idx := sid
-	ln := len(data)
+	qidx := 0
+	//ln := len(data)
 	state := 0
 	for state != -1 {
 		switch state {
@@ -132,7 +133,7 @@ func GetName(data []byte, sid int) (sidx, eidx, nidx int) {
 			// this is the endquote
 			if c == '"' {
 				state = 2
-				eidx = idx
+				qidx = idx + 1
 			}
 
 		case 2: // look for ':'
@@ -144,8 +145,8 @@ func GetName(data []byte, sid int) (sidx, eidx, nidx int) {
 			// this is the end object
 			if c == ':' {
 				state = 3
-				fmt.Printf("idx  %v sidx %v eidx %v ", idx+1, sidx, eidx)
-				return idx + 1, sidx, eidx
+				//fmt.Printf("idx  %v sidx %v eidx %v ", idx+1, sidx, eidx)
+				return idx + 1, sidx, qidx, eidx
 			}
 
 		case -1:
@@ -154,19 +155,19 @@ func GetName(data []byte, sid int) (sidx, eidx, nidx int) {
 		idx += 1
 		if idx >= ln {
 			idx = -1
-			return idx, 0, 0
+			return idx, 0, 0, 0
 		}
 	}
-	return idx, 0, 0
+	return idx, 0, 0, 0
 }
 
 // look for next object  skip {[
-func GetNext(data []byte, sid int) (sidx, eidx, nidx int) {
+func GetNext(data []byte, sid, ln int) (sidx, eidx, nidx int) {
 	//fmt.Printf("GetNext sid %v -", sid)
 	idx := sid
 	sidx = sid
-	ln := len(data)
-	fmt.Printf("GetNext sid %v len %v -", sid, ln)
+	//ln := len(data)
+	//fmt.Printf("GetNext sid %v len %v -", sid, ln)
 
 	state := 0
 	skipobj := 0
@@ -186,15 +187,15 @@ func GetNext(data []byte, sid int) (sidx, eidx, nidx int) {
 			} else if data[idx] == byte(',') {
 				state = -1
 				eidx = idx
-				fmt.Printf("#1 idx %v sidx %v eidx %v\n", idx, sidx, eidx)
+				//fmt.Printf("#1 idx %v sidx %v eidx %v\n", idx, sidx, eidx)
 
 				return idx, sidx, eidx
 			} else if data[idx] == byte('-') {
 				sidx = idx
-				state = 5
+				state = 6
 			} else if data[idx] >= byte('0') && data[idx] <= byte('9') {
 				sidx = idx
-				state = 5
+				state = 6
 			}
 
 		case 10: // check data after quote
@@ -236,7 +237,15 @@ func GetNext(data []byte, sid int) (sidx, eidx, nidx int) {
 			// stop on any of these
 			if c == ',' || c == '}' {
 				eidx = idx
-				fmt.Printf("#2 sidx %v eidx %v\n", sidx, eidx)
+				//fmt.Printf("#2 sidx %v eidx %v\n", sidx, eidx)
+				return idx, sidx, eidx
+			}
+		case 6: // check space after number
+			c := data[idx]
+			// stop on any of these
+			if c == ',' || c == '}' || c == ' ' || c == '\n' {
+				eidx = idx
+				//fmt.Printf("#3 sidx %v eidx %v\n", sidx, eidx)
 				return idx, sidx, eidx
 			}
 
@@ -328,7 +337,7 @@ func Get(data []byte, keys ...string) (value []byte, dataType int, soff int, off
 				// 		k, idx, ln, lk, ln-(offset+idx+lk+2))
 				// }
 				//if idx := bytes.Index(data[offset:], []byte(k)); idx != -1 && (ln-(offset+idx+lk+2)) > 0 {
-				if idx, _, _ := GetName(data, offset); idx != -1 && (ln-(offset+idx+lk+2)) > 0 {
+				if idx, _, _, _ := GetName(data, offset, len(data)); idx != -1 && (ln-(offset+idx+lk+2)) > 0 {
 					offset += idx
 					if debug {
 						fmt.Printf(" ##2 k [%s] idx %d lk %d \n", k, idx, lk)
@@ -467,18 +476,19 @@ func main() {
 	fmt.Printf(" data ## ##[%p]\n", &input)
 	idx := 0
 	s := 0
+	q := 0
 	n := 0
 	for idx >= 0 {
-		idx, s, n = GetName(input, idx)
+		idx, s, q, n = GetName(input, idx, len(input))
 		if idx > 0 {
-			fmt.Printf(" data %p idx %v s %v n %v name [%v] \n", &input, idx, s, n, string(input[s:idx]))
+			fmt.Printf(" name [%v] ", string(input[s:q]))
 			//idx = n
 			//fmt.Printf(" next idx %v \n", idx)
 		}
 		//idx, s, n = GetNext(input, idx)
 		if idx > 0 {
-			idx, s, n = GetNext(input, idx)
-			fmt.Printf(" >> idx %v s %v n %v data [%v] \n", idx, s, n, string(input[s:n]))
+			idx, s, n = GetNext(input, idx, len(input))
+			fmt.Printf(" data [%v] \n", string(input[s:n]))
 		}
 
 	}

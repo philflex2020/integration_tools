@@ -1,5 +1,5 @@
 {
-    "clients": {
+    "clients"   : {
         "main": {
             "directory": "/home/vagrant/data",
             "servers": [ "local" ],
@@ -13,7 +13,7 @@
             "timeout": 10
         }
     },
-    "db_directory": "/home/vagrant/.cloud_sync/db",
+    "db_directory"   : "/home/vagrant/.cloud_sync/db",
     "retry_limit": 1,
     "sleep_limit_seconds": 30,
     "buffer_size": 100000
