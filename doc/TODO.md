@@ -1,6 +1,18 @@
 DONE
 fixFile.go 
-  needs to be integrated
+  needs to be integrated in progress
+
+cfgEsslabStuff=(
+    "##dbName##|labdb"
+    "##Dir##|/home/docker/lab_db"
+)    
+
+
+cfgFiles=(    
+     "ess_controller|storage.json|replace|system.client.dbName|lab"
+     "ess_controller|stuff.json|template|cfgEsslabStuff"
+)
+
 
 TODO
 ssh tunnel perhaps
