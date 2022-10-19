@@ -1323,13 +1323,18 @@ function setGitRef()
   if [ $# -lt 2 ]  
   then
     echo " please supply git repo, branch , destid"
-    echo " example: setGitRef integration_dev $cfgGITBRANCH "
-    return
+    gitrepo="$cfgGITREPO"
+    gitbranch="$cfgGITBRANCH"
+  else
+   gitrepo="$1"
+   gitbranch="$2"
+
   fi
+  echo "using  repo $gitrepo branch $gitbranch"
   pwd=`pwd`
-  //date
+  ##date
   cfgDtime=`date +%F_%T | sed -e 's/://g'`
-  //dd=`date +%F%T`
+  ##dd=`date +%F%T`
   ddd="refs:$cfgDtime"
   if [ $# -ge 3 ]
   then
@@ -1343,26 +1348,26 @@ function setGitRef()
   echo " dest = $dest"
   cd $gdest
   #cd ../../
-  edir=$gdest/$1
+  edir=$gdest/$gitrepo
 
   #cd $edir
-  if [ -d $gdest/$1 ]
+  if [ -d $gdest/$gitrepo ]
   then 
-    cd $gdest/$1
+    cd $gdest/$gitrepo
     git pull -r
 
   else
     cd $gdest
-    git clone git@github.com:flexgen-power/$1
-    cd $1
+    git clone git@github.com:flexgen-power/$gitrepo
+    cd $gitrepo
   fi
-  git checkout $2
+  git checkout $gitbranch
 
   cfgGITBRANCH=`git branch | grep \* | cut -d ' ' -f2`
   cfgGITCOMMIT=`git log --pretty=format:'%h' -n 1`
   cfgGITVERSION=`git rev-list --count ${cfgGITCOMMIT}`
   cfgGITTAG=`git describe --match v* --abbrev=0 --tags HEAD --always`
-  echo "cfgGITREPO=\"$1\""                    > config/git_data.sh
+  echo "cfgGITREPO=\"$gitrepo\""                    > config/git_data.sh
   echo "cfgGITBRANCH=\"${cfgGITBRANCH}\""   >> config/git_data.sh
   echo "cfgGITCOMMIT=\"${cfgGITCOMMIT}\""   >> config/git_data.sh
   echo "cfgGITVERSION=\"${cfgGITVERSION}\"" >> config/git_data.sh
