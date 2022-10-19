@@ -7,12 +7,12 @@ cfgSystem=NCEMC10
 cfgTarget=gauntlet
 
 cfgNodes_gauntlet=( 
-     "ess_controller:hybridos@10.10.1.29" 
-    "site_controller:hybridos@10.10.1.28" 
-       "fleet_manager:hybridos@10.10.1.156" 
-              "twins:hybridos@10.10.1.27"
-         "powercloud:hybridos@10.10.1.11"
-         "twins_test:root@172.30.0.20"
+     "ess_controller:hybridos@10.10.1.29|/home/hybridos" 
+    "site_controller:hybridos@10.10.1.28|/home/hybridos" 
+       "fleet_manager:hybridos@10.10.1.156|/home/hybridos" 
+              "twins:hybridos@10.10.1.27|/home/hybridos"
+         "powercloud:hybridos@10.10.1.11|/home/hybridos"
+         "twins_test:root@172.30.0.20|/home/config"
 )
 
 
@@ -80,8 +80,9 @@ cfgSrc=gauntlet
 cfgDest=gauntlet
 cfgSysId=NCEMC10
 cfgNodes="${cfgNodes_gauntlet[@]}"
+cfgTargSite=gauntlet
 
-echo " set up new cfgNodes as [${cfgNodes[@]}]"
+#echo " set up new cfgNodes as [${cfgNodes[@]}]"
 
 
 # #** TODO modbus_client acromag.json 10.10.1.27:1504

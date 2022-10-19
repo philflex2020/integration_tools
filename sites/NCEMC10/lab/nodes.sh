@@ -79,3 +79,4 @@ cfgSrc=lab
 cfgDest=lab
 cfgSysId=NCEMC10
 cfgNodes=${cfgNodes_lab[@]}
+cfgTargSite=lab
