@@ -940,31 +940,43 @@ cfgTargSite="$cfgSite"
 
 function cfgHelpSites()
 {
-    echo "     (sys)                       (site)               (dest)                (repo)"
-    echo -n " (r)    Ref Source:"
+    if [ "$cfgTargSite" == "" ]
+    then
+      cfgTargSite="docker"
+    fi
+    if [ "$cfgPullSite" == "" ]
+    then
+      cfgPullSite="docker"
+    fi
+
+    #echo "     (sys)                       (site)               (dest)  "
+    echo -n " Ref Source:"
     echo -n " System:${cfgB}${cfgRefSystem}${cfgE} "
     echo -n " Site:${cfgB}${cfgRefSite}${cfgE}     " 
     #"<- PullSource: ${cfgB}$cfgTarget${cfgE} "
-    echo -n " destId:${cfgB}$cfgRefDtime${cfgE} "
-    echo    " Git:${cfgB}$cfgRefBranch${cfgE} "
+    echo  " destId:${cfgB}$cfgRefDtime${cfgE} "
 
-    echo -n " (t) Target System:"
+    echo -n " Target Push:"
     echo -n " System:${cfgB}${cfgTargSystem}${cfgE} "
     echo -n " Site:${cfgB}${cfgTargSite}${cfgE}     " 
+    echo    " destId:${cfgB}$cfgTargDtime${cfgE} "
     #"<- PullSource: ${cfgB}$cfgTarget${cfgE} "
     #echo -n " destId:${cfgB}$cfgDestDtime${cfgE} "
-    echo
-    echo -n " (p)     Pull Dest:"
+    #echo
+    echo -n " Pull Dest:"
     echo -n " System:${cfgB}${cfgPullSystem}${cfgE} "
     echo -n " Site:${cfgB}${cfgPullSite}${cfgE}     " 
     #"<- PullSource: ${cfgB}$cfgTarget${cfgE} "
     echo " destId:${cfgB}$cfgPullDtime${cfgE} "
+    echo 
+    echo " Git Branch:${cfgB}$cfgRefBranch${cfgE} "
+
 }
 
 function cfgHelp()
 { 
     echo
-    echo " ${cfgB}System Config Management Tool${cfgE}"
+    echo "           ${cfgB}System Config Management Tool${cfgE}"
     echo
     cfgHelpSites
     #echo "                         -> PushDest: ${cfgB}$cfgSite${cfgE} "
@@ -975,13 +987,13 @@ function cfgHelp()
     echo " (sn) showNodes                    -- shows the system target nodes"    
     echo " (sp) showPorts node               -- show ports require  for a given node"
     
-    echo " (sys) src[Ref/Targ/Pull] id       -- set system (NCEMC/TX100 etc)"
-    echo " (site) site[Ref/Targ/Pull] id     -- set site (gauntlet/docker/randolph)"
-    echo " (dest) src[Ref/Targ/Pull] id      -- set destid (2022_10_13_1122)"
+    #echo " (sys) src[Ref/Targ/Pull] id       -- set system (NCEMC/TX100 etc)"
+    #echo " (site) site[Ref/Targ/Pull] id     -- set site (gauntlet/docker/randolph)"
+    #echo " (dest) src[Ref/Targ/Pull] id      -- set destid (2022_10_13_1122)"
 
     echo " (scm) showConfigMaps              -- show modbus and dnp3 files"
-    echo " showPullConfigs [node] destid     -- show modbus and dnp3 files"
-    echo " showRefConfigs [node] destid      -- show modbus and dnp3 files"
+    #echo " showPullConfigs [node] destid     -- show modbus and dnp3 files"
+    #echo " showRefConfigs [node] destid      -- show modbus and dnp3 files"
     echo 
     echo " (sv) runVar name                 -- show selected var (in Progress)"
     
@@ -1294,33 +1306,44 @@ function fixFile()
 #   setGitRef integration_dev NCEMC/randolph_twins refs:2022-1014_test
 function setGitRef()
 {
-  if [ $# -lt 3 ]  
+  if [ $# -lt 2 ]  
   then
-    echo " please supply git repo , branch and destid"
+    echo " please supply git repo, branch , destid"
     return
   fi
   pwd=`pwd`
-  dest=`getAnyDir $3`
+  //date
+  dd=`date +%F%T`
+  ddd="refs:$dd"
+  if [ $# -ge 3 ]
+  then
+    ddd=$3
+  fi  
+  dest=`getAnyDir $ddd`
+  gdest=/home/config/git
   mkdir -p $dest
+  mkdir -p $gdest
+  
   echo " dest = $dest"
-  cd $dest
-  cd ../../
-  edir=`pwd`
+  cd $gdest
+  #cd ../../
+  edir=$gdest/$1
 
-  cd $edir
-  if [ -d $1 ]
+  #cd $edir
+  if [ -d $gdest/$1 ]
   then 
-    cd $1
+    cd $gdest/$1
     git pull -r
 
   else
+    cd $gdest
     git clone git@github.com:flexgen-power/$1
     cd $1
   fi
   git checkout $2
   cd $pwd
-  echo "copying git configs from $edir/$1/config to $dest " 
-  cp -a $edir/$1/config/* $dest  
+  echo "copying git configs from $edir/config to $dest " 
+  cp -a $edir/config/* $dest  
 }
 
 # fixIps node pullDir
