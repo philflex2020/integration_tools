@@ -929,6 +929,8 @@ cfgTargDtime="$cfgDtime"
 cfgPullDtime="$cfgDtime"
 
 cfgRefBranch="integration_dev:NCEMC10_features/hotfix"
+cfgGITREPO="integration_dev"
+cfgGITBRANCH="NCEMC/randolph_twins"
 
 cfgRefSystem=$cfgSystem
 cfgTargSystem="$cfgSystem"
@@ -936,8 +938,10 @@ cfgPullSystem="$cfgSystem"
 
 cfgRefSite="repo"
 cfgTargSite="$cfgSite"
+cfgTargSystem="NCEMC10"
 #cfgPullSite=gauntlet
-
+loadNodes
+#fnodes="../sites/$cfgTargSystem/$cfgTargSite/nodes.sh"
 function cfgHelpSites()
 {
     if [ "$cfgTargSite" == "" ]
@@ -950,7 +954,7 @@ function cfgHelpSites()
     fi
 
     #echo "     (sys)                       (site)               (dest)  "
-    echo -n " Ref Source:"
+    echo -n " Ref Source: "
     echo -n " System:${cfgB}${cfgRefSystem}${cfgE} "
     echo -n " Site:${cfgB}${cfgRefSite}${cfgE}     " 
     #"<- PullSource: ${cfgB}$cfgTarget${cfgE} "
@@ -963,13 +967,13 @@ function cfgHelpSites()
     #"<- PullSource: ${cfgB}$cfgTarget${cfgE} "
     #echo -n " destId:${cfgB}$cfgDestDtime${cfgE} "
     #echo
-    echo -n " Pull Dest:"
+    echo -n " Pull Dest:  "
     echo -n " System:${cfgB}${cfgPullSystem}${cfgE} "
     echo -n " Site:${cfgB}${cfgPullSite}${cfgE}     " 
     #"<- PullSource: ${cfgB}$cfgTarget${cfgE} "
     echo " destId:${cfgB}$cfgPullDtime${cfgE} "
     echo 
-    echo " Git Branch:${cfgB}$cfgRefBranch${cfgE} "
+    echo " Git Repo:${cfgB}$cfgGITREPO${cfgE} Branch:${cfgB}$cfgGITBRANCH${cfgE} "
 
 }
 
@@ -1304,17 +1308,23 @@ function fixFile()
 #  Git branch
 #  destid
 #   setGitRef integration_dev NCEMC/randolph_twins refs:2022-1014_test
+#GITBRANCH  = $(shell git branch | grep \* | cut -d ' ' -f2)
+#GITCOMMIT  = $(shell git log --pretty=format:'%h' -n 1)
+#GITVERSION = $(shell git rev-list --count $(GITCOMMIT))
+#GITTAG     = $(shell git describe --match v* --abbrev=0 --tags HEAD --always)
 function setGitRef()
 {
   if [ $# -lt 2 ]  
   then
     echo " please supply git repo, branch , destid"
+    echo " example: setGitRef integration_dev $cfgGITBRANCH "
     return
   fi
   pwd=`pwd`
   //date
-  dd=`date +%F%T`
-  ddd="refs:$dd"
+  cfgDtime=`date +%F_%T | sed -e 's/://g'`
+  //dd=`date +%F%T`
+  ddd="refs:$cfgDtime"
   if [ $# -ge 3 ]
   then
     ddd=$3
@@ -1341,6 +1351,16 @@ function setGitRef()
     cd $1
   fi
   git checkout $2
+
+  cfgGITBRANCH=`git branch | grep \* | cut -d ' ' -f2`
+  cfgGITCOMMIT=`git log --pretty=format:'%h' -n 1`
+  cfgGITVERSION=`git rev-list --count ${cfgGITCOMMIT}`
+  cfgGITTAG=`git describe --match v* --abbrev=0 --tags HEAD --always`
+  echo "cfgGITREPO=\"$1\""                    > config/git_data.txt
+  echo "cfgGITBRANCH=\"${cfgGITBRANCH}\""   >> config/git_data.sh
+  echo "cfgGITCOMMIT=\"${cfgGITCOMMIT}\""   >> config/git_data.sh
+  echo "cfgGITVERSION=\"${cfgGITVERSION}\"" >> config/git_data.sh
+  echo "cfgGITTAG=\"${cfgGITTAG}\""         >> config/git_data.sh
   cd $pwd
   echo "copying git configs from $edir/config to $dest " 
   cp -a $edir/config/* $dest  

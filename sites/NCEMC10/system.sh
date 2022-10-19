@@ -6,6 +6,13 @@
 cfgSystem=NCEMC10
 cfgTarget=gauntlet
 
+# some git defaults
+cfgGITREPO="integration_dev"
+cfgGITBRANCH="NCEMC/randolph_twins"
+cfgGITCOMMIT="a437243"
+cfgGITVERSION="75"
+cfgGITTAG="v10.2.0"
+
 # moved to gauntlet/nodes.sh
 # cfgNodes_gauntlet=( 
 #      "ess_controller:hybridos@10.10.1.29" 
