@@ -186,7 +186,6 @@ function getTargDir()
   then
     dest=/home/config/targ/$cfgTargSystem/$cfgTargSite/$2/$1
   fi
-  
   echo $dest
 }
 
@@ -460,12 +459,15 @@ function pushConfigs()
   # etRefDir
   if [ $# -lt 2 ]
   then
-    refdt=$cfgRefDtime
+    refdt=$cfgTargDtime
   else
     refdt=$2
   fi 
-  src=`getRefDir $1 $refdt`
+  # TOTO pickone showone
+  # we stage configs in TargDir
+  src=`getTargDir $1 $refdt`
   # getTargDir perhaps
+  # TODODODODO  get from node config
   dest=/home/hybridos
   ##mkdir -p $dest
   ip=`nodeSSH $1`
@@ -1073,12 +1075,15 @@ function cfgHelp()
     echo " (spd) showPullIds                 -- set/show the available pull destids "    
     echo " (sn) showNodes                    -- shows the system target nodes"    
     echo " (sp) showPorts node               -- show ports require  for a given node"
+    echo " (scm) showConfigMaps              -- show modbus and dnp3 files"
+    echo " ===>  pull configs from git "
+    echo " (sgref) setGitRef [repo] [branch] destid -- setup a refs destid from git "
+    echo " (stage) StageCfgs [target] [destid] -- stage configs for a target from repos "
     
     #echo " (sys) src[Ref/Targ/Pull] id       -- set system (NCEMC/TX100 etc)"
     #echo " (site) site[Ref/Targ/Pull] id     -- set site (gauntlet/docker/randolph)"
     #echo " (dest) src[Ref/Targ/Pull] id      -- set destid (2022_10_13_1122)"
 
-    echo " (scm) showConfigMaps              -- show modbus and dnp3 files"
     #echo " showPullConfigs [node] destid     -- show modbus and dnp3 files"
     #echo " showRefConfigs [node] destid      -- show modbus and dnp3 files"
     echo 
@@ -1092,7 +1097,6 @@ function cfgHelp()
     echo " (lf) logFims [node] destid        -- start a 5 second log of fims"
     echo " (pf) pullFims [node] destid       -- pull the fimsLog"
     echo 
-    echo " (sgref) setGitRef [repo] [branch] destid -- setup a refs destid from git "
     echo    
     echo " showConfigs [node] destid         -- show configs from specified dest"
     echo " (dfc) diffConfigs node [pull:|refs:]dest [pull:|refs:]orig   -- check configs in dest against origs "
@@ -1278,7 +1282,9 @@ function cfgMenu()
         pullConfigs $cfgPullDtime
       fi
       ;;
-
+      "stage")
+        StageCfgs $node $data
+      ;;
       "push") 
       if [ "$node" != "" ]
       then
@@ -1344,7 +1350,18 @@ function cfgMenu()
 
 }
 
-# fixFiles too
+function StageCfgs()
+{
+  ddd="refs:$cfgRefDtime"
+  src=`getAnyDir $ddd`
+
+  ddd="targ:$cfgRefDtime"
+  dest=`getAnyDir $ddd`
+
+  echo " stageCfgs  src = [$src] targ [$dest]\n"
+
+}
+  # fixFiles too
 # man they are all over the place...
 # https://github.com/flexgen-power/cloud_sync/dev/config/config.json
 # https://github.com/flexgen-power/config_powercloud/dev/ftd/ftd.json
@@ -1415,9 +1432,9 @@ function setGitRef()
   echo "using  repo $gitrepo branch $gitbranch"
   pwd=`pwd`
   ##date
-  cfgDtime=`date +%F_%T | sed -e 's/://g'`
+  cfgRefDtime=`date +%F_%T | sed -e 's/://g'`
   ##dd=`date +%F%T`
-  ddd="refs:$cfgDtime"
+  ddd="refs:$cfgRefDtime"
   if [ $# -ge 3 ]
   then
     ddd=$3
