@@ -667,7 +667,12 @@ function showNodes()
   cKey=0
   echo " args = $#"
   echo " cfgTargs = [${cfgTargs[@]}]"
-  if [ $# -ge 1 ]
+  if [ $# -ge 2 ]
+  then
+    curr=`pickOne $1 ${cfgTargs[@]} "$2"`
+    showPick ${cfgTargs[@]} $curr
+    #return
+  elif [ $# -ge 1 ]
   then
     curr=`pickOne $1 ${cfgTargs[@]} "docker"`
     showPick ${cfgTargs[@]} $curr
@@ -1350,12 +1355,12 @@ function cfgMenu()
 
 }
 
+//  we copy a repo set of configs to a stage dir for a given target , or the default target
 function StageCfgs()
 {
   if [ $# -gt 0 ]
   then
-    node="$1"
-    cfgTargSite=$node
+    cfgTargSite="$1"
   fi
   ddd="refs:$cfgRefDtime"
   src=`getAnyDir $ddd`
@@ -1365,10 +1370,12 @@ function StageCfgs()
 
   echo "stageCfgs  [$src] ==> [$dest]"
   mkdir -p $dest
-  cp -a $src/* $dest/
-  ls $dest
-
-
+  if [ -d "$src" ]
+  then
+    cp -a $src/* $dest/
+  else
+    echo " unable to find ref dir [$src]"    
+  fi
 
 }
   # fixFiles too
