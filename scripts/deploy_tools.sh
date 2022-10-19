@@ -1365,9 +1365,9 @@ function StageCfgs()
 
   echo "stageCfgs  src = [$src] targ [$dest]"
   mkdir -p $dest
-  cp -a $src/ $dest
+  cp -a $src/ $dest/
   ls $dest
-  
+
 
 
 }
