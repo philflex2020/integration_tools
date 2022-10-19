@@ -571,38 +571,91 @@ function loadNodes()
   fi
 }
 
-function showNodes()
+# $1 sel(0 to bypass)  $2 list  $3 curr sel  
+function pickOne()
 {
-  uKey=1
-  cKey=0
-  if [ $# -ge 1 ]
-  then
-    cKey=$1 
-  fi
-  echo "cKey = $cKey"
-  for i in ${cfgTargs[@]} 
+  uKey=0
+  cKey=$1
+  #cKey=$((${cKey} + 1))
+  eKey=$#
+  eKey=$((${eKey} - 1))
+  targs=("$@")
+
+  #echo " args = $#"
+  #echo "cKey = $cKey"
+  #echo "targs = [$2]"
+  #echo "def targ = ${targs[$eKey]}"
+  curr=${targs[$eKey]}
+  for i in ${targs[@]} 
   do
-    if [ "$uKey" == "$cKey" ]
+    #echo "uKey [$uKey] cKey [$cKey] i [$i]"
+    if [ "$uKey" == "$cKey" ] && [ $uKey -gt 0 ]
     then
-      cfgTargSite=$i
-      loadNodes
+      #echo "curr was  = [$curr]"
+      curr="$i"
+      echo $curr
+      return
       #nodes.sh
     fi
     uKey=$((${uKey} + 1))
   done
-  
+  echo $curr
+  return
+}
 
-  echo " available targets :"
-  echo
-  for i in ${cfgTargs[@]} 
-  do 
-    if [ "$cfgTargSite" == "$i" ]
-    then
-       echo "=>  $i"
-    else
-       echo "    $i"
+function showPick ()
+{
+  uKey=1
+  cKey=$((${cKey} + 1))
+  targs=("$@")
+  eKey=$#
+  eKey=$((${eKey} - 1))
+  curr=${targs[$eKey]}
+  
+  for i in ${targs[@]} 
+  do
+    if [ $uKey -gt 0 ] && [ $uKey -lt $# ]
+    then 
+      if [ "$curr" == "$i" ]
+      then
+        echo "=>  $i"
+      else
+        echo "    $i"
+      fi
     fi
+    uKey=$((${uKey} + 1))
   done
+}
+
+function showNodes()
+{
+  uKey=1
+  cKey=0
+  echo " args = $#"
+  echo " cfgTargs = [${cfgTargs[@]}]"
+  if [ $# -ge 1 ]
+  then
+    curr=`pickOne $1 ${cfgTargs[@]} "docker"`
+    showPick ${cfgTargs[@]} $curr
+    #return
+  fi
+  if [ "$cfgTargSite" != "$curr" ]
+  then
+    cfgTargSite=$curr
+    loadNodes
+      #nodes.sh
+  fi
+    # echo " available targets :"
+  # echo
+  # for i in ${cfgTargs[@]} 
+  # do 
+  #   if [ "$cfgTargSite" == "$i" ]
+  #   then
+  #      echo "=>  $i"
+  #   else
+  #      echo "    $i"
+  #   fi
+  # done
   echo
   echo " ip map for current target   => $cfgTargSite "
   echo
@@ -968,7 +1021,7 @@ function cfgMenu()
 
       "sn") 
       echo " >>> system ips"
-      showNodes $node
+      showNodes $node $data
       ;;
 
       "sys") 
