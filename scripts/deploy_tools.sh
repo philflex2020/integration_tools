@@ -1352,11 +1352,12 @@ function cfgMenu()
 
 function StageCfgs()
 {
+  node="$1"
   ddd="refs:$cfgRefDtime"
   src=`getAnyDir $ddd`
 
   ddd="targ:$cfgRefDtime"
-  dest=`getAnyDir $ddd`
+  dest=`getAnyDir $ddd $1`
 
   echo " stageCfgs  src = [$src] targ [$dest]\n"
 
