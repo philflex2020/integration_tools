@@ -81,6 +81,7 @@ cfgDest=gauntlet
 cfgSysId=NCEMC10
 cfgNodes="${cfgNodes_gauntlet[@]}"
 
+echo " set up new cfgNodes as [${cfgNodes[@]}]"
 
 
 # #** TODO modbus_client acromag.json 10.10.1.27:1504
