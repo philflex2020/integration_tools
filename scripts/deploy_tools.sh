@@ -680,7 +680,7 @@ function showNodes()
   fi
   if [ "$cfgTargSite" != "$curr" ]
   then
-    cfgTargSite=$curr
+    cfgTargSite="$curr"
     loadNodes
       #nodes.sh
   fi
