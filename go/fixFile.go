@@ -2,6 +2,7 @@ package main
 
 // p wilshire
 // 10_17_2022
+//   10_19_2022 made it recursive  system.target.ip
 // replace a named field in a json file
 // used in the integration_tools utility
 
@@ -455,6 +456,60 @@ func Get(data []byte, keys ...string) (value []byte, dataType int, soff int, off
 	return value, dataType, retoff, retend, nil
 }
 
+func seekName(data []byte, name string, soff int, eoff int) (dataType int, soffr int, eoffr int, err error) {
+	s := 0
+	q := 0
+	//n := 0
+	sx := 0
+	nx := 0
+	idx := soff
+	for idx >= 0 {
+		idx, s, q, _ = GetName(data, idx, eoff)
+		if idx > 0 {
+			fmt.Printf(" name [%v] ", string(data[s:q]))
+			//idx = n
+			//fmt.Printf(" next idx %v \n", idx)
+		}
+
+		//idx, s, n = GetNext(input, idx)
+		if idx > 0 {
+			idx, sx, nx = GetNext(data, idx, eoff)
+			fmt.Printf(" data [%v] \n", string(data[sx:nx]))
+		}
+		if string(data[s+1:q-1]) == name {
+			fmt.Printf(" found name [%v] ", string(data[s:q]))
+			return idx, sx, nx, nil
+		}
+
+	}
+	return -1, 0, 0, nil
+
+}
+
+func FindPath(data []byte, keys string) (dataType int, soff int, eoff int, err error) {
+	debug := true
+	//	var keya = string
+	//	if strings.Contains(keys, ".") {
+	keya := strings.Split(keys, ".")
+	//	}
+	soff = 0
+	eoff = len(data)
+	if len(keya) > 0 {
+		for ki, k := range keya {
+			if debug {
+
+				fmt.Printf(" findpath dbgb0 => [%d] key [%v] \n", ki, k)
+				//k, offset, ki, string(data[offset:ln])) // string(data[:20]))
+			}
+			if ki < 3 {
+				_, soff, eoff, _ = seekName(data, k, soff, eoff) //(dataType int, soff int, eoff int, err error)
+				fmt.Printf(" findpath 2 dbgb0 => [%d] key [%v]  soff %v eoff %v data [%v] \n", ki, k, soff, eoff, string(data[soff:eoff]))
+			}
+		}
+	}
+
+	return 0, 0, 0, nil
+}
 func main() {
 
 	cfgFile := flag.String("file", "test.json", " input file to use")
@@ -478,6 +533,12 @@ func main() {
 	s := 0
 	q := 0
 	n := 0
+	idx, s, q, _ = FindPath(input, string("servers.local.ip"))
+	idx = 0
+	s = 0
+	q = 0
+	n = 0
+
 	for idx >= 0 {
 		idx, s, q, n = GetName(input, idx, len(input))
 		if idx > 0 {

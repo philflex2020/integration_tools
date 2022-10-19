@@ -1,0 +1,46 @@
+ncemc_ips
+Site IP address COOP Site Name
+
+10.101.83.10 Central EMC Doc's Road
+10.101.88.10 South River Collier
+10.101.86.10 Pee Dee McKinney
+10.101.87.10 Randolph Five Points
+10.101.90.10 Wake Walkers Crossroads
+10.101.89.10 Tri-County New Rosewood
+10.101.81.10 Brunswick Zion Hill
+10.101.84.10 Four-County Rocky Point
+10.101.85.10 Jones Onslow Queens Creek
+10.101.82.10 Carteret-Craven Maysville
+VLAN 3 HybridOS Network
+Subnet 192.168.114.0
+Subnet Mask 255.255.255.0
+Default Gateway 192.168.114.1
+192.168.114.0DeviceDescription/Location
+192.168.114.1
+192.168.114.2
+192.168.114.3
+192.168.114.4
+192.168.114.5 HybridOS Controller Port 4 Hybrid OS Cabinet
+192.168.114.6
+192.168.114.7
+192.168.114.8
+192.168.114.9 Debug Laptop
+192.168.114.10
+192.168.114.11 ESS 1 Controller BCP Cabinet 1
+192.168.114.12 ESS 2 Controller BCP Cabinet 2
+192.168.114.13  
+192.168.114.14  
+192.168.114.15
+The following items are located in the Hybrid OS Cabinet
+192.168.114.20 SEL-3530 RTAC
+192.168.114.21 SEL-735 Power Meter
+192.168.114.22 SEL-351 Recloser Protection Relay
+192.168.114.23 SEL-2488 GPS Time Clock
+192.168.114.24 Aux Meter AcuVim Meter
+192.168.114.25 Acromag I/O switch
+192.168.114.26
+192.168.114.27
+192.168.114.28
+192.168.114.29
+192.168.114.30 UPS Hybrid OS cabinet
+192.168.114.48 Pi Historian PC
