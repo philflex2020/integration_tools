@@ -63,6 +63,8 @@ to copy the repo dirs to a stage location
 
 stageCfgs  [/home/config/refs/NCEMC10/repo/2022-10-19_145712] ==> [/home/config/targ/NCEMC10/gauntlet/2022-10-19_145712]
 
+make sure the correct target node is set up
+
 sn 2
  Enter command :sn 2
  >>> system ips
@@ -73,6 +75,24 @@ sn 2
     lab
 found  file [../sites/NCEMC10/system.sh]
 found  file [../sites/NCEMC10/gauntlet/nodes.sh]
+ new cfgTargSite=>gauntlet
+
+ ip map for current target   => gauntlet
+
+   ess_controller:hybridos@10.10.1.29|/home/hybridos
+   site_controller:hybridos@10.10.1.28|/home/hybridos
+   fleet_manager:hybridos@10.10.1.156|/home/hybridos
+   twins:hybridos@10.10.1.27|/home/hybridos
+   powercloud:hybridos@10.10.1.11|/home/hybridos
+   twins_test:root@172.30.0.20|/home/config
+
+   ===============
+
+
+
+Now we have to fixIPs and fixFiles
+
+
 
 TODO
 ssh tunnel perhaps
