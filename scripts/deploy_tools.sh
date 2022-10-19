@@ -1363,7 +1363,12 @@ function StageCfgs()
   ddd="targ:$cfgRefDtime"
   dest=`getAnyDir $ddd`
 
-  echo " stageCfgs  src = [$src] targ [$dest] "
+  echo "stageCfgs  src = [$src] targ [$dest]"
+  mkdir -p $dest
+  cp -a $src/ $dest
+  ls $dest
+  
+
 
 }
   # fixFiles too
