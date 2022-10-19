@@ -1352,14 +1352,18 @@ function cfgMenu()
 
 function StageCfgs()
 {
-  node="$1"
+  if [ $# -gt 0 ]
+  then
+    node="$1"
+    cfgTargSite=$node
+  fi
   ddd="refs:$cfgRefDtime"
   src=`getAnyDir $ddd`
 
   ddd="targ:$cfgRefDtime"
-  dest=`getAnyDir $1 $ddd`
+  dest=`getAnyDir $ddd`
 
-  echo " stageCfgs  src = [$src] targ [$dest]\n"
+  echo " stageCfgs  src = [$src] targ [$dest] "
 
 }
   # fixFiles too
