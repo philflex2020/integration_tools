@@ -105,6 +105,11 @@ function getAnyDir()
     p1v=${p1#"pull:"}
     dest=/home/config/pull/$cfgPullSystem/$cfgPullSite/$p1v
     ;;
+    "targ:"*)
+    p1=$1
+    p1v=${p1#"targ:"}
+    dest=/home/config/targ/$cfgTargSystem/$cfgTargSite/$p1v
+    ;;
     "refs:"*)
     p1=$1
     p1v=${p1#"refs:"}
@@ -123,6 +128,11 @@ function getAnyDir()
     p2v=${p2#"pull:"}
     dest=/home/config/pull/$cfgPullSystem/$cfgPullSite/$p2v/$1
     ;;
+    "targ:"*)
+    p2=$2
+    p2v=${p2#"targ:"}
+    dest=/home/config/targ/$cfgPullSystem/$cfgPullSite/$p2v/$1
+    ;;
     "refs:"*)
     p2=$2
     p2v=${p2#"refs:"}
@@ -135,6 +145,7 @@ function getAnyDir()
     esac
   fi
   
+  mkdir -p $dest
   echo $dest
 }
 
@@ -848,7 +859,7 @@ function showRefDestIds()
       then
          echo "*=> $d"
          gid=`getAnyDir refs:$d`
-         if [ -f "$gid/git_data.txt" ]
+         if [ -f "$gid/git_data.sh" ]
          then
            echo "     loading git data"
            source "$gid/git_data.sh"
@@ -858,6 +869,50 @@ function showRefDestIds()
       fi
     done
 }
+
+function showTargDestIds()
+{
+    cDtime="$cfgTargDtime"
+    cKey=0
+    if [ $# -ge 1 ]
+    then
+      cKey=$1 
+      #cDtime=$1
+      #cfgRefDtime=$1
+    fi
+
+    uKey=1
+    dest=`getTargDir `
+    echo "destid dir [$dest] [$cDtime]"
+    dirs=(`ls -1 $dest `)
+    if [ "$cKey" == "new" ]
+    then 
+      cfgDtime=`date +%F_%T | sed -e 's/://g'`
+      cfgTargDtime="$cfgDtime"
+      dirs+=($cfgTargDtime)
+    fi
+
+    for d in ${dirs[@]}
+    do
+      if [ "$uKey" == "$cKey" ]
+      then
+        cDtime=$d
+        cfgTargDtime=$d
+      fi
+      uKey=$((${uKey} + 1))
+    done
+    for d in ${dirs[@]}
+    do
+      if [ "$d" == "$cfgTargDtime" ]
+      then
+         echo "*=> $d"
+         gid=`getAnyDir targ:$d`
+      else
+         echo "    $d"
+      fi
+    done
+}
+
 # Show ports for a selected system
 #"ess_controller|modbus_client|bms_1_modbus_client.json|twins:1500"
 # showRpms [twins] default to all
@@ -992,8 +1047,9 @@ function cfgHelp()
     #echo "                         -> PushDest: ${cfgB}$cfgSite${cfgE} "
     echo
     echo " (rpms) showRpms                   -- show the System rpms "    
-    echo " (spd) showPullIds                 -- set/show the available pull destids "    
     echo " (srd) showRefIds                  -- set/show the available ref destids "    
+    echo " (std) showTargIds                 -- set/show the available Tsrget (stage) destids "    
+    echo " (spd) showPullIds                 -- set/show the available pull destids "    
     echo " (sn) showNodes                    -- shows the system target nodes"    
     echo " (sp) showPorts node               -- show ports require  for a given node"
     
@@ -1142,6 +1198,11 @@ function cfgMenu()
       echo " >>> current ref destids"
       showRefDestIds $node
       ;;
+      "std") 
+      echo " >>> current ref destids"
+      showTargDestIds $node
+      ;;
+      
       "fs") 
       echo "# looking for a string"
       findString $node $data
