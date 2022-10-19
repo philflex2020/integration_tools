@@ -551,13 +551,66 @@ function diffConfigs()
 
 }
 
+function loadNodes()
+{
+  fnodes="../sites/$cfgTargSystem/$cfgTargSite/nodes.sh"
+  ftarg="../sites/$cfgTargSystem/system.sh"
+  if [ -f  "$ftarg" ]
+  then
+    echo "found  file [$ftarg] "
+    . $ftarg
+  else
+    echo "no file found [$ftarg]"
+  fi
+  if [ -f  "$fnodes" ]
+  then
+    echo "found  file [$fnodes] "
+    . $fnodes
+  else
+    echo "no file found [$fnodes]"
+  fi
+}
+
 function showNodes()
 {
-    for i in ${cfgNodes[@]} 
-    do 
-    echo $i
+  uKey=1
+  cKey=0
+  if [ $# -ge 1 ]
+  then
+    cKey=$1 
+  fi
+  echo "cKey = $cKey"
+  for i in ${cfgTargs[@]} 
+  do
+    if [ "$uKey" == "$cKey" ]
+    then
+      cfgTargSite=$i
+      loadNodes
+      #nodes.sh
+    fi
+    uKey=$((${uKey} + 1))
+  done
+  
 
-    done
+  echo " available targets :"
+  echo
+  for i in ${cfgTargs[@]} 
+  do 
+    if [ "$cfgTargSite" == "$i" ]
+    then
+       echo "=>  $i"
+    else
+       echo "    $i"
+    fi
+  done
+  echo
+  echo " ip map for current target   => $cfgTargSite "
+  echo
+  for i in ${cfgNodes[@]} 
+  do 
+    echo "   $i"
+  done
+  echo
 }
 
 function showConfigMaps()
@@ -866,7 +919,7 @@ function cfgHelp()
     echo " (rpms) showRpms                   -- show the System rpms "    
     echo " (spd) showPullIds                 -- set/show the available pull destids "    
     echo " (srd) showRefIds                  -- set/show the available ref destids "    
-    echo " (sn) showNodes                    -- shows the system nodes"    
+    echo " (sn) showNodes                    -- shows the system target nodes"    
     echo " (sp) showPorts node               -- show ports require  for a given node"
     
     echo " (sys) src[Ref/Targ/Pull] id       -- set system (NCEMC/TX100 etc)"
@@ -915,7 +968,7 @@ function cfgMenu()
 
       "sn") 
       echo " >>> system ips"
-      showNodes
+      showNodes $node
       ;;
 
       "sys") 
@@ -961,23 +1014,7 @@ function cfgMenu()
       case "${node:0:1}" in 
         "T"|"t")
           cfgTargSite="$data"
-          fnodes="../sites/$cfgTargSystem/$cfgTargSite/nodes.sh"
-          ftarg="../sites/$cfgTargSystem/system.sh"
-          if [ -f  "$ftarg" ]
-          then
-             echo "found  file [$ftarg] "
-             . $ftarg
-          else
-             echo "no file found [$ftarg]"
-          fi
-          if [ -f  "$fnodes" ]
-          then
-             echo "found  file [$fnodes] "
-             . $fnodes
-          else
-             echo "no file found [$fnodes]"
-          fi
-          # . $fnodes
+          loadNodes
         ;;
 
         "R"|"r")

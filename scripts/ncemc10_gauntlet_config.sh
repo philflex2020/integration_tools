@@ -130,6 +130,11 @@ cfgDest=gauntlet
 cfgSysId=NCEMC10
 cfgNodes=${cfgNodes_gauntlet[@]}
 
+cfgTargs=(
+    "docker"
+    "gauntlet"
+    "lab"
+)
 # pull in the rest of it
 source ./deploy_tools.sh
 cfgMenu
