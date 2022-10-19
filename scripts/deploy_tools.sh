@@ -847,6 +847,12 @@ function showRefDestIds()
       if [ "$d" == "$cfgRefDtime" ]
       then
          echo "*=> $d"
+         gid=`getAnyDir refs:$d`
+         if [ -f "$gid/git_data.txt" ]
+         then
+           echo "     loading git data"
+           source "$gid/git_data.txt"
+         fi
       else
          echo "    $d"
       fi
@@ -928,16 +934,16 @@ cfgRefDtime="$cfgDtime"
 cfgTargDtime="$cfgDtime"
 cfgPullDtime="$cfgDtime"
 
-cfgRefBranch="integration_dev:NCEMC10_features/hotfix"
-cfgGITREPO="integration_dev"
-cfgGITBRANCH="NCEMC/randolph_twins"
+# cfgRefBranch="integration_dev:NCEMC10_features/hotfix"
+# cfgGITREPO="integration_dev"
+# cfgGITBRANCH="NCEMC/randolph_twins"
 
-cfgRefSystem=$cfgSystem
-cfgTargSystem="$cfgSystem"
-cfgPullSystem="$cfgSystem"
+# cfgRefSystem=$cfgSystem
+# cfgTargSystem="$cfgSystem"
+# cfgPullSystem="$cfgSystem"
 
-cfgRefSite="repo"
-cfgTargSite="$cfgSite"
+# cfgRefSite="repo"
+cfgTargSite="docker"
 cfgTargSystem="NCEMC10"
 #cfgPullSite=gauntlet
 loadNodes

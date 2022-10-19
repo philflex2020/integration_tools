@@ -13,6 +13,18 @@ cfgGITCOMMIT="a437243"
 cfgGITVERSION="75"
 cfgGITTAG="v10.2.0"
 
+cfgRefBranch="integration_dev:NCEMC10_features/hotfix"
+cfgGITREPO="integration_dev"
+cfgGITBRANCH="NCEMC/randolph_twins"
+
+cfgRefSystem=$cfgSystem
+cfgTargSystem="$cfgSystem"
+cfgPullSystem="$cfgSystem"
+
+cfgRefSite="repo"
+cfgTargSite="docker"
+cfgPullSite="docker"
+
 # moved to gauntlet/nodes.sh
 # cfgNodes_gauntlet=( 
 #      "ess_controller:hybridos@10.10.1.29" 
