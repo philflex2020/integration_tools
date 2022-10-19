@@ -683,6 +683,7 @@ function showNodes()
     echo " note cfgTargSite=>$cfgTargSite  curr=>$curr "
     cfgTargSite="$curr"
     loadNodes
+    echo " new cfgTargSite=>$cfgTargSite "
       #nodes.sh
   fi
     # echo " available targets :"
