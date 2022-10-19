@@ -170,6 +170,27 @@ function getRefDir()
   echo $dest
 }
 
+function getTargDir()
+{
+  #cfgDesxt=gauntlet
+  #cfgSite=gauntlet
+  #cfgSysId=NCEMC10
+  dest=/home/config/targ/$cfgTargSystem/$cfgTargSite
+  # add a node 
+  if [ $# -ge 1 ] 
+  then
+    dest=/home/config/targ/$cfgTargSystem/$cfgTargSite/$1
+  fi
+  # add  node and a dir
+  if [ $# -ge 2 ] 
+  then
+    dest=/home/config/targ/$cfgTargSystem/$cfgTargSite/$2/$1
+  fi
+  
+  echo $dest
+}
+
+
 # getPull
 function getSrcDir()
 {
