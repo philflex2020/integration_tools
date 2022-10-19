@@ -79,7 +79,7 @@ cfgFiles=(
 cfgSrc=gauntlet
 cfgDest=gauntlet
 cfgSysId=NCEMC10
-cfgNodes=${cfgNodes_gauntlet[@]}
+cfgNodes="${cfgNodes_gauntlet[@]}"
 
 
 
