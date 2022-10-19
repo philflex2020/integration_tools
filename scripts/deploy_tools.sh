@@ -592,14 +592,14 @@ function loadNodes()
   if [ -f  "$ftarg" ]
   then
     echo "found  file [$ftarg] "
-    . $ftarg
+    . "$ftarg"
   else
     echo "no file found [$ftarg]"
   fi
   if [ -f  "$fnodes" ]
   then
     echo "found  file [$fnodes] "
-    . $fnodes
+    . "$fnodes"
   else
     echo "no file found [$fnodes]"
   fi
