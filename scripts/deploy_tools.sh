@@ -131,7 +131,7 @@ function getAnyDir()
     "targ:"*)
     p2=$2
     p2v=${p2#"targ:"}
-    dest=/home/config/targ/$cfgPullSystem/$cfgPullSite/$p2v/$1
+    dest=/home/config/targ/$cfgTargSystem/$cfgTargSite/$p2v/$1
     ;;
     "refs:"*)
     p2=$2
@@ -1357,7 +1357,7 @@ function StageCfgs()
   src=`getAnyDir $ddd`
 
   ddd="targ:$cfgRefDtime"
-  dest=`getAnyDir $ddd $1`
+  dest=`getAnyDir $1 $ddd`
 
   echo " stageCfgs  src = [$src] targ [$dest]\n"
 
