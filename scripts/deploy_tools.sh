@@ -851,7 +851,7 @@ function showRefDestIds()
          if [ -f "$gid/git_data.txt" ]
          then
            echo "     loading git data"
-           source "$gid/git_data.txt"
+           source "$gid/git_data.sh"
          fi
       else
          echo "    $d"
@@ -1362,7 +1362,7 @@ function setGitRef()
   cfgGITCOMMIT=`git log --pretty=format:'%h' -n 1`
   cfgGITVERSION=`git rev-list --count ${cfgGITCOMMIT}`
   cfgGITTAG=`git describe --match v* --abbrev=0 --tags HEAD --always`
-  echo "cfgGITREPO=\"$1\""                    > config/git_data.txt
+  echo "cfgGITREPO=\"$1\""                    > config/git_data.sh
   echo "cfgGITBRANCH=\"${cfgGITBRANCH}\""   >> config/git_data.sh
   echo "cfgGITCOMMIT=\"${cfgGITCOMMIT}\""   >> config/git_data.sh
   echo "cfgGITVERSION=\"${cfgGITVERSION}\"" >> config/git_data.sh
