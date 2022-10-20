@@ -368,8 +368,9 @@ func main() {
 	fmt.Printf(" data ## ##[%s]\n", string(input))
 	keya := strings.Split(string(input), "\n")
 	for ki, k := range keya {
-		if len(k) > 2 {
-			fmt.Printf(" idx  [%d] line [%v] \n", ki, k)
+		l := len(k)
+		if l > 2 {
+			fmt.Printf(" idx  [%d] line [%v] \n", ki, k[1:l-1])
 		}
 	}
 }
