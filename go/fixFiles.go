@@ -372,7 +372,7 @@ func main() {
 		if l > 2 {
 			k := k[1 : l-1]
 			ka := strings.Split(string(k), "|")
-			fmt.Printf(" idx  [%d] line [%v]  file [%v] \n", ki, k, ka[0])
+			fmt.Printf(" idx  [%d] line [%v]  file [%v] action [%s]\n", ki, k, ka[0], ka[1])
 		}
 	}
 }
