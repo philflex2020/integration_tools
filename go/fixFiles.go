@@ -102,12 +102,12 @@ func main() {
 			fmt.Printf(" idx  [%d] line [%v]  file [%v] action [%s]\n", ki, k, ka[0], ka[1])
 			if ka[1] == "template" {
 				addTemplate(ka[0], &tMap)
-
 			} else if ka[1] == "replace" {
 				//func repFile(fname, key, val string, tm *map[string]string) {
 				repFile(ka[0], ka[2], ka[3], &tMap)
-
 			}
+			//func ipFile(mapname, flist, tm *map[string]string) {
+
 		}
 	}
 }
