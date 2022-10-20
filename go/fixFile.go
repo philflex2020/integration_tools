@@ -163,7 +163,7 @@ func GetName(data []byte, sid, ln int) (sidx, eidx, nidx, pidx int) {
 }
 
 // look for next object  skip {[
-func GetNext(data []byte, sid, ln int) (sidx, eidx, nidx int) {
+func GetNext(data []byte, sid, ln int) (sidx, eidx, nidx, dt int) {
 	//fmt.Printf("GetNext sid %v -", sid)
 	idx := sid
 	sidx = sid
@@ -173,16 +173,20 @@ func GetNext(data []byte, sid, ln int) (sidx, eidx, nidx int) {
 	state := 0
 	skipobj := 0
 	skiparr := 0
+	dt = 0
 	for state != -1 {
 		switch state {
 		case 0: // looking for start quote or a '[' or a '{'
 			if data[idx] == byte('"') {
+				dt = String
 				state = 10
 				sidx = idx
 			} else if data[idx] == byte('[') {
+				dt = Array
 				state = 20
 				sidx = idx
 			} else if data[idx] == byte('{') {
+				dt = Object
 				state = 30
 				sidx = idx
 			} else if data[idx] == byte(',') {
@@ -190,11 +194,17 @@ func GetNext(data []byte, sid, ln int) (sidx, eidx, nidx int) {
 				eidx = idx
 				//fmt.Printf("#1 idx %v sidx %v eidx %v\n", idx, sidx, eidx)
 
-				return idx, sidx, eidx
+				return idx, sidx, eidx, dt
 			} else if data[idx] == byte('-') {
+				dt = Number
 				sidx = idx
 				state = 6
 			} else if data[idx] >= byte('0') && data[idx] <= byte('9') {
+				dt = Number
+				sidx = idx
+				state = 6
+			} else if data[idx] == byte('t') || data[idx] == byte('f') {
+				dt = Boolean
 				sidx = idx
 				state = 6
 			}
@@ -239,7 +249,7 @@ func GetNext(data []byte, sid, ln int) (sidx, eidx, nidx int) {
 			if c == ',' || c == '}' {
 				eidx = idx
 				//fmt.Printf("#2 sidx %v eidx %v\n", sidx, eidx)
-				return idx, sidx, eidx
+				return idx, sidx, eidx, dt
 			}
 		case 6: // check space after number
 			c := data[idx]
@@ -247,7 +257,7 @@ func GetNext(data []byte, sid, ln int) (sidx, eidx, nidx int) {
 			if c == ',' || c == '}' || c == ' ' || c == '\n' {
 				eidx = idx
 				//fmt.Printf("#3 sidx %v eidx %v\n", sidx, eidx)
-				return idx, sidx, eidx
+				return idx, sidx, eidx, dt
 			}
 
 		case -1:
@@ -256,10 +266,10 @@ func GetNext(data []byte, sid, ln int) (sidx, eidx, nidx int) {
 		idx += 1
 		if idx >= ln {
 			idx = -1
-			return idx, 0, 0
+			return idx, 0, 0, dt
 		}
 	}
-	return idx, 0, 0
+	return idx, 0, 0, dt
 }
 
 /*
@@ -467,23 +477,15 @@ func seekName(data []byte, name string, soff int, eoff int) (dataType int, soffr
 		idx, s, q, _ = GetName(data, idx, eoff)
 		if idx > 0 {
 			fmt.Printf(" name [%v] ", string(data[s:q]))
-			//idx = n
-			//fmt.Printf(" next idx %v \n", idx)
-		}
-
-		//idx, s, n = GetNext(input, idx)
-		if idx > 0 {
-			idx, sx, nx = GetNext(data, idx, eoff)
+			idx, sx, nx, _ = GetNext(data, idx, eoff)
 			fmt.Printf(" data [%v] \n", string(data[sx:nx]))
+			if string(data[s+1:q-1]) == name {
+				fmt.Printf(" found name [%v] ", string(data[s:q]))
+				return idx, sx, nx, nil
+			}
 		}
-		if string(data[s+1:q-1]) == name {
-			fmt.Printf(" found name [%v] ", string(data[s:q]))
-			return idx, sx, nx, nil
-		}
-
 	}
-	return -1, 0, 0, nil
-
+	return -1, 0, 0, fmt.Errorf("Path not found")
 }
 
 func FindPath(data []byte, keys string) (dataType int, soff int, eoff int, err error) {
@@ -497,19 +499,21 @@ func FindPath(data []byte, keys string) (dataType int, soff int, eoff int, err e
 	if len(keya) > 0 {
 		for ki, k := range keya {
 			if debug {
-
 				fmt.Printf(" findpath dbgb0 => [%d] key [%v] \n", ki, k)
 				//k, offset, ki, string(data[offset:ln])) // string(data[:20]))
 			}
-			if ki < 3 {
-				_, soff, eoff, _ = seekName(data, k, soff, eoff) //(dataType int, soff int, eoff int, err error)
+			if err == nil {
+				_, soff, eoff, err = seekName(data, k, soff, eoff) //(dataType int, soff int, eoff int, err error)
 				fmt.Printf(" findpath 2 dbgb0 => [%d] key [%v]  soff %v eoff %v data [%v] \n", ki, k, soff, eoff, string(data[soff:eoff]))
+			} else {
+				break
 			}
 		}
 	}
 
-	return 0, 0, 0, nil
+	return 0, soff, eoff, err
 }
+
 func main() {
 
 	cfgFile := flag.String("file", "test.json", " input file to use")
@@ -517,7 +521,7 @@ func main() {
 	cfgDir := flag.String("dir", "./", " optional dir ")
 	cfgKey := flag.String("key", "ip_address", " key to find")
 	cfgVal := flag.String("val", "127.0.0.1", " new value")
-	cfgPath := flag.String("path", "", " path to object")
+	cfgPath := flag.String("path", "servers.local.ip", "path to object")
 
 	flag.Parse()
 
@@ -532,27 +536,35 @@ func main() {
 	idx := 0
 	s := 0
 	q := 0
-	n := 0
-	idx, s, q, _ = FindPath(input, string("servers.local.ip"))
-	idx = 0
-	s = 0
-	q = 0
-	n = 0
+	//n := 0
+	idx, s, q, err = FindPath(input, *cfgPath) // string("servers.local"))
+	if err == nil {
 
-	for idx >= 0 {
-		idx, s, q, n = GetName(input, idx, len(input))
-		if idx > 0 {
-			fmt.Printf(" name [%v] ", string(input[s:q]))
-			//idx = n
-			//fmt.Printf(" next idx %v \n", idx)
-		}
-		//idx, s, n = GetNext(input, idx)
-		if idx > 0 {
-			idx, s, n = GetNext(input, idx, len(input))
-			fmt.Printf(" data [%v] \n", string(input[s:n]))
-		}
+		fmt.Printf(" path [%v] %T found, data idx %v s %v q %v val [%s]\n", *cfgPath, *cfgPath, idx, s, q, string(input[s:q]))
+	} else {
+		fmt.Printf(" path [%v] %T Not Found err [%v] \n", *cfgPath, *cfgPath, err)
 
 	}
+
+	// idx = 0
+	// s = 0
+	// q = 0
+	// n = 0
+
+	// for idx >= 0 {
+	// 	idx, s, q, n = GetName(input, idx, len(input))
+	// 	if idx > 0 {
+	// 		fmt.Printf(" name [%v] ", string(input[s:q]))
+	// 		//idx = n
+	// 		//fmt.Printf(" next idx %v \n", idx)
+	// 	}
+	// 	//idx, s, n = GetNext(input, idx)
+	// 	if idx > 0 {
+	// 		idx, s, n, _ = GetNext(input, idx, len(input))
+	// 		fmt.Printf(" data [%v] \n", string(input[s:n]))
+	// 	}
+
+	// }
 	os.Exit(1)
 
 	//Get(data []byte, keys ...string) (value []byte, dataType int, soff int, offset int, err error) {
