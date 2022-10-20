@@ -12,3 +12,13 @@ cat cs_out.json
 
 ./f -dir ./ -file cs_out.json  -output cs_out.json -val "/home/hybridos/db/cloud_sync"  -path "servers.local.directory"
 cat cs_out.json
+foo=`diff -u cs_out.json cs_result.json`
+if [ "$foo" == "" ]
+then 
+echo "test passed"
+else
+echo "test failed diffs are ..."
+diff -u cs_out.json cs_result.json
+fi
+
+
