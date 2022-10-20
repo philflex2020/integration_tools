@@ -1,1 +1,1 @@
-./f -dir ./ -file cs.json -key directory -val /home/dir3  -path "servers|local"
+./f -dir ./ -file cs.json  -val /home/dir3  -path "clients.main.extension"

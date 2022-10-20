@@ -162,10 +162,11 @@ func GetName(data []byte, sid, ln int) (sidx, eidx, nidx, pidx int) {
 
 // look for next object  skip {[
 //TODO needs to return proper string length
-func GetNext(data []byte, sid, ln int) (sidx, eidx, nidx, dt int) {
+func GetNext(data []byte, sid, ln int) (sidx, eidx, edat, nidx, dt int) {
 	//fmt.Printf("GetNext sid %v -", sid)
 	idx := sid
 	sidx = sid
+	edat = sid
 	//ln := len(data)
 	//fmt.Printf("GetNext sid %v len %v -", sid, ln)
 
@@ -193,7 +194,7 @@ func GetNext(data []byte, sid, ln int) (sidx, eidx, nidx, dt int) {
 				eidx = idx
 				//fmt.Printf("#1 idx %v sidx %v eidx %v\n", idx, sidx, eidx)
 
-				return idx, sidx, eidx, dt
+				return idx, sidx, edat, eidx, dt
 			} else if data[idx] == byte('-') {
 				dt = Number
 				sidx = idx
@@ -213,6 +214,7 @@ func GetNext(data []byte, sid, ln int) (sidx, eidx, nidx, dt int) {
 			// this is the endquote
 			if c == '"' {
 				state = 5 // look for comma or '}'
+				edat = idx + 1
 				eidx = idx
 			}
 
@@ -248,21 +250,22 @@ func GetNext(data []byte, sid, ln int) (sidx, eidx, nidx, dt int) {
 			c := data[idx]
 			// stop on any of these
 			if c == ',' || c == '}' {
-				fmt.Printf("#2 idx %v sidx %v eidx %v\n", idx, sidx, eidx)
+				//fmt.Printf("#2 idx %v sidx %v eidx %v\n", idx, sidx, eidx)
 				eidx = idx
 				//fmt.Printf("#2 sidx %v eidx %v\n", sidx, eidx)
-				return idx, sidx, eidx, dt
+				return idx, sidx, edat, eidx, dt
 			}
 		case 6: // check space after number
 			c := data[idx]
 			// stop on any of these
-			if c == ',' || c == '}' || c == ' ' || c == '\n' {
+			if c == ',' || c == '}' || c == ']' || c == ' ' || c == '\n' {
 				eidx = idx
+				edat = idx
 				if c == '\n' {
 					eidx = idx - 1
 				}
 				//fmt.Printf("#3 sidx %v eidx %v\n", sidx, eidx)
-				return idx, sidx, eidx, dt
+				return idx, sidx, edat, eidx, dt
 			}
 
 		case -1:
@@ -271,10 +274,10 @@ func GetNext(data []byte, sid, ln int) (sidx, eidx, nidx, dt int) {
 		idx += 1
 		if idx >= ln {
 			idx = -1
-			return idx, 0, 0, dt
+			return idx, 0, 0, 0, dt
 		}
 	}
-	return idx, 0, 0, dt
+	return idx, 0, 0, 0, dt
 }
 
 /*
@@ -290,36 +293,38 @@ If no keys provided it will try to extract closest JSON value (simple ones or ob
 
 */
 
-func seekName(data []byte, name string, soff int, eoff int) (dataType int, soffr int, eoffr int, err error) {
+func seekName(data []byte, name string, soff int, eoff int) (dataType int, soffr int, edat int, eoffr int, err error) {
 	s := 0
 	q := 0
 	//n := 0
 	sx := 0
+	ex := 0
 	nx := 0
 	idx := soff
 	dt := 0
 	for idx >= 0 {
 		idx, s, q, _ = GetName(data, idx, eoff)
 		if idx > 0 {
-			fmt.Printf(" name [%v] ", string(data[s:q]))
-			idx, sx, nx, dt = GetNext(data, idx, eoff)
-			fmt.Printf(" data [%v] \n", string(data[sx:nx]))
+			//fmt.Printf(" name [%v] ", string(data[s:q]))
+			idx, sx, ex, nx, dt = GetNext(data, idx, eoff)
+			//fmt.Printf(" data [%v] \n", string(data[sx:nx]))
 			if string(data[s+1:q-1]) == name {
-				fmt.Printf(" found name [%v] ", string(data[s:q]))
-				return dt, sx, nx, nil
+				//fmt.Printf(" found name [%v] ", string(data[s:q]))
+				return dt, sx, ex, nx, nil
 			}
 		}
 	}
-	return 0, 0, 0, fmt.Errorf("Path not found")
+	return 0, 0, 0, 0, fmt.Errorf("Path not found")
 }
 
-func FindPath(data []byte, keys string) (dataType int, soff int, eoff int, err error) {
-	debug := true
+func FindPath(data []byte, keys string) (dataType int, soff int, edat int, eoff int, err error) {
+	debug := false
 	//	var keya = string
 	//	if strings.Contains(keys, ".") {
 	keya := strings.Split(keys, ".")
 	//	}
 	soff = 0
+	edat = 0
 	dt := 0
 	eoff = len(data)
 	if len(keya) > 0 {
@@ -329,15 +334,15 @@ func FindPath(data []byte, keys string) (dataType int, soff int, eoff int, err e
 				//k, offset, ki, string(data[offset:ln])) // string(data[:20]))
 			}
 			if err == nil {
-				dt, soff, eoff, err = seekName(data, k, soff, eoff) //(dataType int, soff int, eoff int, err error)
-				fmt.Printf(" findpath 2 dbgb0 => [%d] key [%v]  soff %v eoff %v data [%v] \n", ki, k, soff, eoff, string(data[soff:eoff]))
+				dt, soff, edat, eoff, err = seekName(data, k, soff, eoff) //(dataType int, soff int, eoff int, err error)
+				//fmt.Printf(" findpath 2 dbgb0 => [%d] key [%v]  soff %v eoff %v data [%v] \n", ki, k, soff, eoff, string(data[soff:eoff]))
 			} else {
 				break
 			}
 		}
 	}
 
-	return dt, soff, eoff, err
+	return dt, soff, edat, eoff, err
 }
 
 func main() {
@@ -361,13 +366,14 @@ func main() {
 	fmt.Printf(" data ## ##[%p]\n", &input)
 	dt := 0
 	s := 0
+	e := 0
 	q := 0
 	st := 0
 	//n := 0
-	dt, s, q, err = FindPath(input, *cfgPath) // string("servers.local"))
+	dt, s, e, q, err = FindPath(input, *cfgPath) // string("servers.local"))
 	if err == nil {
 
-		fmt.Printf(" path [%v] %T found, data type %v s %v q %v val [%s]\n", *cfgPath, *cfgPath, dt, s, q, string(input[s:q]))
+		fmt.Printf(" path [%v] %T found, data type %v s %v e %v q %v val [%s]\n", *cfgPath, *cfgPath, dt, s, e, q, string(input[s:e]))
 	} else {
 		fmt.Printf(" path [%v] %T Not Found err [%v] \n", *cfgPath, *cfgPath, err)
 
