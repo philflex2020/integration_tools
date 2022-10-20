@@ -1,1 +1,14 @@
-./f -dir ./ -file cs.json  -val /home/dir3  -path "clients.main.extension"
+./f -dir ./ -file cs.json  -output cs_out.json -val "/home/dir3"  -path "clients.main.extension"
+cat cs_out.json
+
+./f -dir ./ -file cs_out.json  -output cs_out.json -val "[ \"local\", \"remote\" ]"  -path "clients.main.servers"
+cat cs_out.json
+
+./f -dir ./ -file cs_out.json  -output cs_out.json -val "12"  -path "retry_limit"
+cat cs_out.json
+
+./f -dir ./ -file cs_out.json  -output cs_out.json -val "20"  -path "servers.local.timeout"
+cat cs_out.json
+
+./f -dir ./ -file cs_out.json  -output cs_out.json -val "/home/hybridos/db/cloud_sync"  -path "servers.local.directory"
+cat cs_out.json

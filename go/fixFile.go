@@ -7,7 +7,6 @@ package main
 // used in the integration_tools utility
 
 import (
-	"bytes"
 	"fmt"
 	"strconv"
 
@@ -23,76 +22,76 @@ func ReplaceBytes(data []byte, ix int, iy int, rep []byte) (value []byte, err er
 	return append(data[:ix], append(rep, data[iy:]...)...), nil
 }
 
-// Find position of next character which is not ' ', ',', '}' or ']'
-func nextValue(data []byte) (offset int) {
-	for true {
-		if len(data) == offset {
-			return -1
-		}
-		if data[offset] != ' ' && data[offset] != '\n' && data[offset] != '\r' && data[offset] != 9 && data[offset] != ',' && data[offset] != '}' && data[offset] != ']' {
-			return
-		}
-		offset++
-	}
-	return -1
-}
+// // Find position of next character which is not ' ', ',', '}' or ']'
+// func xnextValue(data []byte) (offset int) {
+// 	for true {
+// 		if len(data) == offset {
+// 			return -1
+// 		}
+// 		if data[offset] != ' ' && data[offset] != '\n' && data[offset] != '\r' && data[offset] != 9 && data[offset] != ',' && data[offset] != '}' && data[offset] != ']' {
+// 			return
+// 		}
+// 		offset++
+// 	}
+// 	return -1
+// }
 
-// Tries to find the end of string
-// Support if string contains escaped quote symbols.
-func stringEnd(data []byte) int {
-	i := 0
+// // Tries to find the end of string
+// // Support if string contains escaped quote symbols.
+// func xstringEnd(data []byte) int {
+// 	i := 0
 
-	for true {
-		sIdx := bytes.IndexByte(data[i:], '"')
+// 	for true {
+// 		sIdx := bytes.IndexByte(data[i:], '"')
 
-		if sIdx == -1 {
-			return -1
-		}
-		i += sIdx + 1
-		// If it just escaped \", continue
-		if i > 2 && data[i-2] == '\\' {
-			continue
-		}
-		break
-	}
-	return i
-}
+// 		if sIdx == -1 {
+// 			return -1
+// 		}
+// 		i += sIdx + 1
+// 		// If it just escaped \", continue
+// 		if i > 2 && data[i-2] == '\\' {
+// 			continue
+// 		}
+// 		break
+// 	}
+// 	return i
+// }
 
-// Find end of the data structure, array or object.
-// For array openSym and closeSym will be '[' and ']', for object '{' and '}'
-// Know about nested structures
-func trailingBracket(data []byte, openSym byte, closeSym byte) int {
-	level := 0
-	i := 0
-	ln := len(data)
+// // Find end of the data structure, array or object.
+// // For array openSym and closeSym will be '[' and ']', for object '{' and '}'
+// // Know about nested structures
+// func xtrailingBracket(data []byte, openSym byte, closeSym byte) int {
+// 	level := 0
+// 	i := 0
+// 	ln := len(data)
 
-	for true {
-		if i >= ln {
-			return -1
-		}
-		c := data[i]
-		// If inside string, skip it
-		if c == '"' {
-			//sFrom := i
-			i++
-			se := stringEnd(data[i:])
-			if se == -1 {
-				return -1
-			}
-			i += se - 1
-		}
-		if c == openSym {
-			level++
-		} else if c == closeSym {
-			level--
-		}
-		i++
-		if level == 0 {
-			break
-		}
-	}
-	return i
-}
+// 	for true {
+// 		if i >= ln {
+// 			return -1
+// 		}
+// 		c := data[i]
+// 		// If inside string, skip it
+// 		if c == '"' {
+// 			//sFrom := i
+// 			i++
+// 			se := xstringEnd(data[i:])
+// 			if se == -1 {
+// 				return -1
+// 			}
+// 			i += se - 1
+// 		}
+// 		if c == openSym {
+// 			level++
+// 		} else if c == closeSym {
+// 			level--
+// 		}
+// 		i++
+// 		if level == 0 {
+// 			break
+// 		}
+// 	}
+// 	return i
+// }
 
 // Data types available in valid JSON data.
 const (
@@ -225,6 +224,7 @@ func GetNext(data []byte, sid, ln int) (sidx, eidx, edat, nidx, dt int) {
 				skiparr += 1
 			} else if c == ']' {
 				if skiparr <= 0 {
+					edat = idx + 1
 					eidx = idx
 					state = 5
 				} else {
@@ -239,6 +239,7 @@ func GetNext(data []byte, sid, ln int) (sidx, eidx, edat, nidx, dt int) {
 				skipobj += 1
 			} else if c == '}' {
 				if skipobj <= 0 {
+					edat = idx + 1
 					eidx = idx
 					state = 5
 				} else {
@@ -348,7 +349,7 @@ func FindPath(data []byte, keys string) (dataType int, soff int, edat int, eoff 
 func main() {
 
 	cfgFile := flag.String("file", "test.json", " input file to use")
-	//cfgOutFile := flag.String("output", "dummy", " output file to use")
+	cfgOutFile := flag.String("output", "dummy.json", " output file to use")
 	cfgDir := flag.String("dir", "./", " optional dir ")
 	//cfgKey := flag.String("key", "ip_address", " key to find")
 	cfgVal := flag.String("val", "127.0.0.1", " new value")
@@ -357,6 +358,7 @@ func main() {
 	flag.Parse()
 
 	cfile := fmt.Sprintf("%s/%s", *cfgDir, *cfgFile)
+	cout := fmt.Sprintf("%s/%s", *cfgDir, *cfgOutFile)
 
 	input, err := ioutil.ReadFile(cfile)
 	if err != nil {
@@ -368,7 +370,7 @@ func main() {
 	s := 0
 	e := 0
 	q := 0
-	st := 0
+	//st := 0
 	//n := 0
 	dt, s, e, q, err = FindPath(input, *cfgPath) // string("servers.local"))
 	if err == nil {
@@ -379,14 +381,14 @@ func main() {
 
 	}
 
-	os.Exit(1)
+	//os.Exit(1)
 	{
 		newval := []byte(*cfgVal)
-		if st == 1 {
+		if dt == 1 {
 			newval = []byte(strconv.Quote(string(newval)))
 		}
-		newtemp, _ := ReplaceBytes(input, s, q, newval)
-		if err = ioutil.WriteFile(cfile, newtemp, 0666); err != nil {
+		newtemp, _ := ReplaceBytes(input, s, e, newval)
+		if err = ioutil.WriteFile(cout, newtemp, 0666); err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 		}
