@@ -14,6 +14,7 @@ import (
 	"flag"
 	"io/ioutil"
 	"os"
+	"strings"
 )
 
 // func ReplaceBytes(data []byte, ix int, iy int, rep []byte) (value []byte, err error) {
@@ -365,6 +366,11 @@ func main() {
 	}
 
 	fmt.Printf(" data ## ##[%s]\n", string(input))
+	keya := strings.Split(string(input), "\n")
+	for ki, k := range keya {
+		fmt.Printf(" idx  [%d] line [%v] \n", ki, k)
+
+	}
 }
 
 // 	dt := 0
