@@ -175,8 +175,9 @@ func buildHTML(jsonStr string, htmlPage *string, outerkeys []string, keys map[st
 		fmt.Println("Cannot convert file to json object")
 		fmt.Println(jsonStr)
 	} else { //dealing with a json object
+		*htmlPage = *htmlPage + "<h1>" + "FlexGen Config Monitoring System" + `</h1><br>`
 		for _, key := range outerkeys {
-			*htmlPage = *htmlPage + "<h1>" + key + `</h1><br><form method="put" enctype="application/x-www-form-urlencoded"><table>`
+			*htmlPage = *htmlPage + "<h2>" + key + `</h2><br><form method="put" enctype="application/x-www-form-urlencoded"><table>`
 			for _, key2 := range keys[key] {
 				val := (jsonObj[key].(map[string]interface{}))[key2]
 
