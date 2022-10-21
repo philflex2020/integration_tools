@@ -1,3 +1,7 @@
 stuff.tmpl|template|cfgEsslabStuff
+ip_map.tmpl|template|ip_data
+
 config/ess_controller/storage.json|replace|system.client.dbName|lab
 config/ess_controller/dts.json|replace|dbName|mylab
+config/modbus_client/bms_1_modbus_client.json|lookup.ip_data|connection.ip_address|bms_1_ip
+config/modbus_client/bms_1_modbus_client.json|lookup.ip_data|connection.port|bms_1_port

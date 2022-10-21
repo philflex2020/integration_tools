@@ -1,9 +1,25 @@
 package main
 
 // p wilshire
-// 10_17_2022
-//   10_19_2022 made it recursive  system.target.ip
-// replace a named field in a json file
+// 10_20_2022
+// takes a list of files/ templates
+// runs replacement on each of the files.
+
+// this is in a mapping template file
+//bms_1_ip|10.10.1.27
+//bms_1_port|1500
+
+// read in this file
+//ip_data.tmpl|template|ip_data
+
+// the following lines perform a look up in the ip_data  mappings
+//config/modbus_client/bms_1_modbus_client.json|lookup.ip_data|connection.ip_address|bms_1_ip
+//config/modbus_client/bms_1_modbus_client.json|lookup.ip_data|connection.port|bms_1_port
+
+// these a simple file replacements
+//config/ess_controller/storage.json|replace|system.client.dbName|lab
+//config/ess_controller/dts.json|replace|dbName|mylab
+
 // used in the integration_tools utility
 
 import (
@@ -22,8 +38,10 @@ import (
 // 	return append(data[:ix], append(rep, data[iy:]...)...), nil
 // }
 
-func addTemplate(fname string, tm *map[string]string) {
+func addTemplate(fname, tname string, tm *map[string]*map[string]string) {
 
+	tMap := make(map[string]string)
+	(*tm)[tname] = &tMap
 	cfile := fmt.Sprintf("%s/%s", ".", fname)
 	input, err := ioutil.ReadFile(cfile)
 	if err != nil {
@@ -37,13 +55,14 @@ func addTemplate(fname string, tm *map[string]string) {
 			//k := k[1 : l-1]
 			ka := strings.Split(string(k), "|")
 			fmt.Printf(" idx  [%d] line [%v]  rep [%v] with [%s]\n", ki, k, ka[0], ka[1])
-			(*tm)[ka[0]] = ka[1]
+
+			tMap[ka[0]] = ka[1]
 		}
 	}
 
 }
 
-func repFile(fname, key, val string, tm *map[string]string) (err error) {
+func repFile(fname, key, val string, tm *map[string]*map[string]string) (err error) {
 
 	cfile := fmt.Sprintf("%s/%s", ".", fname)
 	input, err := ioutil.ReadFile(cfile)
@@ -72,7 +91,7 @@ func repFile(fname, key, val string, tm *map[string]string) (err error) {
 
 func main() {
 
-	tMap := make(map[string]string)
+	tMap := make(map[string]*map[string]string)
 	fmt.Printf(" tMap type %T\n", tMap)
 	cfgFile := flag.String("flist", "flist.txt", "file list")
 	//cfgOutFile := flag.String("output", "dummy.json", " output file to use")
@@ -101,15 +120,15 @@ func main() {
 			ka := strings.Split(string(k), "|")
 			fmt.Printf(" idx  [%d] line [%v]  file [%v] action [%s]\n", ki, k, ka[0], ka[1])
 			if ka[1] == "template" {
-				addTemplate(ka[0], &tMap)
+				addTemplate(ka[0], ka[2], &tMap)
 			} else if ka[1] == "replace" {
 				//func repFile(fname, key, val string, tm *map[string]string) {
 				repFile(ka[0], ka[2], ka[3], &tMap)
 			}
 			//func ipFile(mapname, flist, tm *map[string]string) {
-
 		}
 	}
+	fmt.Printf("tMap at the end [%v] \n", tMap)
 }
 
 // 	dt := 0
