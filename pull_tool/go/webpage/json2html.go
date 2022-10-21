@@ -16,11 +16,15 @@ import (
 var CPATH string = "system_configs.json"
 
 type SystemConfigs struct {
-	SysInfo SysInfo `json:"sysInfo"`
-	System  System  `json:"system"`
-	Ess     Ess     `json:"ess"`
-	Bms     Bms     `json:"bms"`
+	SysInfo  SysInfo  `json:"sysInfo"`
+	SiteInfo SiteInfo `json:"siteInfo"`
+	System   System   `json:"system"`
+	SiteIps  SiteIps  `json:"siteIps"`
+	Ess      Ess      `json:"ess"`
+	Bms      Bms      `json:"bms"`
 }
+
+// not used
 type StrArray []string
 type SysInfo struct {
 	SystemType           string    `json:"systemType_e"`
@@ -33,6 +37,10 @@ type SysInfo struct {
 	Actions              StrArray  `json:"actions_A"`
 	SiteType             string    `json:"siteType_a"`
 }
+type SiteInfo struct {
+	Sites StrArray `json:"locations_A"`
+}
+
 type System struct {
 	Dnp3       int `json:"dnp3_e"`
 	Historian  int `json:"historian_e"`
@@ -67,36 +75,53 @@ type Bms struct {
 	Racks      []int  `json:"racks_e"`
 }
 
+type SiteIps struct {
+	Powercloud string `json:"powercloud_ip_e"`
+	Fleet      string `json:"fleet_manager_ip_e"`
+	Site       string `json:"site_controller_ip_e"`
+	Ess        string `json:"ess_ip_e"`
+	Twins      string `json:"twins_ip_e"`
+	Bms_1_ip   string `json:"bms_1_ip_e"`
+	Bms_1_port int    `json:"bms_1_port_e"`
+	Bms_2_ip   string `json:"bms_2_ip_e"`
+	Bms_2_port int    `json:"bms_2_port_e"`
+	Pcs_1_ip   string `json:"pcs_1_ip_e"`
+	Pcs_1_port int    `json:"pcs_1_port_e"`
+	Pcs_2_ip   string `json:"pcs_2_ip_e"`
+	Pcs_2_port int    `json:"pcs_2_port_e"`
+}
+
 var (
 	// ErrUnsupportedType is returned if the type is not implemented
 	ErrUnsupportedType = errors.New("unsupported type")
 )
 
-func (sa *StrArray) UnmarshalJSON(data []byte) error {
-	fmt.Printf(" func Unmarshall call \n")
-	var jsonObj interface{}
-	err := json.Unmarshal(data, &jsonObj)
-	if err != nil {
-		return err
-	}
-	switch obj := jsonObj.(type) {
-	case string:
-		*sa = StrArray([]string{obj})
-		return nil
-	case []interface{}:
-		s := make([]string, 0, len(obj))
-		for _, v := range obj {
-			value, ok := v.(string)
-			if !ok {
-				return ErrUnsupportedType
-			}
-			s = append(s, value)
-		}
-		*sa = StrArray(s)
-		return nil
-	}
-	return ErrUnsupportedType
-}
+// func (sa *StrArray) UnmarshalJSON(data []byte) error {
+// 	fmt.Printf(" func Unmarshall call \n")
+// 	var jsonObj interface{}
+// 	err := json.Unmarshal(data, &jsonObj)
+// 	if err != nil {
+// 		return err
+// 	}
+// 	switch obj := jsonObj.(type) {
+// 	case string:
+// 		*sa = StrArray([]string{obj})
+// 		return nil
+// 	case []interface{}:
+// 		s := make([]string, 0, len(obj))
+// 		for _, v := range obj {
+// 			value, ok := v.(string)
+// 			if !ok {
+// 				return ErrUnsupportedType
+// 			}
+// 			s = append(s, value)
+// 		}
+// 		*sa = StrArray(s)
+// 		return nil
+// 	}
+// 	return ErrUnsupportedType
+// }
+
 func indexOf(arr []string, str string) int {
 	var index int = -1
 	for i, s := range arr {
@@ -134,8 +159,16 @@ func runPage() {
 			formVals := r.Form
 			if len(formVals) > 0 {
 				for _, key := range outerkeys {
+					fmt.Printf(" looking at key [%v]\n", key)
+					fmt.Printf(" looking at keys [%v]\n", keys[key])
 					for _, key2 := range keys[key] {
+						fmt.Printf(" looking at key2 [%v] %T\n", key2, key2)
+						//if jsonObj[key] == nil {
+						//	continue
+						//}
 						val := (jsonObj[key].(map[string]interface{}))[key2]
+						fmt.Printf("             looking at key2 val [%v]\n", val)
+
 						if _, ok := formVals[key2[:len(key2)-2]]; ok { //key2[:len(key2)-2] is there because all of the editable fields have an _e at the end
 							//TODO: figure out what to do about comparing values...This treats every formVal element as a list
 							if fmt.Sprintf("%v", formVals[key2[:len(key2)-2]][0]) != fmt.Sprintf("%v", val) {

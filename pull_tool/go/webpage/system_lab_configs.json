@@ -1,0 +1,17 @@
+{
+    "siteIps": {
+        "powercloud_ip_e": "172.30.20.10",
+        "fleet_manager_ip_e": "172.30.20.10",
+        "site_controller_ip_e": "172.30.20.10",
+        "ess_ip_e": "172.30.40.10",
+        "twins_ip_e": "172.30.40.10",
+        "bms_1_ip_e": "172.30.20.20",
+        "bms_1_port_e": 502,
+        "pcs_1_ip_e": "172.30.30.20",
+        "pcs_1_port_e": 503,
+        "bms_2_ip_e": "172.30.20.20",
+        "bms_2_port_e": 502,
+        "pcs_2_ip_e": "172.30.30.20",
+        "pcs_2_port_e": 503,
+    }
+}    

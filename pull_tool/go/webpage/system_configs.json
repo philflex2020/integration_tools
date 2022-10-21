@@ -17,6 +17,14 @@
             "create_configs"
         ]
     },
+    "siteInfo": {
+        "locations": [
+            "lab",
+            "gauntlet",
+            "docker",
+            "randolph"
+        ]
+    },
     "system": {
         "dnp3_e": 0,
         "historian_e": 0,
@@ -26,6 +34,22 @@
         "ess_e": 10,
         "twins_e": 1
     },
+    "siteIps": {
+        "powercloud_ip_e": "172.30.20.40",
+        "fleet_manager_ip_e": "172.30.25.10",
+        "site_controller_ip_e": "172.30.20.10",
+        "ess_ip_e": "172.30.40.10",
+        "twins_ip_e": "172.30.40.10",
+        "bms_1_ip_e": "172.30.20.20",
+        "bms_1_port_e": 502,
+        "pcs_1_ip_e": "172.30.30.20",
+        "pcs_1_port_e": 503,
+        "bms_2_ip_e": "172.30.20.20",
+        "bms_2_port_e": 502,
+        "pcs_2_ip_e": "172.30.30.20",
+        "pcs_2_port_e": 503
+    },
+
     "ess": {
         "ess_e": 2,
         "ess_ip_1_e": "172.30.40.10",

@@ -53,7 +53,7 @@ func addTemplate(fname, tname string, tm *map[string]*map[string]string) {
 		l := len(k)
 		if l > 2 {
 			//k := k[1 : l-1]
-			ka := strings.Split(string(k), "|")
+	T		HTTGHRTka := strings.Split(string(k), "|")
 			fmt.Printf(" idx  [%d] line [%v]  rep [%v] with [%s]\n", ki, k, ka[0], ka[1])
 
 			tMap[ka[0]] = ka[1]

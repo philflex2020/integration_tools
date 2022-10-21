@@ -8,12 +8,13 @@ import (
 	"fmt"
 	d "runtime/debug"
 	"strconv"
+
 	//"log"
 	//"unsafe"
-         "io/ioutil"
-         "os"
-        "strings"
 	"flag"
+	"io/ioutil"
+	"os"
+	"strings"
 )
 
 func ReplaceBytes(data []byte, ix int, iy int, rep []byte) (value []byte, err error) {
@@ -191,14 +192,13 @@ func Get(data []byte, keys ...string) (value []byte, dataType int, soff int, off
 							string(data[offset+lk]), string(data[offset-1]), string(data[offset+lk+1]))
 					}
 					// this assumes that there is no space between "string":  fixed
-                                        lkx := 1
+					lkx := 1
 					if data[offset+lk] == '"' && data[offset-1] == '"' {
-                                           for data[offset+lk+lkx] != ':' {
-                                              lkx += 1
-                                           }
+						for data[offset+lk+lkx] != ':' {
+							lkx += 1
+						}
 					}
 					if data[offset+lk] == '"' && data[offset-1] == '"' && data[offset+lk+lkx] == ':' {
-
 
 						offset += lk + lkx + 1
 						nO := nextValue(data[offset:])
@@ -363,47 +363,47 @@ func GetBoolean(data []byte, keys ...string) (val bool, offset int, err error) {
 
 func main() {
 
-         cfgFile := flag.String("file", "test.json", " file to use")
-	 cfgDir := flag.String("dir", "./", " optional dir ")
-	 cfgKey := flag.String("key", "ip_address", " key to find")
-	 cfgVal := flag.String("val", "127.0.0.1", " new value")
+	cfgFile := flag.String("file", "test.json", " file to use")
+	cfgDir := flag.String("dir", "./", " optional dir ")
+	cfgKey := flag.String("key", "ip_address", " key to find")
+	cfgVal := flag.String("val", "127.0.0.1", " new value")
 
-         flag.Parse()
+	flag.Parse()
 
-         cfile := fmt.Sprintf("%s/%s", *cfgDir, *cfgFile)
-         input, err := ioutil.ReadFile(cfile)
-         if err != nil {
-                 fmt.Println(err)
-                 os.Exit(1)
-         }
-//Get(data []byte, keys ...string) (value []byte, dataType int, soff int, offset int, err error) {
+	cfile := fmt.Sprintf("%s/%s", *cfgDir, *cfgFile)
+	input, err := ioutil.ReadFile(cfile)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	//Get(data []byte, keys ...string) (value []byte, dataType int, soff int, offset int, err error) {
 
-         temp,st,soff,off,err:= Get(input,*cfgKey)
+	temp, st, soff, off, err := Get(input, *cfgKey)
 
-         //line := 0
-         //instring := string(input)
-         //temp := strings.Split(instring,"ip_address")
-         fmt.Printf(" temp [%v] %T st %v soff [%v] off [%v] err [%v]\n ", 
-                    string(temp), temp, st, soff, off, err)
-//func ReplaceBytes(data []byte, ix int, iy int, rep []byte) (value []byte, err error) {
-         newval := []byte(*cfgVal)
+	//line := 0
+	//instring := string(input)
+	//temp := strings.Split(instring,"ip_address")
+	fmt.Printf(" temp [%v] %T st %v soff [%v] off [%v] err [%v]\n ",
+		string(temp), temp, st, soff, off, err)
+	//func ReplaceBytes(data []byte, ix int, iy int, rep []byte) (value []byte, err error) {
+	newval := []byte(*cfgVal)
 
-	 if st == 1 {
-            newval =  []byte(strconv.Quote(string(newval)))
-         }
-         newtemp,_ := ReplaceBytes(input,soff, off , newval)
+	if st == 1 {
+		newval = []byte(strconv.Quote(string(newval)))
+	}
+	newtemp, _ := ReplaceBytes(input, soff, off, newval)
 
-         fmt.Printf(" newtemp [%v] \n ", string(newtemp))
+	fmt.Printf(" newtemp [%v] \n ", string(newtemp))
 
-//      for _, item := range temp {
-//              fmt.Println("[",line,"]\t",item)
-//              line++
-//      }
+	//      for _, item := range temp {
+	//              fmt.Println("[",line,"]\t",item)
+	//              line++
+	//      }
 
-         //output := bytes.Replace(input, []byte("replaceme"), []byte("ok"), -1)
+	//output := bytes.Replace(input, []byte("replaceme"), []byte("ok"), -1)
 
-         //if err = ioutil.WriteFile("modified.json", output, 0666); err != nil {
-         //        fmt.Println(err)
-         //        os.Exit(1)
-         //}
- }
+	//if err = ioutil.WriteFile("modified.json", output, 0666); err != nil {
+	//        fmt.Println(err)
+	//        os.Exit(1)
+	//}
+}
