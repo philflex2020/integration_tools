@@ -3,8 +3,6 @@
 # p wilshire
 # 10_09_2022
 # 
-cfgSystem=NCEMC10
-cfgTarget=gauntlet
 
 cfgNodes_gauntlet=( 
      "ess_controller:hybridos@10.10.1.29" 
@@ -125,12 +123,19 @@ cfgVars=(
 
 )
 
+cfgSystem=NCEMC10
+cfgSysId=NCEMC10
+cfgTarget=gauntlet
+
 cfgSrc=gauntlet
 cfgDest=gauntlet
-cfgSysId=NCEMC10
 cfgPullSite=gauntlet
 cfgTargSite=gauntlet
 cfgRefSite=gauntlet
+cfgPullSystem=NCEMC10
+cfgTargSystem=NCEMC10
+cfgRefSystem=NCEMC10
+
 
 cfgNodes=${cfgNodes_gauntlet[@]}
 

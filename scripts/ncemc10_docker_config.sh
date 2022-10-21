@@ -3,8 +3,6 @@
 # p wilshire
 # 10_09_2022
 # 
-cfgSystem=NCEMC10
-cfgTarget=gauntlet
 
 cfgNodes_gauntlet=( 
      "ess_controller:hybridos@10.10.1.29" 
@@ -125,13 +123,22 @@ cfgVars=(
 
 )
 
+
+
 cfgSrc=docker
 cfgDest=docker
 cfgSysId=NCEMC10
+cfgSystem=NCEMC10
+cfgSysId=NCEMC10
+cfgTarget=docker
 
 cfgPullSite=docker
+cfgPullSystem=NCEMC10
+cfgTargSystem=NCEMC10
+cfgRefSystem=NCEMC10
+
 cfgTargSite=docker
-cfgRefSite=docker
+cfgRefSite=repo
 
 cfgNodes=${cfgNodes_docker[@]}
 
