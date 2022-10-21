@@ -41,7 +41,7 @@
             7
         ],
         "pcs_ip_e": "172.30.30.20",
-        "pcs_port_e": "172.30.30.20",
+        "pcs_port_e": 503,
         "pcs_e": 2,
         "pcs_name_e": "PCS",
         "modules_e": [

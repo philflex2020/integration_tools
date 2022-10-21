@@ -52,16 +52,19 @@ type Ess struct {
 	Bms_name string `json:"bms_name_e"`
 	Racks    []int  `json:"racks_e"`
 	Pcs_ip   string `json:"pcs_ip_e"`
+	Pcs_port int    `json:"pcs_port_e"`
 	Pcs      int    `json:"pcs_e"`
 	Pcs_name string `json:"pcs_name_e"`
 	Modules  []int  `json:"modules_e"`
 }
 
 type Bms struct {
-	Bms      int    `json:"bms_e"`
-	Bms_ip_1 string `json:"bms_ip_1_e"`
-	Bms_ip_2 string `json:"bms_ip_2_e"`
-	Racks    []int  `json:"racks_e"`
+	Bms        int    `json:"bms_e"`
+	Bms_ip_1   string `json:"bms_ip_1_e"`
+	Bms_port_1 int    `json:"bms_port_1_e"`
+	Bms_ip_2   string `json:"bms_ip_2_e"`
+	Bms_port_2 int    `json:"bms_port_2_e"`
+	Racks      []int  `json:"racks_e"`
 }
 
 var (
