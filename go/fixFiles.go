@@ -61,6 +61,23 @@ func addTemplate(fname, tname string, tm *map[string]*map[string]string) {
 	}
 
 }
+func lookFile(fname, lookp, key, val string, tm *map[string]*map[string]string) (err error) {
+
+	//cfile := fmt.Sprintf("%s/%s", ".", fname)
+	look := lookp[len("lookup."):]
+	nval := (*(*tm)[look])[val]
+	fmt.Printf(">>>>> look = [%v] val = [%v] nval = [%v]\n", look, val, nval)
+	err = repFile(fname, key, nval, tm)
+
+	// //input
+	// _, err = ioutil.ReadFile(cfile)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	return err
+	// 	//os.Exit(1)
+	// }
+	return err
+}
 
 func repFile(fname, key, val string, tm *map[string]*map[string]string) (err error) {
 
@@ -121,6 +138,9 @@ func main() {
 			fmt.Printf(" idx  [%d] line [%v]  file [%v] action [%s]\n", ki, k, ka[0], ka[1])
 			if ka[1] == "template" {
 				addTemplate(ka[0], ka[2], &tMap)
+			} else if strings.HasPrefix(ka[1], "lookup.") {
+				//func repFile(fname, key, val string, tm *map[string]string) {
+				lookFile(ka[0], ka[1], ka[2], ka[3], &tMap)
 			} else if ka[1] == "replace" {
 				//func repFile(fname, key, val string, tm *map[string]string) {
 				repFile(ka[0], ka[2], ka[3], &tMap)
