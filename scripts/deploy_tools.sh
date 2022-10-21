@@ -1028,8 +1028,8 @@ cfgPullDtime="$cfgDtime"
 # cfgPullSystem="$cfgSystem"
 
 # cfgRefSite="repo"
-cfgTargSite="docker"
-cfgTargSystem="NCEMC10"
+#cfgTargSite="docker"
+#cfgTargSystem="NCEMC10"
 #cfgPullSite=gauntlet
 loadNodes
 #fnodes="../sites/$cfgTargSystem/$cfgTargSite/nodes.sh"

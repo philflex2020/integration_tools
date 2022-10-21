@@ -128,6 +128,10 @@ cfgVars=(
 cfgSrc=gauntlet
 cfgDest=gauntlet
 cfgSysId=NCEMC10
+cfgPullSite=gauntlet
+cfgTargSite=gauntlet
+cfgRefSite=gauntlet
+
 cfgNodes=${cfgNodes_gauntlet[@]}
 
 cfgTargs=(

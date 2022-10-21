@@ -7,14 +7,22 @@ cfgSystem=NCEMC10
 cfgTarget=gauntlet
 
 cfgNodes_gauntlet=( 
-     "ess_controller:hybridos@10.10.1.29|/home/hybridos" 
-    "site_controller:hybridos@10.10.1.28|/home/hybridos" 
-       "fleet_manager:hybridos@10.10.1.156|/home/hybridos" 
-              "twins:hybridos@10.10.1.27|/home/hybridos"
-         "powercloud:hybridos@10.10.1.11|/home/hybridos"
-         "twins_test:root@172.30.0.20|/home/config"
+     "ess_controller:hybridos@10.10.1.29" 
+    "site_controller:hybridos@10.10.1.28" 
+       "fleet_manager:hybridos@10.10.1.156" 
+              "twins:hybridos@10.10.1.27"
+         "powercloud:hybridos@10.10.1.11"
+         "twins_test:root@172.30.0.20"
 )
 
+cfgNodes_docker=( 
+     "ess_controller:root@172.30.0.21" 
+    "site_controller:root@172.30.0.22" 
+       "fleet_manager:root@172.30.0.23" 
+              "twins:root@172.30.0.20"
+         "powercloud:root@172.30.0.24"
+         "twins_test:root@172.30.0.20"
+)
 
 cfgAllNodes=( 
      "ess_controller" 
@@ -23,6 +31,30 @@ cfgAllNodes=(
               "twins"
 )
 
+
+#show rpms
+cfgRpms=(
+"common|cloud_sync|/usr/local/bin/cloud_sync"
+"common|ftd|/usr/local/bin/ftd"
+"common|fims|/usr/local/bin/fims_server"
+"common|dts|/usr/local/bin/dts"
+"common|dbi|/usr/local/bin/dbi"
+"common|events|/usr/local/bin/events"
+"common|modbus_interface|/usr/local/bin/modbus_client"
+"common|dnp3_interface|/usr/local/bin/dnp3_clinet"
+"common|web_server|/usr/local/bin/web_ui"
+"common|influx|/usr/bin/influx"
+"common|metrics|/usr/local/bin/metrics"
+"common|mongod|/usr/bin/mongod"
+"common|ssh|/usr/bin/ssh"
+"common|sshd|/usr/sbin/sshd"
+"ess_controller|ess_controller|/usr/local/bin/ess_controler"
+"ess_controller|ess_controller_pm"
+"site_controller|site_controller|/usr/local/bin/site_controller"
+"site_controller|site_controller_pm"
+"twins|twins|/usr/local/bin/twins"
+"twins|twins_pm"
+)
 
 #/usr/lib/systemd/system
 cfgService=(
@@ -45,6 +77,14 @@ cfgService=(
 "twins|twins"
 )
 
+# this is other files 
+#     "dbName": "ncemc_01",
+# just find fields and replace 
+cfgFiles=(    
+     "ess_controller|replace|storage.json|dbName|ncemc_01"
+)
+
+# this is for ip addresses 
 cfgMaps=(    
 "ess_controller|modbus_client|bms_1_modbus_client.json|fleet_manager:1500"
 "ess_controller|modbus_client|bms_2_modbus_client.json|twins:1501"
@@ -72,18 +112,37 @@ cfgMaps=(
 "twins|dnp3_server|randolph_rtac_dnp3_server.json|twins:20001"
 )
 
-cfgFiles=(    
-     "ess_controller|replace|storage.json|dbName|gauntlet"
+cfgVars=(
+     "active_power|ess_controller|/ess_1/controls/ess_1|ActivePowerSetpoint"
+     "active_power|ess_controller|/ess_1/components/pcs_registers_fast|active_power"
+     "active_power|site_controller|/components/flexgen_ess_01_hs|active_power_setpoint"
+     "active_power|ess_controller|/ess_2/controls/ess_2|ActivePowerSetpoint"
+     "active_power|ess_controller|/ess_2/components/pcs_registers_fast|active_power"
+     "active_power|site_controller|/components/flexgen_ess_02_hs|active_power_setpoint"
+     "reactive_power|ess_controller|/ess_1/controls/ess_1|ReactivePowerSetpoint"
+     "test_set|ess_controller|/ess_2/test/test_active_power|'{\"active_power\":3344}'|set"
+     "test_get|ess_controller|/ess_2/test/test_active_power|active_power"
+
 )
 
-cfgSrc=gauntlet
-cfgDest=gauntlet
+cfgSrc=docker
+cfgDest=docker
 cfgSysId=NCEMC10
-cfgNodes="${cfgNodes_gauntlet[@]}"
-cfgTargSite=gauntlet
-cfgPullSite=gauntlet
 
-#echo " set up new cfgNodes as [${cfgNodes[@]}]"
+cfgPullSite=docker
+cfgTargSite=docker
+cfgRefSite=docker
+
+cfgNodes=${cfgNodes_docker[@]}
+
+cfgTargs=(
+    "docker"
+    "gauntlet"
+    "lab"
+)
+# pull in the rest of it
+source ./deploy_tools.sh
+cfgMenu
 
 
 # #** TODO modbus_client acromag.json 10.10.1.27:1504
