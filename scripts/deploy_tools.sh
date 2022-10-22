@@ -1257,14 +1257,14 @@ function cfgMenu()
       diffDest=""
       echo " >>> setup difa dir"
       getDiffDest $node $data $data1 "diffA"
-      diffAdestId=$diffDest
+      diffADestId=$diffDest
       ;;
 
       "difb") 
       diffDest=""
       echo " >>> setup difb dir"
       getDiffDest $node $data $data1 "diffB"
-      diffBdestId=$diffDest
+      diffBDestId=$diffDest
       ;;
 
       "srd") 
