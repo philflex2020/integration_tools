@@ -1217,7 +1217,7 @@ function cfgMenu()
 
            tempDestId=$cfgPullDtime
 
-           showPullDestIds
+           showPullDestIds $data $data1
            difADestId=$cfgPullDtime
            difARef="pull"
            #populates $cfgPullDtime
@@ -1227,7 +1227,7 @@ function cfgMenu()
 
            tempDestId=$cfgRefDtime
 
-           showRefDestIds 
+           showRefDestIds $data $data1
            difADestId=$cfgRefDtime
            difARef="refs"
            #populates $cfgPullDtime
@@ -1237,7 +1237,7 @@ function cfgMenu()
 
            tempDestId=$cfgTargDtime
 
-           showTargDestIds
+           showTargDestIds $data $data1
            difADestId=$cfgTargDtime
            difARef="targ"
            #populates $cfgPullDtime
