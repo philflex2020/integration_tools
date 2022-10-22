@@ -55,5 +55,6 @@ cfgNodes_randolph=(
 nodeMap[lab]=${cfgNodes_lab[@]}
 
 
-echo $nodeMap[lab]
+echo ${nodeMap[lab]}
+
 
