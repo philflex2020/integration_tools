@@ -1089,6 +1089,7 @@ function cfgHelp()
     echo 
     echo    
     echo " showConfigs [node] destid         -- show configs from specified dest"
+    echo " (difa|difb) pull site number      -- setup diff dirs A and B"
     echo " (dfc) diffConfigs node [pull:|refs:]dest [pull:|refs:]orig   -- check configs in dest against origs "
     echo
     echo " (fs) findString [destid] string   -- find files containing a string (no spaces please)"
@@ -1255,16 +1256,26 @@ function cfgMenu()
 
       "difa") 
       diffDest=""
-      echo " >>> setup difa dir"
-      getDiffDest $node $data $data1 "diffA"
-      diffADestId=$diffDest
+      if [ "$node" == "" ]
+      then 
+        echo " >>> current difa dir [$diffADir]"
+      else      
+        echo " >>> setup difa dir"
+        getDiffDest $node $data $data1 "diffA"
+        diffADir=$diffDest
+      fi
       ;;
 
       "difb") 
       diffDest=""
-      echo " >>> setup difb dir"
-      getDiffDest $node $data $data1 "diffB"
-      diffBDestId=$diffDest
+      if [ "$node" == "" ]
+      then 
+        echo " >>> current difb dir [$diffBDir]"
+      else      
+        echo " >>> setup difb dir"
+        getDiffDest $node $data $data1 "diffB"
+        diffBDir=$diffDest
+      fi
       ;;
 
       "srd") 
