@@ -13,6 +13,7 @@ cfgSystem=gauntlet
 
 # cfgPullSystem=NCEMC10
 cfgPullSite=gauntlet
+cfgTarget=gauntlet
 
 
 # cfgSystem=NCEMC10
