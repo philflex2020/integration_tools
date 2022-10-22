@@ -1096,6 +1096,50 @@ function cfgHelp()
     echo " (push) pushConfigs [node] destid   -- push configs to a specified dest (in Progress)"
 }
 
+function getDiffDest()
+{
+  node=$1
+  data=$2
+  data1=$3  
+  who=$4
+
+
+  case "$node" in
+      "p"|"pull")
+
+        tempDestId=$cfgPullDtime
+
+        showPullDestIds $data $data1
+        difDestId=$cfgPullDtime
+        difRef="pull"
+        #populates $cfgPullDtime
+        cfgPullDtime=$tempDestId
+    ;;
+    "r"|"ref")
+
+        tempDestId=$cfgRefDtime
+
+        showRefDestIds $data $data1
+        difDestId=$cfgRefDtime
+        difRef="refs"
+        #populates $cfgPullDtime
+        cfgRefDtime=$tempDestId
+    ;;
+    "t"|"targ")
+
+        tempDestId=$cfgTargDtime
+
+        showTargDestIds $data $data1
+        difDestId=$cfgTargDtime
+        difRef="targ"
+        #populates $cfgPullDtime
+        cfgTrgDtime=$tempDestId
+    ;;
+    
+  esac
+  diffDest=`getAnyDir $difRef:$difDestId`
+  echo " dif $who dir is [$difDest]"
+}
 
 function cfgMenu()
 {
@@ -1210,43 +1254,15 @@ function cfgMenu()
       ;;
 
       "difa") 
+      echo " >>> setup difa dir"
+      getDiffDest $node $data $data1 "diffA"
+      diffAdestId=$diffDest
+      ;;
 
-      echo " >>> setup difa destids"
-      case "$node" in
-         "p"|"pull")
-
-           tempDestId=$cfgPullDtime
-
-           showPullDestIds $data $data1
-           difADestId=$cfgPullDtime
-           difARef="pull"
-           #populates $cfgPullDtime
-           cfgPullDtime=$tempDestId
-        ;;
-        "r"|"ref")
-
-           tempDestId=$cfgRefDtime
-
-           showRefDestIds $data $data1
-           difADestId=$cfgRefDtime
-           difARef="refs"
-           #populates $cfgPullDtime
-           cfgRefDtime=$tempDestId
-        ;;
-        "t"|"targ")
-
-           tempDestId=$cfgTargDtime
-
-           showTargDestIds $data $data1
-           difADestId=$cfgTargDtime
-           difARef="targ"
-           #populates $cfgPullDtime
-           cfgTrgDtime=$tempDestId
-        ;;
-       
-      esac
-      difAdest=`getAnyDir $difARef:$difADestId`
-      echo " dif A dir is [$difAdest]"
+      "difb") 
+      echo " >>> setup difb dir"
+      getDiffDest $node $data $data1 "diffB"
+      diffBdestId=$diffDest
       ;;
 
       "srd") 
