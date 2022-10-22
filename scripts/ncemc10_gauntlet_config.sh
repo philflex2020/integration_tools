@@ -12,7 +12,7 @@ cfgSystem=gauntlet
 . ../sites/$cfgSystem/$cfgTarget/nodes.sh
 
 # cfgPullSystem=NCEMC10
-# cfgPullSite=gauntlet
+cfgPullSite=gauntlet
 
 
 # cfgSystem=NCEMC10
