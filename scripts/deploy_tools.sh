@@ -1138,7 +1138,7 @@ function getDiffDest()
     
   esac
   diffDest=`getAnyDir $difRef:$difDestId`
-  echo " anydir [$difRef:$difDestId] dif $who dir is [$difDest]"
+  echo " anydir [$difRef:$difDestId] dif for  $who dir is [$diffDest]"
 }
 
 function cfgMenu()
