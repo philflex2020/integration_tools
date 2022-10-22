@@ -1245,7 +1245,7 @@ function cfgMenu()
         ;;
        
       esac
-      difAdest = `getAnyDir $difARef:$difADestId`
+      difAdest=`getAnyDir $difARef:$difADestId`
       echo " dif A dir is [$difAdest]"
       ;;
 
