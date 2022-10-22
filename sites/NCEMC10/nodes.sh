@@ -52,7 +52,10 @@ cfgNodes_randolph=(
          "twins_test:root@172.30.0.20"
 )
 
-nodeMap[lab]=${cfgNodes_lab[@]}
+cfgNodeMap[lab]=${cfgNodes_lab[@]}
+cfgNodeMap[gauntlet]=${cfgNodes_gauntlet[@]}
+cfgNodeMap[docker]=${cfgNodes_docker[@]}
+cfgNodeMap[randolph]=${cfgNodes_randolph[@]}
 
 
 echo ${nodeMap[lab]}
