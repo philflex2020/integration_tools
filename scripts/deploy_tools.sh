@@ -1137,7 +1137,7 @@ function getDiffDest()
     ;;
     
   esac
-  diffDest=`getAnyDir $difRef:$difDestId`
+  diffDest=`getAnyDir "$difRef:$difDestId"`
   echo " anydir [$difRef:$difDestId] dif for  $who dir is [$diffDest]"
 }
 
@@ -1254,12 +1254,14 @@ function cfgMenu()
       ;;
 
       "difa") 
+      diffDest=""
       echo " >>> setup difa dir"
       getDiffDest $node $data $data1 "diffA"
       diffAdestId=$diffDest
       ;;
 
       "difb") 
+      diffDest=""
       echo " >>> setup difb dir"
       getDiffDest $node $data $data1 "diffB"
       diffBdestId=$diffDest
