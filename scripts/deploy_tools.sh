@@ -1023,11 +1023,11 @@ function cfgHelpSites()
 {
     if [ "$cfgTargSite" == "" ]
     then
-      cfgTargSite="docker"
+      cfgTargSite="unknown cfgTargSite"
     fi
     if [ "$cfgPullSite" == "" ]
     then
-      cfgPullSite="docker"
+      cfgPullSite="unknown cfgPullSite"
     fi
 
     #echo "     (sys)                       (site)               (dest)  "
@@ -1125,7 +1125,7 @@ function cfgMenu()
         "T"|"t")
           #cfgTargSystem="$data"
           #. ../sites/$cfgTargSystem/$cfgTargSite/nodes.sh
-          . ../sites/$cfgTargSystem/nodes.sh
+          #. ../sites/$cfgTargSystem/nodes.sh
           echo  " systems = ${fsystems[@]} "
 
           ## we have to do more work here
