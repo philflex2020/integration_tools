@@ -4,7 +4,7 @@
 # 10_09_2022
 # 
 cfgSystem=NCEMC10
-cfgSystem=gauntlet
+cfgTarget=gauntlet
 
 . ../sites/$cfgSystem/repo.sh
 . ../sites/$cfgSystem/system.sh
