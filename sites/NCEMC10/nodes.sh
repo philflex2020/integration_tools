@@ -35,11 +35,11 @@ cfgNodes_docker=(
 )
 
 cfgNodes_lab=( 
-     "ess_controller:hybridos@10.10.1.29" 
-    "site_controller:hybridos@10.10.1.28" 
-       "fleet_manager:hybridos@10.10.1.156" 
-              "twins:hybridos@10.10.1.27"
-         "powercloud:hybridos@10.10.1.11"
+     "ess_controller:hybridos@10.10.1.150" 
+    "site_controller:hybridos@10.10.1.151" 
+       "fleet_manager:hybridos@10.10.1.152" 
+              "twins:hybridos@10.10.1.153"
+         "powercloud:hybridos@10.10.1.154"
          "twins_test:root@172.30.0.20"
 )
 
@@ -52,6 +52,7 @@ cfgNodes_randolph=(
          "twins_test:root@172.30.0.20"
 )
 
+declare -A cfgNodeMap
 cfgNodeMap[lab]=${cfgNodes_lab[@]}
 cfgNodeMap[gauntlet]=${cfgNodes_gauntlet[@]}
 cfgNodeMap[docker]=${cfgNodes_docker[@]}
