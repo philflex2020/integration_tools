@@ -4,7 +4,6 @@
 # 10_09_2022
 # 
 cfgSystem=NCEMC10
-cfgTarget=gauntlet
 
 # some git defaults
 cfgGITREPO="integration_dev"
@@ -191,6 +190,9 @@ cfgVars=(
 cfgSrc=gauntlet
 cfgDest=gauntlet
 cfgSysId=NCEMC10
+
+cfgSystem=NCEMC10
+
 cfgNodes=${cfgNodes_gauntlet[@]}
 
 cfgTargs=(

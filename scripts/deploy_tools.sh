@@ -66,9 +66,6 @@ cfgE="\e[0m"
 ##               node
 function getPullDir()
 {
-  #cfgDesxt=gauntlet
-  #cfgSite=gauntlet
-  #cfgSysId=NCEMC10
   dest=/home/config/pull/$cfgPullSystem/$cfgPullSite
   if [ $# -ge 1 ] 
   then
@@ -92,9 +89,6 @@ function getPullDir()
 ##               node
 function getAnyDir()
 {
-  #cfgDesxt=gauntlet
-  #cfgSite=gauntlet
-  #cfgSysId=NCEMC10
   dest=/home/config/pull/$cfgPullSystem/$cfgPullSite
   # look for pull in $1
   if [ $# -ge 1 ] 
@@ -152,9 +146,6 @@ function getAnyDir()
 # getPull
 function getRefDir()
 {
-  #cfgDesxt=gauntlet
-  #cfgSite=gauntlet
-  #cfgSysId=NCEMC10
   dest=/home/config/refs/$cfgRefSystem/$cfgRefSite
   # add a node 
   if [ $# -ge 1 ] 
@@ -172,9 +163,6 @@ function getRefDir()
 
 function getTargDir()
 {
-  #cfgDesxt=gauntlet
-  #cfgSite=gauntlet
-  #cfgSysId=NCEMC10
   dest=/home/config/targ/$cfgTargSystem/$cfgTargSite
   # add a node 
   if [ $# -ge 1 ] 
@@ -193,9 +181,6 @@ function getTargDir()
 # getPull
 function getSrcDir()
 {
-  #cfgDesxt=gauntlet
-  #cfgSite=gauntlet
-  #cfgSysId=NCEMC10
   dest=/home/config/pull/$cfgSrcSysId/$cfgSrcSite
   if [ $# -ge 1 ] 
   then
@@ -667,6 +652,7 @@ function showNodes()
   cKey=0
   echo " args = $#"
   echo " cfgTargs = [${cfgTargs[@]}]"
+  curr=$cfgTargSite
   if [ $# -ge 2 ]
   then
     curr=`pickOne $1 ${cfgTargs[@]} "$2"`
@@ -1056,7 +1042,6 @@ function cfgHelpSites()
     echo -n " Site:${cfgB}${cfgTargSite}${cfgE}     " 
     echo    " destId:${cfgB}$cfgTargDtime${cfgE} "
     #"<- PullSource: ${cfgB}$cfgTarget${cfgE} "
-    #echo -n " destId:${cfgB}$cfgDestDtime${cfgE} "
     #echo
     echo -n " Pull Dest:  "
     echo -n " System:${cfgB}${cfgPullSystem}${cfgE} "
@@ -1144,7 +1129,6 @@ function cfgMenu()
           echo  " systems = ${fsystems[@]} "
 
           ## we have to do more work here
-          #cfgSysId=NCEMC10
           # cgNodes = nodes for system site combo
           # esch avaiable system will have a config dir with possible sites
           #cfgNodes=${cfgNodes_gauntlet[@]}
