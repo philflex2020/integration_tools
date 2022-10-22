@@ -58,6 +58,6 @@ cfgNodeMap[docker]=${cfgNodes_docker[@]}
 cfgNodeMap[randolph]=${cfgNodes_randolph[@]}
 
 
-echo ${nodeMap[lab]}
+echo ${cfgNodeMap[lab]}
 
 
