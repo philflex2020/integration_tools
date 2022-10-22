@@ -793,10 +793,15 @@ function showPullDestIds()
 {
     cDtime="$cfgPullDtime"
     cKey=0
+    if [ $# -ge 2 ]
+    then
+      cKey=$2 
+    fi
     if [ $# -ge 1 ]
     then
-      cKey=$1 
+      cfgPullSite=$1
     fi
+    
     uKey=1
 
 
@@ -1208,7 +1213,7 @@ function cfgMenu()
 
       "spd") 
       echo " >>> current pull destids"
-      showPullDestIds $node
+      showPullDestIds $node $data
       ;;
 
       "srd") 
