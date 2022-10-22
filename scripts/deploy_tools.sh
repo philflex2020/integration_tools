@@ -804,14 +804,6 @@ function showPullDestIds()
     
     uKey=1
 
-
-
-    # if [ $# -ge 1 ]
-    # then
-    #   cfgDtime=$1
-    #   cfgPullDtime=$1
-    # fi
-
     dest=`getPullDir `
     echo "destid dir [$dest] [$cfgPullDtime]"
     dirs=(`ls -1 $dest `)
@@ -1214,6 +1206,47 @@ function cfgMenu()
       "spd") 
       echo " >>> current pull destids"
       showPullDestIds $node $data
+      #populates $cfgPullDtime
+      ;;
+
+      "difa") 
+
+      echo " >>> setup difa destids"
+      case "$node" in
+         "p"|"pull")
+
+           tempDestId=$cfgPullDtime
+
+           showPullDestIds
+           difADestId=$cfgPullDtime
+           difARef="pull"
+           #populates $cfgPullDtime
+           cfgPullDtime=$tempDestId
+        ;;
+        "r"|"ref")
+
+           tempDestId=$cfgRefDtime
+
+           showRefDestIds 
+           difADestId=$cfgRefDtime
+           difARef="refs"
+           #populates $cfgPullDtime
+           cfgRefDtime=$tempDestId
+        ;;
+        "t"|"targ")
+
+           tempDestId=$cfgTargDtime
+
+           showTargDestIds
+           difADestId=$cfgTargDtime
+           difARef="targ"
+           #populates $cfgPullDtime
+           cfgTrgDtime=$tempDestId
+        ;;
+       
+      esac
+      difAdest = `getAnyDir $difARef:$difADestId`
+      echo " dif A dir is [$difAdest]"
       ;;
 
       "srd") 
