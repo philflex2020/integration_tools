@@ -668,6 +668,7 @@ function showNodes()
   then
     echo " note cfgTargSite=>$cfgTargSite  curr=>$curr "
     cfgTargSite="$curr"
+    echo "loading new target definitions"
     loadNodes
     echo " new cfgTargSite=>$cfgTargSite "
       #nodes.sh
@@ -1115,7 +1116,7 @@ function cfgMenu()
       ;;
 
       "sn") 
-      echo " >>> system ips"
+      echo " >>> select system (use a number)"
       showNodes $node $data
       ;;
 
