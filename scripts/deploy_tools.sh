@@ -546,12 +546,29 @@ function testConfigs()
 # $1 node name refs:$2 dest id pull:$3 orig id
 function diffConfigs()
 {
-    ddd=`date +%F%T`
+    #ddd=`date +%F%T`
     #dest=/home/config/pull/$2/$1
     #orig=/home/config/pull/$3/$1
     #getAnyDir decodes pull: def:from $x 
-    dest=`getAnyDir $1 $2`
-    orig=`getAnyDir $1 $3`
+    
+    orig=$diffAdir
+    dest=$diffBdir
+
+    if [ "$orig" == "" ]
+    then
+       echo "select diff A dir with difa"
+    fi
+    if [ "$dest" == "" ]
+    then
+       echo "select diff B dir with difb"
+    fi
+    if [ "$orig" == "" ] || [ "$dest" == "" ]
+    then
+      return 
+    fi
+    
+    #dest=`getAnyDir $1 $2`
+    #orig=`getAnyDir $1 $3`
 
     files=`find $dest -name "*.json" `
     for f in $files 
@@ -1109,7 +1126,6 @@ function getDiffDest()
       "p"|"pull")
 
         tempDestId=$cfgPullDtime
-
         showPullDestIds $data $data1
         difDestId=$cfgPullDtime
         difRef="pull"
@@ -1119,7 +1135,6 @@ function getDiffDest()
     "r"|"ref")
 
         tempDestId=$cfgRefDtime
-
         showRefDestIds $data $data1
         difDestId=$cfgRefDtime
         difRef="refs"
@@ -1129,7 +1144,6 @@ function getDiffDest()
     "t"|"targ")
 
         tempDestId=$cfgTargDtime
-
         showTargDestIds $data $data1
         difDestId=$cfgTargDtime
         difRef="targ"
