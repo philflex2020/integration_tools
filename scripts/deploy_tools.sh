@@ -551,8 +551,8 @@ function diffConfigs()
     #orig=/home/config/pull/$3/$1
     #getAnyDir decodes pull: def:from $x 
     
-    orig=$diffAdir
-    dest=$diffBdir
+    orig=$diffADir
+    dest=$diffBDir
 
     if [ "$orig" == "" ]
     then
