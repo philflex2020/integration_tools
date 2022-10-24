@@ -575,7 +575,7 @@ function diffConfigs()
     do
       dfile=${f#$dest}
       ofile=${f#$orig}
-      if [ -f "${orig}${ofile}" ]
+      if [ -f "${orig}${dfile}" ]
       then 
         xdiff=`diff -u ${orig}${dfile} ${dest}${dfile} > ${dest}${dfile}.diff`
         if [ -s ${dest}${dfile}.diff ]
