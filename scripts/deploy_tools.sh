@@ -573,18 +573,23 @@ function diffConfigs()
     files=`find $dest -name "*.json" `
     for f in $files 
     do
-      file=${f#$dest}
-      xdiff=`diff -u ${orig}${file} ${dest}${file} > ${dest}${file}.diff`
-      if [ -s ${dest}${file}.diff ]
-      then
-        echo " $file - diffs =========="
-        cat ${dest}${file}.diff
+      dfile=${f#$dest}
+      ofile=${f#$orig}
+      if [ -f "${orig}${ofile}" ]
+      then 
+        xdiff=`diff -u ${orig}${dfile} ${dest}${dfile} > ${dest}${dfile}.diff`
+        if [ -s ${dest}${dfile}.diff ]
+        then
+          echo " $dfile - diffs =========="
+          cat ${dest}${dfile}.diff
+        else
+          #echo " $file - no diffs =========="
+          rm -f ${dest}${dfile}.diff
+        fi
       else
-        #echo " $file - no diffs =========="
-        rm -f ${dest}${file}.diff
+          echo " no $ofile - found =========="
       fi
     done
-
 }
 
 function loadNodes()
