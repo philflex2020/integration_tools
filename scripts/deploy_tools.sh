@@ -586,8 +586,8 @@ function diffConfigs()
           #echo " $file - no diffs =========="
           rm -f ${dest}${dfile}.diff
         fi
-      else
-          echo " no $ofile - found =========="
+      #else
+      #    echo " no $ofile - found =========="
       fi
     done
 }
