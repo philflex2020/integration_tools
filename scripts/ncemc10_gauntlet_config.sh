@@ -32,6 +32,12 @@ cfgTarget=gauntlet
 
 # pull in the rest of it
 source ./deploy_tools.sh
+#difa p gauntlet 2
+getDiffDest p gauntlet 2 "diffA"
+diffADir=$diffDest
+getDiffDest p gauntlet 1 "diffB"
+diffBDir=$diffDest
+
 cfgMenu
 
 
