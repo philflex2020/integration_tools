@@ -1,0 +1,409 @@
+P. wilshire
+10_25_2022
+
+Lets assume that you have a master git repo
+
+origin  git@github.com:flexgen-power/integration_dev
+
+
+You want to have a local copy of that repo
+( to do this you will have had to set up a local git user etc.)
+
+git@127.0.0.1:/home/git/local.git
+
+
+you do that by setting up local and  bridge repos
+mkdir /home/git/local.git
+cd  /home/git/local.git
+git init --bare
+   Initialized empty Git repository in /home/git/local.git/
+
+
+mkdir   /home/git/bridge.git
+cd  /home/git/bridge.git
+git init --bare
+   Initialized empty Git repository in /home/git/bridge.git/
+
+you add the two remotes to the bridge repo 
+
+git remote add local git@127.0.0.1:/home/git/local.git
+git remote add origin git@github.com:flexgen-power/integration_dev
+
+here is the reslut
+
+git remote -v
+local   git@127.0.0.1:/home/git/local.git (fetch)
+local   git@127.0.0.1:/home/git/local.git (push)
+origin  git@github.com:flexgen-power/integration_dev (fetch)
+origin  git@github.com:flexgen-power/integration_dev (push)
+
+Now do a fetch
+
+git fetch --all
+Fetching local
+
+Fetching origin
+remote: Enumerating objects: 7539, done.
+remote: Counting objects: 100% (1566/1566), done.
+remote: Compressing objects: 100% (729/729), done.
+remote: Total 7539 (delta 940), reused 1316 (delta 764), pack-reused 5973
+Receiving objects: 100% (7539/7539), 85.58 MiB | 15.25 MiB/s, done.
+Resolving deltas: 100% (5301/5301), done.
+From github.com:flexgen-power/integration_dev
+ * [new branch]      NCEMC/fm-configs -> origin/NCEMC/fm-configs
+ * [new branch]      NCEMC/metrics-and-feeders -> origin/NCEMC/metrics-and-feeders
+ * [new branch]      NCEMC/multiple-inputs/dnp3 -> origin/NCEMC/multiple-inputs/dnp3
+ * [new branch]      NCEMC/powercloud -> origin/NCEMC/powercloud
+ * [new branch]      NCEMC/randolph -> origin/NCEMC/randolph
+ * [new branch]      NCEMC/randolph_twins -> origin/NCEMC/randolph_twins
+ * [new branch]      NCEMC/randolph_twins_docker -> origin/NCEMC/randolph_twins_docker
+ * [new branch]      NCEMC/scheduler-test-bench -> origin/NCEMC/scheduler-test-bench
+ * [new branch]      ameresco/okc -> origin/ameresco/okc
+ * [new branch]      ameresco_sce/emulator -> origin/ameresco_sce/emulator
+ * [new branch]      ameresco_sce/lab -> origin/ameresco_sce/lab
+ * [new branch]      ameresco_sce/lab-paired_down -> origin/ameresco_sce/lab-paired_down
+ * [new branch]      ameresco_sce/powercloud -> origin/ameresco_sce/powercloud
+ * [new branch]      ameresco_sce/powercloud_bench -> origin/ameresco_sce/powercloud_bench
+ * [new branch]      brp/ffra_and_10.2_testing -> origin/brp/ffra_and_10.2_testing
+ * [new branch]      brp/ffra_tony_twins -> origin/brp/ffra_tony_twins
+ * [new branch]      dev        -> origin/dev
+ * [new branch]      edpr/scarlet -> origin/edpr/scarlet
+ * [new branch]      fullstack/devel -> origin/fullstack/devel
+ * [new branch]      gauntlet/10.2.0 -> origin/gauntlet/10.2.0
+ * [new branch]      preserved/multiple-inputs/dnp3 -> origin/preserved/multiple-inputs/dnp3
+ * [new branch]      release/v10.2.0 -> origin/release/v10.2.0
+ * [new branch]      test/voltageBalancing -> origin/test/voltageBalancing
+ * [new tag]         v10.2.0    -> v10.2.0
+From github.com:flexgen-power/integration_dev
+ * [new tag]         v10.1.0    -> v10.1.0
+ * [new tag]         v9.2.0     -> v9.2.0
+ * [new tag]         v9.3.0     -> v9.3.0
+
+
+
+Local has nothing until you populate it
+in this case we use a subset NCEMC 
+
+
+git push local refs/remotes/origin/NCEMC/*:refs/heads/*
+Counting objects: 2124, done.
+Delta compression using up to 16 threads.
+Compressing objects: 100% (891/891), done.
+Writing objects: 100% (2124/2124), 6.02 MiB | 0 bytes/s, done.
+Total 2124 (delta 1150), reused 2041 (delta 1111)
+To git@127.0.0.1:/home/git/local.git
+ * [new branch]      origin/NCEMC/fm-configs -> fm-configs
+ * [new branch]      origin/NCEMC/metrics-and-feeders -> metrics-and-feeders
+ * [new branch]      origin/NCEMC/multiple-inputs/dnp3 -> multiple-inputs/dnp3
+ * [new branch]      origin/NCEMC/powercloud -> powercloud
+ * [new branch]      origin/NCEMC/randolph -> randolph
+ * [new branch]      origin/NCEMC/randolph_twins -> randolph_twins
+ * [new branch]      origin/NCEMC/randolph_twins_docker -> randolph_twins_docker
+ * [new branch]      origin/NCEMC/scheduler-test-bench -> scheduler-test-bench
+
+
+
+
+
+Now lets use the local database
+This still needs some work.
+
+
+mkdir /home/git/test
+git clone git@127.0.0.1:/home/git/local.git
+
+Cloning into 'local'...
+remote: Counting objects: 2124, done.
+remote: Compressing objects: 100% (852/852), done.
+remote: Total 2124 (delta 1150), reused 2124 (delta 1150)
+Receiving objects: 100% (2124/2124), 6.02 MiB | 0 bytes/s, done.
+Resolving deltas: 100% (1150/1150), done.
+warning: remote HEAD refers to nonexistent ref, unable to checkout.
+
+
+
+cd local/
+git branch -a
+  remotes/origin/fm-configs
+  remotes/origin/metrics-and-feeders
+  remotes/origin/multiple-inputs/dnp3
+  remotes/origin/powercloud
+  remotes/origin/randolph
+  remotes/origin/randolph_twins
+  remotes/origin/randolph_twins_docker
+  remotes/origin/scheduler-test-bench
+
+git checkout remotes/origin/randolph_twins_docker
+Note: checking out 'remotes/origin/randolph_twins_docker'
+
+git checkout -b remotes/origin/randolph_twins_docker_test
+touch README_test.md
+git add README_test.md
+git commit -am " added test"
+[remotes/origin/randolph_twins_docker_test 70ea83e]  added test
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 README_test.md
+
+git push --set-upstream origin remotes/origin/randolph_twins_docker_test
+
+Counting objects: 3, done.
+Delta compression using up to 16 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (2/2), 256 bytes | 0 bytes/s, done.
+Total 2 (delta 1), reused 0 (delta 0)
+To git@127.0.0.1:/home/git/local.git
+ * [new branch]      remotes/origin/randolph_twins_docker_test -> remotes/origin/randolph_twins_docker_test
+Branch remotes/origin/randolph_twins_docker_test set up to track remote branch remotes/origin/randolph_twins_docker_test from origin.
+
+git status
+# On branch remotes/origin/randolph_twins_docker_test
+nothing to commit, working directory clean
+
+now go back to our bridge system
+
+cd /home/git/bridge.git
+sh-4.2# git fetch --all
+
+Fetching local
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 2 (delta 1), reused 0 (delta 0)
+Unpacking objects: 100% (2/2), done.
+From 127.0.0.1:/home/git/local
+ * [new branch]      remotes/origin/randolph_twins_docker_test -> local/remotes/origin/randolph_twins_docker_test
+Fetching origin
+
+
+Sync up with integration_dev
+
+
+ git push  --set-upstream origin refs/remotes/origin/NCEMC/randolph_twins_docker
+
+Check the result.
+
+cd /home/git/integration_dev
+git pull -r
+remote: Enumerating objects: 960, done.
+remote: Counting objects: 100% (960/960), done.
+remote: Compressing objects: 100% (472/472), done.
+remote: Total 960 (delta 500), reused 889 (delta 429), pack-reused 0
+Receiving objects: 100% (960/960), 1.88 MiB | 0 bytes/s, done.
+Resolving deltas: 100% (500/500), completed with 54 local objects.
+From github.com:flexgen-power/integration_dev
+   adfee53..6eb01b8  NCEMC/powercloud -> origin/NCEMC/powercloud
+   1ff89c4..a965124  NCEMC/randolph -> origin/NCEMC/randolph
+ * [new branch]      NCEMC/randolph_twins_docker -> origin/NCEMC/randolph_twins_docker
+ * [new branch]      ameresco_sce/powercloud -> origin/ameresco_sce/powercloud
+ + 5bae539...189813f brp/ffra_and_10.2_testing -> origin/brp/ffra_and_10.2_testing  (forced update)
+ + c059da3...a7cd5e9 brp/ffra_tony_twins -> origin/brp/ffra_tony_twins  (forced update)
+Current branch NCEMC/randolph_twins is up to date.
+
+
+Hmm cannot find our new README_test.md in integration_dev
+
+Its in git@127.0.0.1:/home/git/local.git  remotes/origin/randolph_twins_docker_test
+
+but did not cross over on the bridge.
+
+
+
+aha try this
+
+
+git push  --set-upstream origin refs/remotes/local/remotes/origin/randolph_twins_docker_test
+Counting objects: 3, done.
+Delta compression using up to 16 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (2/2), 256 bytes | 0 bytes/s, done.
+Total 2 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To git@github.com:flexgen-power/integration_dev
+ * [new branch]      local/remotes/origin/randolph_twins_docker_test -> local/remotes/origin/randolph_twins_docker_test
+
+
+Hmm new branch created but still no update
+
+
+AHA skip the bridge
+
+
+sh-4.2# cd /home/git/test/local
+sh-4.2# git remote -v
+origin  git@127.0.0.1:/home/git/local.git (fetch)
+origin  git@127.0.0.1:/home/git/local.git (push)
+sh-4.2# git remote add remote git@github.com:flexgen-power/integration_dev
+sh-4.2# git fetch --all
+Fetching origin
+Fetching remote
+remote: Enumerating objects: 5424, done.
+remote: Counting objects: 100% (877/877), done.
+remote: Compressing objects: 100% (345/345), done.
+remote: Total 5424 (delta 613), reused 705 (delta 506), pack-reused 4547
+Receiving objects: 100% (5424/5424), 79.53 MiB | 8.58 MiB/s, done.
+Resolving deltas: 100% (4109/4109), completed with 51 local objects.
+From github.com:flexgen-power/integration_dev
+ * [new branch]      NCEMC/fm-configs -> remote/NCEMC/fm-configs
+ * [new branch]      NCEMC/metrics-and-feeders -> remote/NCEMC/metrics-and-feeders
+ * [new branch]      NCEMC/multiple-inputs/dnp3 -> remote/NCEMC/multiple-inputs/dnp3
+ * [new branch]      NCEMC/powercloud -> remote/NCEMC/powercloud
+ * [new branch]      NCEMC/randolph -> remote/NCEMC/randolph
+ * [new branch]      NCEMC/randolph_twins -> remote/NCEMC/randolph_twins
+ * [new branch]      NCEMC/randolph_twins_docker -> remote/NCEMC/randolph_twins_docker
+ * [new branch]      NCEMC/scheduler-test-bench -> remote/NCEMC/scheduler-test-bench
+ * [new branch]      ameresco/okc -> remote/ameresco/okc
+ * [new branch]      ameresco_sce/emulator -> remote/ameresco_sce/emulator
+ * [new branch]      ameresco_sce/lab -> remote/ameresco_sce/lab
+ * [new branch]      ameresco_sce/lab-paired_down -> remote/ameresco_sce/lab-paired_down
+ * [new branch]      ameresco_sce/powercloud -> remote/ameresco_sce/powercloud
+ * [new branch]      ameresco_sce/powercloud_bench -> remote/ameresco_sce/powercloud_bench
+ * [new branch]      brp/ffra_and_10.2_testing -> remote/brp/ffra_and_10.2_testing
+ * [new branch]      brp/ffra_tony_twins -> remote/brp/ffra_tony_twins
+ * [new branch]      dev        -> remote/dev
+ * [new branch]      edpr/scarlet -> remote/edpr/scarlet
+ * [new branch]      fullstack/devel -> remote/fullstack/devel
+ * [new branch]      gauntlet/10.2.0 -> remote/gauntlet/10.2.0
+ * [new branch]      preserved/multiple-inputs/dnp3 -> remote/preserved/multiple-inputs/dnp3
+ * [new branch]      release/v10.2.0 -> remote/release/v10.2.0
+ * [new branch]      test/voltageBalancing -> remote/test/voltageBalancing
+ * [new tag]         v10.1.0    -> v10.1.0
+ * [new tag]         v10.2.0    -> v10.2.0
+ * [new tag]         v9.2.0     -> v9.2.0
+ * [new tag]         v9.3.0     -> v9.3.0
+sh-4.2# git status
+# On branch remotes/origin/randolph_twins_docker_test
+nothing to commit, working directory clean
+sh-4.2# nano README_test.md
+sh-4.2# git add README_test.md
+sh-4.2# git commit -m " added test"
+[remotes/origin/randolph_twins_docker_test 2c967c1]  added test
+ 1 file changed, 2 insertions(+)
+sh-4.2# git push
+Counting objects: 5, done.
+Delta compression using up to 16 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 278 bytes | 0 bytes/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+To git@127.0.0.1:/home/git/local.git
+   70ea83e..2c967c1  remotes/origin/randolph_twins_docker_test -> remotes/origin/randolph_twins_docker_test
+sh-4.2# git remote -v
+origin  git@127.0.0.1:/home/git/local.git (fetch)
+origin  git@127.0.0.1:/home/git/local.git (push)
+remote  git@github.com:flexgen-power/integration_dev (fetch)
+remote  git@github.com:flexgen-power/integration_dev (push)
+sh-4.2# git push --set-upstream remote remotes/origin/randolph_twins_docker_test
+Counting objects: 5, done.
+Delta compression using up to 16 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 278 bytes | 0 bytes/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+remote:
+remote: Create a pull request for 'remotes/origin/randolph_twins_docker_test' on GitHub by visiting:
+remote:      https://github.com/flexgen-power/integration_dev/pull/new/remotes/origin/randolph_twins_docker_test
+remote:
+To git@github.com:flexgen-power/integration_dev
+ * [new branch]      remotes/origin/randolph_twins_docker_test -> remotes/origin/randolph_twins_docker_test
+Branch remotes/origin/randolph_twins_docker_test set up to track remote branch remotes/origin/randolph_twins_docker_test from remote.
+
+
+
+I think we have it
+
+
+
+
+
+
+
+
+
+
+It sounds like you're thinking that their branch is "the same branch" as your branch if it has the same name. 
+That's not necessarily true. 
+One way to look at it is, git doesn't think about branches in two repos as "the same branch" ever; 
+it just has rules for how it integrates changes between repos. 
+Depending on how you configure those rules, you might think of them as "the same branch".
+
+So the first thing is to configure the rules differently. 
+Actually git's default behavior isn't too bad here; 
+but setting --mirror=fetch on the repo1 remote overrides the default in a way that probably isn't helping. 
+Things are a little simpler if we don't do that. 
+We can also keep things a little simpler by manually adding both remotes instead of cloning one of the repos. 
+(This isn't necessary; I just think it makes what's going on a little clearer.)
+
+git init --bare
+git remote add external $ORIGIN_URL
+git remtoe add internal $REPO1_URL
+git fetch --all
+Now supposing each repo had a branch1 and a branch2, and those both diverged, your new repo look slike
+
+       E <--(remotes/external/branch2)
+      /
+o -- x -- D <--(remotes/internal/branch2)
+      \
+       x -- A -- B <--(remotes/internal/branch1)
+        \
+         C <--(remotes/external/branch1)
+From here, you can share the external branches to the internal repo without any concern about branch name 
+conflicts by namespacing the branches.
+
+git push internal refs/remotes/external/*:refs/heads/external/*
+Now your internal repo looks like
+
+       E <--(external/branch2)
+      /
+o -- x -- D <--(branch2)
+      \
+       x -- A -- B <--(branch1)
+        \
+         C <--(external/branch1)
+Of course the external changes aren't integrated with the internal ones, but that's the same as it would be if they 
+had used different branch names per your original advice. 
+It's expected - at some point someone has to merge external changes into internal branches (or vice versa), 
+and that's when conflicts will have to be resolved.
+
+(You can, of course, use certain practices to make the merge conflict resolution as painless as possible - 
+  such as favoring short-lived branches and frequent incremental integrations. But you can't entirely eliminate them.)
+
+You could similarly share the internal changes in un-integrated form with the external repo; e.g. by doing something like
+
+git push external refs/remotes/internal/*:refs/heads/internal/*
+But this leaves some questions about who integrates changes and how,
+ especially since it sounds like the external company isn't doing what's asked of them in this regard. 
+So you might want to integrate their changes internally, 
+and then share the integrated changes using the branch names they already know.
+
+The trick to that is, you have to use a "fetch, integrate, push" 
+model to avoid the "non-fast-forward" errors like you're already seeing. 
+When your working clones are able to directly communicate with the remote, this is typically done as
+
+git pull
+# resolve conflicts
+git push
+Because you have to use this bridge repository, 
+and yet probably don't want to do all the integration work at that repo, you have extra steps. 
+And that can be an annoyance, because the longer it takes to complete the fetch/integrate/push cycle, 
+the more chance new changes appear after you fetch but before you push, 
+requiring you to do yet another fetch/integrate/push cycle. 
+Of course pushes are accepted or reject on a ref-by-ref basis, so over time, 
+it should work out (as attempt 1 successfully pushes branch A, and attempt 2 successfully pushes branches B and C, etc.).
+
+So an integration workflow might look like this:
+
+On the bridge repository
+
+fetch --all
+git push external refs/origins/internal/*:refs/heads/*
+This tries to directly update their branches. Some of the refs may be rejected; that's ok, you'll hope to get them on the next cycle.
+
+git push internal refs/origins/external/*:refs/heads/external/*
+This should always succeed. To make sure it always succeeds, you should be sure to never make an internal commit to the external/* branches. For this reason you might want to use a non-branch ref (i.e. keep the external refs outside the refs/heads hierarchy), but it's not entirely clear where you'd put them. You could keep treating them like remote tracking refs
+
+git push internal refs/origins/external/*:refs/origins/external/*
+That's a little shady since the internal repo doesn't actually have a remote named external...
+
+Anyway, one way or another your developers can now see the changes and integrate them into the local versions of the branches, resolving conflicts. Then on your next integration cycle when you fetch you'll get the merge commits, which you can try to push to the remote. Repeat as necessary.
+
+Of course this is predicated on "they don't seem to do what they're asked" as regards coordinating internal and external changes. The more you can have everyone using the repo on the same page, the fewer headaches you'll have. (Like in this case, having to do all integration internally, and potentially having delayed external visibility to internal changes.)
+
+In that sense, I like the idea of pushing the internal refs to the external repo and the external refs to the internal repo so that both companies' devs can see both sets of changes. But what you don't want is to have external devs committing to internal branches or vice versa, because then the integrations will start getting weird, with branches like rsfs/heads/internal/external/master or something equally silly.

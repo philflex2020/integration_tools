@@ -1,0 +1,92 @@
+
+
+
+It sounds like you're thinking that their branch is "the same branch" as your branch if it has the same name. 
+That's not necessarily true. 
+One way to look at it is, git doesn't think about branches in two repos as "the same branch" ever; 
+it just has rules for how it integrates changes between repos. 
+Depending on how you configure those rules, you might think of them as "the same branch".
+
+So the first thing is to configure the rules differently. 
+Actually git's default behavior isn't too bad here; 
+but setting --mirror=fetch on the repo1 remote overrides the default in a way that probably isn't helping. 
+Things are a little simpler if we don't do that. 
+We can also keep things a little simpler by manually adding both remotes instead of cloning one of the repos. 
+(This isn't necessary; I just think it makes what's going on a little clearer.)
+
+git init --bare
+git remote add external $ORIGIN_URL
+git remtoe add internal $REPO1_URL
+git fetch --all
+Now supposing each repo had a branch1 and a branch2, and those both diverged, your new repo look slike
+
+       E <--(remotes/external/branch2)
+      /
+o -- x -- D <--(remotes/internal/branch2)
+      \
+       x -- A -- B <--(remotes/internal/branch1)
+        \
+         C <--(remotes/external/branch1)
+From here, you can share the external branches to the internal repo without any concern about branch name 
+conflicts by namespacing the branches.
+
+git push internal refs/remotes/external/*:refs/heads/external/*
+Now your internal repo looks like
+
+       E <--(external/branch2)
+      /
+o -- x -- D <--(branch2)
+      \
+       x -- A -- B <--(branch1)
+        \
+         C <--(external/branch1)
+Of course the external changes aren't integrated with the internal ones, but that's the same as it would be if they 
+had used different branch names per your original advice. 
+It's expected - at some point someone has to merge external changes into internal branches (or vice versa), 
+and that's when conflicts will have to be resolved.
+
+(You can, of course, use certain practices to make the merge conflict resolution as painless as possible - 
+  such as favoring short-lived branches and frequent incremental integrations. But you can't entirely eliminate them.)
+
+You could similarly share the internal changes in un-integrated form with the external repo; e.g. by doing something like
+
+git push external refs/remotes/internal/*:refs/heads/internal/*
+But this leaves some questions about who integrates changes and how,
+ especially since it sounds like the external company isn't doing what's asked of them in this regard. 
+So you might want to integrate their changes internally, 
+and then share the integrated changes using the branch names they already know.
+
+The trick to that is, you have to use a "fetch, integrate, push" 
+model to avoid the "non-fast-forward" errors like you're already seeing. 
+When your working clones are able to directly communicate with the remote, this is typically done as
+
+git pull
+# resolve conflicts
+git push
+Because you have to use this bridge repository, 
+and yet probably don't want to do all the integration work at that repo, you have extra steps. 
+And that can be an annoyance, because the longer it takes to complete the fetch/integrate/push cycle, 
+the more chance new changes appear after you fetch but before you push, 
+requiring you to do yet another fetch/integrate/push cycle. 
+Of course pushes are accepted or reject on a ref-by-ref basis, so over time, 
+it should work out (as attempt 1 successfully pushes branch A, and attempt 2 successfully pushes branches B and C, etc.).
+
+So an integration workflow might look like this:
+
+On the bridge repository
+
+fetch --all
+git push external refs/origins/internal/*:refs/heads/*
+This tries to directly update their branches. Some of the refs may be rejected; that's ok, you'll hope to get them on the next cycle.
+
+git push internal refs/origins/external/*:refs/heads/external/*
+This should always succeed. To make sure it always succeeds, you should be sure to never make an internal commit to the external/* branches. For this reason you might want to use a non-branch ref (i.e. keep the external refs outside the refs/heads hierarchy), but it's not entirely clear where you'd put them. You could keep treating them like remote tracking refs
+
+git push internal refs/origins/external/*:refs/origins/external/*
+That's a little shady since the internal repo doesn't actually have a remote named external...
+
+Anyway, one way or another your developers can now see the changes and integrate them into the local versions of the branches, resolving conflicts. Then on your next integration cycle when you fetch you'll get the merge commits, which you can try to push to the remote. Repeat as necessary.
+
+Of course this is predicated on "they don't seem to do what they're asked" as regards coordinating internal and external changes. The more you can have everyone using the repo on the same page, the fewer headaches you'll have. (Like in this case, having to do all integration internally, and potentially having delayed external visibility to internal changes.)
+
+In that sense, I like the idea of pushing the internal refs to the external repo and the external refs to the internal repo so that both companies' devs can see both sets of changes. But what you don't want is to have external devs committing to internal branches or vice versa, because then the integrations will start getting weird, with branches like rsfs/heads/internal/external/master or something equally silly.

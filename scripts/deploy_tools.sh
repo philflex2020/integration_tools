@@ -1566,6 +1566,14 @@ function setGitRef()
   cp -a $edir/config/* $dest  
 }
 
+function cfgSetIp()
+{
+  fname=$1
+  ipaddress=$2
+  port=$3
+  contents="$(jq '.connection.ip_address |= "$ipaddress" | .connection.port |= $port ' $fname)" && echo "${contents}" > $fname
+}
+
 # fixIps node pullDir
 function fixIps()
 {
@@ -1600,27 +1608,28 @@ function fixIps()
       newport=$port
       for cfgsrc in "${cfgsrcArr[@]}" 
       do
-        #echo "file FOUND " 
-        # we change the file in place, as long as it is not checked in we'll be OK
-        # have to find the exact line with "ip_address"
-        # but what if its not on a line on its own
-        # we need to crawl through the file to find the string to replace
-        ipADDRArr=`grep \"ip_address\" $cfgsrc`
-        ipADDR=$ipADDRArr
-        trim="        "
-        #trimc=`echo "$ipADDR" | tr -cd ' ' | wc -c`
-        newip="$trim\"ip_address\": \"$pip\""
+        cfgSetIP $cfgsrc $newip $newport
+        # #echo "file FOUND " 
+        # # we change the file in place, as long as it is not checked in we'll be OK
+        # # have to find the exact line with "ip_address"
+        # # but what if its not on a line on its own
+        # # we need to crawl through the file to find the string to replace
+        # ipADDRArr=`grep \"ip_address\" $cfgsrc`
+        # ipADDR=$ipADDRArr
+        # trim="        "
+        # #trimc=`echo "$ipADDR" | tr -cd ' ' | wc -c`
+        # newip="$trim\"ip_address\": \"$pip\""
 
-        fixFile $cfgsrc "$ipADDR" "$newip"
+        # fixFile $cfgsrc "$ipADDR" "$newip"
 
-        pORTArr=`grep \"port\" $cfgsrc`
-        newport="$trim\"port\": $port"
-        echo ">>>> pORTArr  [$pORTArr]"
-        echo ">>>> newport  [$newport]"
+        # pORTArr=`grep \"port\" $cfgsrc`
+        # newport="$trim\"port\": $port"
+        # echo ">>>> pORTArr  [$pORTArr]"
+        # echo ">>>> newport  [$newport]"
 
-        xxx=`echo "$pORTArr" | grep ','`
-        fixFile $cfgsrc "$pORTArr" "$newport"
-        done
+        # xxx=`echo "$pORTArr" | grep ','`
+        # fixFile $cfgsrc "$pORTArr" "$newport"
+      done
     done 
     return
     #CFGSRC="/home/docker/git/dnp3_interface/brp/angleton/dnp3_client.json"

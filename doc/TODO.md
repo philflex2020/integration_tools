@@ -1,5 +1,20 @@
 P wilshire
+10.25.2022
+
+==================
+ssh tunnels for ncemc
+Fleetman:
+ssh -L 10002:10.221.214.21:443 hybridos@10.10.1.10
+SC:
+ssh -L 9999:10.101.87.5:443 -J hybridos@10.10.1.10 h
+
+
+
+
+
 10.24.2022
+
+
 Rsync option 
 
 Run a simple script on each of the nodes to rsync the configs back to power_cloud.
