@@ -1,5 +1,70 @@
 P wilshire
+10.24.2022
+Rsync option 
+
+Run a simple script on each of the nodes to rsync the configs back to power_cloud.
+
+sh-4.2# rsync -aL  --out-format='%n' /usr/local/etc/config root@172.30.0.23:/home/config/rsync/ess_controller
+config/modbus_client/
+config/modbus_client/bms_1_modbus_client.json
+
+sh-4.2# rsync -aL  --out-format='%n' /usr/local/etc/config root@172.30.0.23:/home/config/rsync/ess_controller
 10.20.2022
+
+also this just shows a list of changed files
+
+sh-4.2# rsync -naLi   /usr/local/etc/config root@172.30.0.23:/home/config/rsync/ess_controller
+<f.st...... config/modbus_client/bms_1_modbus_client.json
+
+
+
+and the git side on powercloud
+
+
+
+   adduser git
+   passwd git 
+   git
+   git 
+   su git
+
+   cd /home/git
+   mkdir .ssh && chmod 700 .ssh
+   cp /root/.ssh/* .ssh
+   ls -al .ssh
+   chmod 600 ./ssh/id*
+   chmod 600 .ssh/id*
+   chmod 600 .ssh/known_hosts
+   cd  /home/git
+   mkdir config.git
+   cd  config.git
+   git init --bare
+
+
+   su root
+   cd /home/config/rsync
+   git init
+   git add ess_controller
+   git config --global user.email "pwilshire@flexgen.com"
+   git config --global user.name "phil wilshire"
+   git commit -am " initial setup"
+   git remote add origin git@127.0.0.1:/home/git/config.git
+   git push origin master
+
+
+ git log --before 4.days.ago -1 (days, hours)
+commit 6e51243d7420110a19bacb5eaeee2b03f2252c36
+Author: phil wilshire <pwilshire@flexgen.com>
+Date:   Thu Oct 20 13:25:58 2022 -0400
+
+     working on fixFiles
+
+git log --since="2 weeks ago" -- gitk
+Show the changes during the last two weeks to the file gitk. The -- is necessary to avoid confusion with the branch named gitk
+git log --follow builtin/rev-list.c
+Shows the commits that changed builtin/rev-list.c, including those commits that occurred before the file was given its present name.
+
+==================================================
 change of priority to pull tool
 
 decided that this needs a web frontend to gain traction
@@ -35,9 +100,10 @@ The task is not difficult....
 
 
 4/ adjust modbus addressing to cope with different device-ids.
-   major vendor that maps different battery modules to differnt device-IDS and keeps the modbus register offsets the same for each module.
-   In our simulation environment we need to take the device-id * 1000 an add it to the variable offsets  for each module. Our simulation systems have to have unique variable offsets.
-   so the offsets need to be adjusted to run in a simulator and then restored to run on site.
+   We have a major vendor that maps different battery modules to different device-ids and keeps the modbus register offsets the same for each module.
+   In our simulation environment we need to take the device-id * 1000 an add it to the variable offsets for each module. 
+   Our simulation systems have to have unique variable offsets.
+   The offsets need to be adjusted to run in a simulator and then restored to run on site.
 
 so this 
 
@@ -88,7 +154,7 @@ Objective 2 to allow diff tool to  look for changes in configs.
 1/ Select a System ( BRPTX100 , BRPTX10 etc )
 2/ Select a site where the system is running:  docker, lab, gauntlet  or a customer site.
 3/ Select a pull id ( basically a Date)
-4/ pull the config dir from all ( or selected ) site nodes.
+4/ Pull the config dir from all ( or selected ) site nodes.
 
 This will populate a local directory with an exact copy of all the configs used on the selected nodes on the selected site.
 
