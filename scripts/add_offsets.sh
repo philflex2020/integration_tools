@@ -1,7 +1,7 @@
 #!/bin/bash
-# remove_offsets
+# add offsets
 devid=0
-
+foo=0
 while IFS= read -r line
 do
   nline="$line"
@@ -13,10 +13,12 @@ do
 
   elif  [[ $devid -gt 10 ]] && [[ "$line" = *"offset"* ]] ; then
     ofoo=`echo  "$line" | cut -d ':' -f2 | cut -d ',' -f1`
-    ofom=`expr $ofoo % 1000`
+    ofadd=`expr $devid \* 1000`
+    ofom=`expr $ofoo + $ofadd`
     nline=`echo "$line" | sed -e "s/$ofoo/$ofom/1"`
-    #echo "$line  offset : $ofoo : $ofom"
+    #echo "$line  offset : $ofoo : $ofom : ofadd $ofadd "
     #echo "nline >> $nline"
+    #exit 0
   fi
   echo "$nline"
-done < bms_orig.json
+done < bms_fix.json
