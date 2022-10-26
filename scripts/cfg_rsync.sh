@@ -67,3 +67,45 @@ serverip="root@172.30.0.23"
 rsync -aLi  --out-format='%n' /home/config/rsync/$node  $nodeip:/usr/local/etc/config > /tmp/$node.out 2>/tmp/$node_err.out
 ssh $nodeip "cd /home/scripts && sh dbi.sh /usr/local/etc/config"
 
+
+# git diff 
+git diff
+git diff dd8f59...829fc3
+git diff -p dd8f59...829fc3 > /tmp/git_diff.out   
+ foo=(`git log --after="$when"  | grep -A 2 commit`)
+for f in  "${foo[@]}" ; do echo $f ; done
+
+commit
+c996c4b068b39a65cd19aa1dceeaa740b97fb443
+Author:
+phil
+wilshire
+<pwilshire@flexgen.com>
+Date:
+Tue
+Oct
+25
+17:10:08
+2022
+-0400
+--
+commit
+c996c4b068b39a65cd19aa1dceeaa740b97fb443
+Author:
+phil
+wilshire
+<pwilshire@flexgen.com>
+Date:
+Tue
+Oct
+25
+17:10:08
+2022
+-0400
+used
+jq
+for
+fixIPs
+--
+
+
