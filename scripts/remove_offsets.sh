@@ -1,5 +1,8 @@
 #!/bin/bash
 # remove_offsets
+function cfgRemoveOffsets()
+{
+
 devid=0
 
 while IFS= read -r line
@@ -19,4 +22,7 @@ do
     #echo "nline >> $nline"
   fi
   echo "$nline"
-done < bms_orig.json
+done < $1
+}
+bms_orig=`cfgRemoveOffsets bms_orig.json`
+echo "$bms_orig" > bms_orig_fixed.json
