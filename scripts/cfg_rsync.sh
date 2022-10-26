@@ -29,8 +29,28 @@ uptime=`date +%F%S | sed -e 's/\//_/g'`
 node=twins
 serverip="root@172.30.0.23"
 
-rsync -aLi  --out-format='%n' /usr/local/etc/config $serverip:/home/config/rsync/$node > /tmp/$node.out 2>/tmp/$node_err.out
+rsync -aLi  --out-format='%n' /usr/local/etc/config $serverip:/home/config/rsync/$node | grep ".json" > /tmp/$node_$uptime.files 2>/tmp/$node_err.out
 ssh $serverip "cd /home/config/rsync && git add $node && git commit -m \" $node update $uptime\" && git push"
+#tar -cvf allfiles.tar -T /tmp/$node_$uptime.files
+
+#or from a node
+#push to a local mirror dir nd get a list of chenged files 
+# tar those up and get cloudsync to deal with them
+# scripts/cfg_push_local.sh
+uptime=`date +%F%S | sed -e 's/\//_/g'`
+node=twins
+serverip="root@172.30.0.23"
+datadir="/home/config/data"
+stagedir="/home/rsync"
+srcdir="/usr/local/etc/config"
+
+
+
+rsync -aLi  --out-format='%n' ${srcdir} ${stagedir}/${node} | grep ".json" \
+                             > /tmp/${node}_${uptime}.files 2>/tmp/${node}_${uptime}_err.out
+#ssh $serverip "cd /home/config/rsync && git add $node && git commit -m \" $node update $uptime\" && git push"
+
+#cd /usr/local/etc tar -cvzf ${datadir}/${node}_${uptime}_files.tar.gz -T /tmp/${node}_${uptime}.files
 
 
 
