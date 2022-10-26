@@ -5,7 +5,7 @@ function cfgRemoveOffsets()
 
 devid=0
 
-while IFS= read -r line
+while IFS= read -r line || [ -n "$line" ]
 do
   nline="$line"
   if [[ "$line" = *"device_id"* ]] ; then
