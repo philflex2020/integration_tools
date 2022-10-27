@@ -59,8 +59,8 @@ else
 fi
 
 if [ ! -s "/tmp/${node}_${uptime}_err.out" ] ; then
-   echo " ${node}_${uptime}_err"  >> ${logfile}
-   cat /tmp/${node}_${uptime}_err.out >> ${logfile}
+   echo " ${node}_${uptime}_err"  >> ${logdir}/${logfile}
+   cat /tmp/${node}_${uptime}_err.out >> ${logdir}/${logfile}
 fi
 
 rm -f /tmp/${node}_${uptime}.files
