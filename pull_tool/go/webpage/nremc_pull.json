@@ -1,0 +1,65 @@
+{
+    "bms": {
+        "bms_e": 2,
+        "bms_ip_1_e": "172.30.40.10",
+        "bms_ip_2_e": "172.30.20.10",
+        "bms_port_1_e": 502,
+        "bms_port_2_e": 502,
+        "racks_e": [
+            4,
+            7
+        ]
+    },
+    "ess": {
+        "bms_e": 4,
+        "bms_ip_e": "172.30.20.20",
+        "bms_name_e": "CATL",
+        "bms_port_e": 502,
+        "ess_e": 2,
+        "ess_ip_1_e": "172.30.40.10",
+        "ess_ip_2_e": "172.30.20.10",
+        "modules_e": [
+            1,
+            2,
+            2,
+            2
+        ],
+        "pcs_e": 2,
+        "pcs_ip_e": "172.30.30.20",
+        "pcs_name_e": "PCS",
+        "pcs_port_e": "172.30.30.20",
+        "racks_e": [
+            4,
+            4,
+            5,
+            7
+        ]
+    },
+    "sysInfo": {
+        "actions": [
+            "reload",
+            "save",
+            "saveas",
+            "create_docker",
+            "create_configs"
+        ],
+        "outputFileCreated": "2022-04-26T17:16:05.583Z",
+        "outputFileName_e": "nremc_pull.json",
+        "revision_e": "nremc_v1234",
+        "siteType_a": "ncemc10",
+        "systemCreatedBy": "Phil",
+        "systemLastModified": "2022-04-26T17:15:57.000Z",
+        "systemLastModifiedBy_e": "Jimmy Nguyen",
+        "systemName_e": "nremc_sitea",
+        "systemType_e": "nremc10"
+    },
+    "system": {
+        "dnp3_e": 0,
+        "ess_e": 10,
+        "fleet_manager_e": 1,
+        "historian_e": 0,
+        "powercloud_e": 1,
+        "site_e": 1,
+        "twins_e": 1
+    }
+}
