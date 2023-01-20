@@ -1,0 +1,7 @@
+{
+    "desc":"read mb server logs on client",
+    "cmds": [
+        "log modbus_server with mbservcfg in client to clilog",
+        "showvars"
+   ]
+}

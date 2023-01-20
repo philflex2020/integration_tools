@@ -1,0 +1,56 @@
+2023-01-11 21:29:38,451 [    INFO] There are 4 tests in the list.
+2023-01-11 21:29:38,452 [    INFO] Test environment includes 1 test beds.
+2023-01-11 21:29:38,452 [    INFO] Executing command 'docker ps -aqf "name=ess_controller"'.
+2023-01-11 21:29:38,676 [    INFO] Docker Name ess_controller ID is 94a6a984b45b.
+2023-01-11 21:29:38,676 [    INFO] Executing command 'docker container ls --format "table {{.Ports}}" --filter "id=94a6a984b45b"'.
+2023-01-11 21:29:38,890 [    INFO] Executing command 'docker ps -aqf "name=twins"'.
+2023-01-11 21:29:39,108 [    INFO] Docker Name twins ID is ee0e3094f45c.
+2023-01-11 21:29:39,109 [    INFO] Executing command 'docker container ls --format "table {{.Ports}}" --filter "id=ee0e3094f45c"'.
+2023-01-11 21:29:39,331 [    INFO] Executing command 'docker ps -aqf "name=DNP3_test"'.
+2023-01-11 21:29:39,538 [    INFO] Docker Name DNP3_test ID is c527a328bf1d.
+2023-01-11 21:29:39,539 [    INFO] Executing command 'docker ps -aqf "name=DNP3_test"'.
+2023-01-11 21:29:39,757 [    INFO] Docker Name DNP3_test ID is c527a328bf1d.
+2023-01-11 21:29:39,757 [    INFO] Executing command 'docker ps -aqf "name=DNP3_server"'.
+2023-01-11 21:29:39,970 [    INFO] Docker Name DNP3_server ID is c33f248e6b88.
+2023-01-11 21:29:39,972 [    INFO] Executing command 'docker ps -aqf "name=DNP3_server"'.
+2023-01-11 21:29:40,173 [    INFO] Docker Name DNP3_server ID is c33f248e6b88.
+2023-01-11 21:29:40,173 [    INFO] Executing command 'docker inspect  c33f248e6b88'.
+2023-01-11 21:29:40,391 [    INFO] Executing command 'docker ps -aqf "name=DNP3_test"'.
+2023-01-11 21:29:40,607 [    INFO] Docker Name DNP3_test ID is c527a328bf1d.
+2023-01-11 21:29:40,607 [    INFO] Executing command 'docker inspect  c527a328bf1d'.
+2023-01-11 21:29:40,837 [    INFO] Executing command 'docker ps -aqf "name=DNP3_client"'.
+2023-01-11 21:29:41,052 [    INFO] Docker Name DNP3_client ID is 6a2426b3cb94.
+2023-01-11 21:29:41,052 [    INFO] Executing command 'docker inspect  6a2426b3cb94'.
+2023-01-11 21:29:46,773 [    INFO] Running command 'top -b -n 1' in docker 6a2426b3cb94.
+2023-01-11 21:29:46,773 [    INFO] Executing command 'docker exec 6a2426b3cb94 top -b -n 1'.
+2023-01-11 21:29:47,251 [    INFO] Response from running command is '['top - 02:29:47 up 2 days, 22:50,  0 users,  load average: 0.00, 0.02, 0.00', 'Tasks:   3 total,   1 running,   2 sleeping,   0 stopped,   0 zombie', '%Cpu(s):  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st', 'KiB Mem : 16242728 total,  3048656 free,   859108 used, 12334964 buff/cache', 'KiB Swap:  4194304 total,  4194304 free,        0 used. 15054148 avail Mem ', '', '  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND', '    1 root      20   0   11840   2944   2672 S   0.0  0.0   0:00.20 bash', '   79 root      20   0   11836   3048   2668 S   0.0  0.0   0:00.29 sh', '  453 root      20   0   56064   3688   3244 R   0.0  0.0   0:00.02 top']'.
+2023-01-11 21:30:41,697 [    INFO] Running command 'ps -ax' in docker 6a2426b3cb94.
+2023-01-11 21:30:41,698 [    INFO] Executing command 'docker exec 6a2426b3cb94 ps -ax'.
+2023-01-11 21:30:41,999 [    INFO] Response from running command is '['PID TTY      STAT   TIME COMMAND', '    1 pts/0    Ss+    0:00 /bin/bash', '   79 pts/1    Ss+    0:00 /bin/sh', '  459 ?        Rs     0:00 ps -ax']'.
+2023-01-11 21:30:45,362 [    INFO] Running command '/home/docker/configs/scripts/runlog.sh 0 fims_server /home/docker/logs/fims.log' in docker 6a2426b3cb94.
+2023-01-11 21:30:45,362 [    INFO] Executing command 'docker exec 6a2426b3cb94 /home/docker/configs/scripts/runlog.sh 0 fims_server /home/docker/logs/fims.log'.
+2023-01-11 21:30:45,704 [    INFO] Response from running command is '['fims_server running logfile /home/docker/logs/fims.log']'.
+2023-01-11 21:30:47,765 [    INFO] Running command 'ps -ax' in docker 6a2426b3cb94.
+2023-01-11 21:30:47,765 [    INFO] Executing command 'docker exec 6a2426b3cb94 ps -ax'.
+2023-01-11 21:30:48,077 [    INFO] Response from running command is '['PID TTY      STAT   TIME COMMAND', '    1 pts/0    Ss+    0:00 /bin/bash', '   79 pts/1    Ss+    0:00 /bin/sh', '  471 ?        S      0:00 fims_server', '  472 ?        Rs     0:00 ps -ax']'.
+2023-01-11 21:31:05,076 [    INFO] Running command '/home/docker/configs/scripts/runlog.sh 5 fims_listen /home/docker/logs/fims_listen.log' in docker 6a2426b3cb94.
+2023-01-11 21:31:05,076 [    INFO] Executing command 'docker exec 6a2426b3cb94 /home/docker/configs/scripts/runlog.sh 5 fims_listen /home/docker/logs/fims_listen.log'.
+2023-01-11 21:31:05,403 [    INFO] Response from running command is '[]'.
+2023-01-11 21:31:08,019 [    INFO] Running command 'ps -ax' in docker 6a2426b3cb94.
+2023-01-11 21:31:08,020 [    INFO] Executing command 'docker exec 6a2426b3cb94 ps -ax'.
+2023-01-11 21:31:08,404 [    INFO] Response from running command is '['PID TTY      STAT   TIME COMMAND', '    1 pts/0    Ss+    0:00 /bin/bash', '   79 pts/1    Ss+    0:00 /bin/sh', '  471 ?        Sl     0:00 fims_server', '  484 ?        S      0:00 timeout 5 fims_listen', '  485 ?        S      0:00 fims_listen', '  487 ?        Rs     0:00 ps -ax']'.
+2023-01-11 21:31:15,125 [    INFO] Running command 'ps -ax' in docker 6a2426b3cb94.
+2023-01-11 21:31:15,125 [    INFO] Executing command 'docker exec 6a2426b3cb94 ps -ax'.
+2023-01-11 21:31:15,535 [    INFO] Response from running command is '['PID TTY      STAT   TIME COMMAND', '    1 pts/0    Ss+    0:00 /bin/bash', '   79 pts/1    Ss+    0:00 /bin/sh', '  471 ?        S      0:00 fims_server', '  493 ?        Rs     0:00 ps -ax']'.
+2023-01-11 21:31:31,929 [    INFO] Running command 'ps -ax' in docker 6a2426b3cb94.
+2023-01-11 21:31:31,930 [    INFO] Executing command 'docker exec 6a2426b3cb94 ps -ax'.
+2023-01-11 21:31:32,306 [    INFO] Response from running command is '['PID TTY      STAT   TIME COMMAND', '    1 pts/0    Ss+    0:00 /bin/bash', '   79 pts/1    Ss+    0:00 /bin/sh', '  471 ?        S      0:00 fims_server', '  500 ?        Rs     0:00 ps -ax']'.
+2023-01-11 21:33:14,766 [    INFO] Running command '/home/docker/configs/scripts/runlog.sh 5 fims_listen /home/docker/logs/fims_listen.log' in docker 6a2426b3cb94.
+2023-01-11 21:33:14,767 [    INFO] Executing command 'docker exec 6a2426b3cb94 /home/docker/configs/scripts/runlog.sh 5 fims_listen /home/docker/logs/fims_listen.log'.
+2023-01-11 21:33:15,100 [    INFO] Response from running command is '[]'.
+2023-01-11 21:33:16,541 [    INFO] Running command 'ps -ax' in docker 6a2426b3cb94.
+2023-01-11 21:33:16,541 [    INFO] Executing command 'docker exec 6a2426b3cb94 ps -ax'.
+2023-01-11 21:33:16,841 [    INFO] Response from running command is '['PID TTY      STAT   TIME COMMAND', '    1 pts/0    Ss+    0:00 /bin/bash', '   79 pts/1    Ss     0:00 /bin/sh', '  471 ?        Sl     0:00 fims_server', '  506 pts/1    S+     0:00 nano /home/docker/configs/scripts/runlog.sh', '  513 ?        S      0:00 timeout 5 fims_listen', '  514 ?        S      0:00 fims_listen', '  516 ?        Rs     0:00 ps -ax']'.
+2023-01-11 21:33:28,456 [    INFO] Running command 'ps -ax' in docker 6a2426b3cb94.
+2023-01-11 21:33:28,456 [    INFO] Executing command 'docker exec 6a2426b3cb94 ps -ax'.
+2023-01-11 21:33:28,829 [    INFO] Response from running command is '['PID TTY      STAT   TIME COMMAND', '    1 pts/0    Ss+    0:00 /bin/bash', '   79 pts/1    Ss     0:00 /bin/sh', '  471 ?        S      0:00 fims_server', '  506 pts/1    S+     0:00 nano /home/docker/configs/scripts/runlog.sh', '  522 ?        Rs     0:00 ps -ax']'.

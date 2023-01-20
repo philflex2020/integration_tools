@@ -1,0 +1,222 @@
+{
+    "name": "Faults/Alarms - ESS E-Stop Test",
+    "tests": [
+        {
+            "id": "0",
+            "name": "Initial State - PCS Summary (PCS 01 and 02) in maintenance mode and started / BMS Summary (BMS 01 and 02) DC contactors closed / Active Power = 0 and Reactive Power = 0",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_mode",
+                    "value": true
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/start",
+                    "value": true
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/start",
+                    "value": true
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": 0
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/pcs/summary/status",
+                    "value": [
+                        {
+                            "naked_value": "Running"
+                        }
+                    ]
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary/power_state",
+                    "value": [
+                        {
+                            "naked_value": "On Ready"
+                        }
+                    ]
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": 0
+                        }
+                    ]
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "1",
+            "name": "Press the PCS Summary (PCS 01 and 02) E-Stop Button - verify that the PCS enters a fault state and that the fault is labeled 'E-Stop'",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/e-stop",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/faults/pcs:sys_fault",
+                    "value": [
+                        {
+                            "value": 43,
+                            "string": "(EMRGSTP) Emergency stop - Stop pushbutton (at the main control cabinet door) has been pushed, or the DC disconnect switch is set to OFF"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Verify that BMS Summary (BMS 01 and 02) and PCS Summary (PCS 01 and 02) are in a Fault state",
+            "testbeds": [
+                "0"
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/pcs/summary/status",
+                    "value": [
+                        {
+                            "naked_value": "Fault"
+                        }
+                    ]
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary/power_state",
+                    "value": [
+                        {
+                            "naked_value": "On Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Press the PCS Summary (PCS 01 and 02) Clear Faults button - verify that the Fault state is cleared and BMS Summary (BMS 01 and 02) and PCS Summary (PCS 01 and 02) are in a Running state",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/faults/pcs:sys_fault",
+                    "value": [
+                        {
+                            "value": 0,
+                            "string": "(NOFLTS) No faults"
+                        }
+                    ]
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/pcs/summary/status",
+                    "value": [
+                        {
+                            "naked_value": "Running"
+                        }
+                    ]
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary/power_state",
+                    "value": [
+                        {
+                            "naked_value": "On Ready"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "testbeds": [
+        {
+            "id": "0",
+            "name": "Local ESS Docker",
+            "controllers": [
+                {
+                    "id": "ess_controller",
+                    "name": "ess_controller",
+                    "user": "fgdefault",
+                    "pass": "fgdefault1A!"
+                },
+                {
+                    "id": "twins",
+                    "name": "twins",
+                    "user": "",
+                    "pass": ""
+                }
+            ]
+        }
+    ]
+}

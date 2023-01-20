@@ -1,0 +1,32 @@
+{
+    "given": {
+        "name": "Set up the Server",
+        "steps": [
+            "use server",
+            "pkill modbus_client",
+            "pkill modbus_server",
+            "wait 1 second",
+            "setip  mb_client_test ip_client",
+            "setip  mb_srver_test ip_server",
+            "run modbus_client with mb_client_test",
+            "run modbus_server with mb_server_test"
+        ]
+    },
+    "when": {
+        "name": "Connecting",
+        "steps": [
+            "wait 5 seconds",
+            "find 'Connected to server' in mb_client_log",
+            "find 'New connection' in mb_server_log count 3",
+            "start fims_listener"
+        ]
+    },
+    "then": {
+        "name": "Test Connected",
+        "steps": [
+            "wait 5 seconds",
+            "find hs_pubs in fims_listener_log",
+            "find ls_pubs in fims_listener_log"
+        ]
+    }
+}

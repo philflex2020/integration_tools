@@ -1,0 +1,349 @@
+{
+    "name": "Feeder Maintenance Mode",
+    "tests": [
+        {
+            "id": "0",
+            "name": "Initial State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/feeders/feed_1/breaker_status",
+                    "value": [
+                        {
+                            "breaker_status": {
+                                "value": "Closed",
+                                "name": "Breaker Status (651)",
+                                "unit": "",
+                                "scaler": 1,
+                                "enabled": true,
+                                "type": "Bool",
+                                "ui_type": "status"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "1",
+            "name": "Put POI Feeder into maintenance mode",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/feeders/feed_1/maint_mode",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/feeders/feed_1/maint_mode",
+                    "value": [
+                        {
+                            "name": "Maintenance Mode",
+                            "unit": "",
+                            "scaler": 1,
+                            "ui_type": "control",
+                            "type": "enum_slider",
+                            "value": true,
+                            "enabled": true,
+                            "options": [
+                                {
+                                    "name": "No",
+                                    "return_value": false
+                                },
+                                {
+                                    "name": "Yes",
+                                    "return_value": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/feeders/feed_1/breaker_open",
+                    "value": [
+                        {
+                            "name": "Breaker Open (651)",
+                            "unit": "",
+                            "scaler": 1,
+                            "ui_type": "control",
+                            "type": "enum_button",
+                            "enabled": true,
+                            "options": [
+                                {
+                                    "name": "Clear Faults",
+                                    "return_value": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Open POI breaker",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/feeders/feed_1/breaker_open",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/feeders/feed_1/breaker_status",
+                    "value": [
+                        {
+                            "breaker_status": {
+                                "value": "Open",
+                                "name": "Breaker Status (651)",
+                                "unit": "",
+                                "scaler": 1,
+                                "enabled": true,
+                                "type": "Bool",
+                                "ui_type": "status"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/feeders/feed_1/breaker_reset",
+                    "value": [
+                        {
+                            "name": "Breaker Reset (651)",
+                            "unit": "",
+                            "scaler": 1,
+                            "ui_type": "control",
+                            "type": "enum_button",
+                            "enabled": true,
+                            "options": [
+                                {
+                                    "name": "Clear Faults",
+                                    "return_value": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Reset POI breaker",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/feeders/feed_1/breaker_reset",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/feeders/feed_1/breaker_status",
+                    "value": [
+                        {
+                            "breaker_status": {
+                                "value": "Closed",
+                                "name": "Breaker Status (651)",
+                                "unit": "",
+                                "scaler": 1,
+                                "enabled": true,
+                                "type": "Bool",
+                                "ui_type": "status"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/feeders/feed_1/breaker_close",
+                    "value": [
+                        {
+                            "name": "Breaker Close (651)",
+                            "unit": "",
+                            "scaler": 1,
+                            "ui_type": "control",
+                            "type": "enum_button",
+                            "enabled": false,
+                            "options": [
+                                {
+                                    "name": "Clear Faults",
+                                    "return_value": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "name": "Close POI breaker",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/feeders/feed_1/breaker_open",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/feeders/feed_1/breaker_close",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/feeders/feed_1/breaker_status",
+                    "value": [
+                        {
+                            "breaker_status": {
+                                "value": "Closed",
+                                "name": "Breaker Status (651)",
+                                "unit": "",
+                                "scaler": 1,
+                                "enabled": true,
+                                "type": "Bool",
+                                "ui_type": "status"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/feeders/feed_1/breaker_open",
+                    "value": [
+                        {
+                            "name": "Breaker Open (651)",
+                            "unit": "",
+                            "scaler": 1,
+                            "ui_type": "control",
+                            "type": "enum_button",
+                            "enabled": true,
+                            "options": [
+                                {
+                                    "name": "Clear Faults",
+                                    "return_value": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "name": "Put POI Feeder into operation mode",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/feeders/feed_1/maint_mode",
+                    "value": false
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/feeders/feed_1/maint_mode",
+                    "value": [
+                        {
+                            "name": "Maintenance Mode",
+                            "unit": "",
+                            "scaler": 1,
+                            "ui_type": "control",
+                            "type": "enum_slider",
+                            "value": false,
+                            "enabled": true,
+                            "options": [
+                                {
+                                    "name": "No",
+                                    "return_value": false
+                                },
+                                {
+                                    "name": "Yes",
+                                    "return_value": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/feeders/feed_1/breaker_open",
+                    "value": [
+                        {
+                            "name": "Breaker Open (651)",
+                            "unit": "",
+                            "scaler": 1,
+                            "ui_type": "control",
+                            "type": "enum_button",
+                            "enabled": false,
+                            "options": [
+                                {
+                                    "name": "Clear Faults",
+                                    "return_value": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "testbeds": [
+        {
+            "id": "0",
+            "name": "Local docker",
+            "controllers": [
+                {
+                    "id": "site_controller",
+                    "name": "sc_ranchtown_vm",
+                    "user": "hybridos",
+                    "pass": "FlexGen2022!"
+                }
+            ]
+        }
+    ]
+}

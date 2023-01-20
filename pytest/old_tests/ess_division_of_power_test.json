@@ -1,0 +1,255 @@
+{
+    "name": "Maintenance Mode Commands - ESS Division of Power Test",
+    "tests": [
+        {
+            "id": "0",
+            "name": "Initial State - PCS Summary (PCS 01 and 02) in maintenance mode and started / BMS Summary (BMS 01 and 02) DC contactors closed",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_mode",
+                    "value": true
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/start",
+                    "value": true
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/start",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/pcs/summary/status",
+                    "value": [
+                        {
+                            "naked_value": "Running"
+                        }
+                    ]
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary/power_state",
+                    "value": [
+                        {
+                            "naked_value": "On Ready"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "1",
+            "name": "Set BMS 01 SOC to 25%",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/bms_01a/soc_value",
+                    "value": 25
+                }
+            ],
+            "result": [
+                {
+                    "controller": "twins",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/components/bms_01a/soc_value",
+                    "value": [
+                        {
+                            "naked_value": 25
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Set BMS 02 SOC to 75%",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/bms_01b/soc_value",
+                    "value": 75
+                }
+            ],
+            "result": [
+                {
+                    "controller": "twins",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/components/bms_01b/soc_value",
+                    "value": [
+                        {
+                            "naked_value": 75
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Verify that BMS Summary (BMS 01 and 02) is 50%",
+            "testbeds": [
+                "0"
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/bms/summary/soc",
+                    "value": [
+                        {
+                            "naked_value": 50
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "name": "Give a real power command of 2.0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": 2000000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": 2000000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "name": "Verify that BMS 01 System Power reaches 0.5 MW",
+            "testbeds": [
+                "0"
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/bms_1/system_power",
+                    "value": [
+                        {
+                            "naked_value": 500000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "name": "Verify that BMS 02 System Power reaches 1.5 MW",
+            "testbeds": [
+                "0"
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/bms_2/system_power",
+                    "value": [
+                        {
+                            "naked_value": 1500000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "7",
+            "name": "Give a real power command of 0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": 0
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": 0
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "testbeds": [
+        {
+            "id": "0",
+            "name": "Local ESS Docker",
+            "controllers": [
+                {
+                    "id": "ess_controller",
+                    "name": "ess_controller",
+                    "user": "fgdefault",
+                    "pass": "fgdefault1A!"
+                },
+                {
+                    "id": "twins",
+                    "name": "twins",
+                    "user": "",
+                    "pass": ""
+                }
+            ]
+        }
+    ]
+}

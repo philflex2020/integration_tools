@@ -1,0 +1,7 @@
+Jan 20 09:05:08 brp-pueblo1-site-controller-01 modbus_client[2130]: client #0, comp "sungrow_ess_01_hs" aggregator thread: error incrementing a heartbeat register on write, err_code = 110, err_str = "Connection timed out"
+Jan 20 09:05:09 brp-pueblo1-site-controller-01 modbus_client[2130]: aggregator thread for comp "sungrow_ess_01_hs": got an errno while reading the server from thread #1, err_code = 112345691, err_str = "Invalid data". skipping that decode
+Jan 20 09:05:14 brp-pueblo1-site-controller-01 modbus_client[2130]: client "Sungrow Local Controller 1", component "sungrow_ess_01_hs": heartbeat no longer detected
+Jan 20 09:05:14 brp-pueblo1-site-controller-01 modbus_client[2130]: client "Sungrow Local Controller 1", component "sungrow_ess_01_hs": reconnected after picking up a heartbeat change
+Jan 20 09:05:21 brp-pueblo1-site-controller-01 modbus_client[2130]: component "sungrow_ess_01_hs", thread #0: got an error while writing to register(s) at offset 10103, err = "Connection timed out"
+Jan 20 09:05:22 brp-pueblo1-site-controller-01 modbus_client[2130]: aggregator thread for comp "sungrow_ess_01_hs": got an errno while reading the server from thread #0, err_code = 110, err_str = "Connection timed out". skipping that decode
+Jan 20 09:05:22 brp-pueblo1-site-controller-01 modbus_client[2130]: component "sungrow_ess_01_hs", thread #0: got an error while writing to register(s) at offset 10126, err = "Resource temporarily unavailable"

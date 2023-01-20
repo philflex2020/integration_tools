@@ -1,0 +1,165 @@
+{
+    "name": "Maintenance Mode Commands - ESS DC Contactor Test",
+    "tests": [
+        {
+            "id": "0",
+            "name": "Initial State - open BMS DC contactors and stop PCS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/stop",
+                    "value": true
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/shutdown",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary/power_state",
+                    "value": [
+                        {
+                            "naked_value": "Off Ready"
+                        }
+                    ]
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/pcs/summary/status",
+                    "value": [
+                        {
+                            "naked_value": "Off"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "1",
+            "name": "Put BMS Summary (BMS 01 and 02) into maintenance mode",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/maint_mode",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary/maint_mode",
+                    "value": [
+                        {
+                            "naked_value": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Close BMS Summary (BMS 01 and 02) DC contactors",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/start",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary/power_state",
+                    "value": [
+                        {
+                            "naked_value": "On Ready"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Open BMS Summary (BMS 01 and 02) DC contactors",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/stop",
+                    "value": true
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/maint_mode",
+                    "value": false
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary/power_state",
+                    "value": [
+                        {
+                            "naked_value": "Off Ready"
+                        }
+                    ]
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary/maint_mode",
+                    "value": [
+                        {
+                            "naked_value": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "testbeds": [
+        {
+            "id": "0",
+            "name": "Local ESS Docker",
+            "controllers": [
+                {
+                    "id": "ess_controller",
+                    "name": "ess_controller",
+                    "user": "fgdefault",
+                    "pass": "fgdefault1A!"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,592 @@
+{
+    "name": "Maintenance Mode Commands - ESS Real and Reactive Power Test",
+    "tests": [
+        {
+            "id": "0",
+            "name": "Initial State - PCS Summary (PCS 01 and 02) in maintenance mode and started / BMS Summary (BMS 01 and 02) DC contactors closed",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_mode",
+                    "value": true
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/start",
+                    "value": true
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/start",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/pcs/summary/status",
+                    "value": [
+                        {
+                            "naked_value": "Running"
+                        }
+                    ]
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary/power_state",
+                    "value": [
+                        {
+                            "naked_value": "On Ready"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "1",
+            "name": "Give a real power command of 0.5 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": 500000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": 500000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Give a real power command of 2.0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": 2000000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": 2000000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Give a real power command of 3.0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": 3000000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": 3000000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "name": "Give a real power command of 4.0 MW - verify that real power is limited to 3.51 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": 4000000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": 4000000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "name": "Give a real power command of -0.5 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": -500000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": -500000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "name": "Give a real power command of -2.0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": -2000000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": -2000000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "7",
+            "name": "Give a real power command of -3.0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": -3000000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": -3000000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "8",
+            "name": "Give a real power command of -4.0 MW - verify that real power is limited to -3.51 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": -4000000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": -4000000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "9",
+            "name": "Give a real power command of 0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": 0
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "10",
+            "name": "Give a reactive power command of 0.5 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": 500000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": 500000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "11",
+            "name": "Give a reactive power command of 2.0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": 2000000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": 2000000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "12",
+            "name": "Give a reactive power command of 3.0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": 3000000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": 3000000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "13",
+            "name": "Give a reactive power command of 4.0 MW - verify that reactive power is limited to 3.51 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": 4000000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": 4000000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "14",
+            "name": "Give a reactive power command of -0.5 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": -500000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": -500000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "15",
+            "name": "Give a reactive power command of -2.0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": -2000000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": -2000000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "16",
+            "name": "Give a reactive power command of -3.0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": -3000000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": -3000000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "17",
+            "name": "Give a reactive power command of -4.0 MW - verify that reactive power is limited to -3.51 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": -4000000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": -4000000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "18",
+            "name": "Give a reactive power command of 0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": 0
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": 0
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "testbeds": [
+        {
+            "id": "0",
+            "name": "Local ESS Docker",
+            "controllers": [
+                {
+                    "id": "ess_controller",
+                    "name": "ess_controller",
+                    "user": "fgdefault",
+                    "pass": "fgdefault1A!"
+                }
+            ]
+        }
+    ]
+}

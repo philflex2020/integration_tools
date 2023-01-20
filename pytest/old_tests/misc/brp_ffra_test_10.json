@@ -1,0 +1,302 @@
+{
+    "name": "BRP FFRA black box test - 10 - 10.3",
+    "tests": [
+        {
+            "id": "0",
+            "name": "Reset Environment",
+            "testbeds": ["0"],
+            "steps": [  
+                {"controller": "dnp3_client", "action": "fims_set", "uri":"/ercot/outstation/gen_resource_status", "value":0},
+                {"controller": "dnp3_client", "action": "fims_set", "uri":"/ercot/outstation/gen_updated_basepoint", "value":0},
+                {"controller": "dnp3_client", "action": "fims_set", "uri":"/ercot/outstation/load_updated_basepoint", "value":0},
+                {"controller": "dnp3_client", "action": "fims_set", "uri":"/ercot/outstation/gen_ffr_responsibility", "value":0},
+                {"controller": "dnp3_client", "action": "fims_set", "uri":"/ercot/outstation/load_ffr_responsibility", "value":0},
+                {"controller": "dnp3_client", "action": "fims_set", "uri":"/ercot/outstation/gen_frrs_up_responsibility", "value":0},
+                {"controller": "dnp3_client", "action": "fims_set", "uri":"/ercot/outstation/load_frrs_up_responsibility", "value":0},
+                {"controller": "dnp3_client", "action": "fims_set", "uri":"/ercot/outstation/gen_frrs_down_responsibility", "value":0},
+                {"controller": "dnp3_client", "action": "fims_set", "uri":"/ercot/outstation/load_frrs_down_responsibility", "value":0},
+                {"controller": "dnp3_client", "action": "fims_set", "uri":"/ercot/outstation/gen_rrs_responsibility", "value":0},
+                {"controller": "dnp3_client", "action": "fims_set", "uri":"/ercot/outstation/load_rrs_responsibility", "value":0},
+                {"controller": "dnp3_client", "action": "fims_set", "uri":"/ercot/outstation/gen_reg_up_requirement", "value":0},
+                {"controller": "dnp3_client", "action": "fims_set", "uri":"/ercot/outstation/load_reg_up_requirement", "value":0},
+                {"controller": "dnp3_client", "action": "fims_set", "uri":"/ercot/outstation/gen_reg_down_requirement", "value":0},
+                {"controller": "dnp3_client", "action": "fims_set", "uri":"/ercot/outstation/load_reg_down_requirement", "value":0},
+                {"controller": "twins", "action": "fims_set", "uri":"/components/grid/fcmd", "value":60}
+            ],
+            "result": [
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_get",
+                    "uri":"/ercot/outstation/load_net_mw",
+                    "tolerance": "0.01",
+                    "waiting": 30,
+                    "value":[
+                        {"load_net_mw":0.04}
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "1",
+            "name": "FFRA 10.3 test 4 - ERCOT scenario 3",
+            "testbeds": ["0"],
+            "steps": [  
+                {"controller": "dnp3_client", "action": "fims_set", "uri":"/ercot/outstation/gen_resource_status", "value":21},
+                {"controller": "dnp3_client", "action": "fims_set", "uri":"/ercot/outstation/gen_ffr_responsibility", "value":9.9}
+
+            ],
+            "result": [
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_get",
+                    "uri":"/ercot/outstation/gen_net_mw",
+                    "tolerance": "0.3",
+                    "waiting": 30,
+                    "value":[
+                        {"gen_net_mw":0}
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "FFRA 10.3 test 3 - ERCOT scenario 2",
+            "testbeds": ["0"],
+            "steps": [  
+                {"controller": "twins", "action": "fims_set", "uri":"/components/grid/fcmd", "value":59.99}
+            ],
+            "result": [
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_get",
+                    "uri":"/ercot/outstation/gen_net_mw",
+                    "tolerance": "0.3",
+                    "waiting": 30,
+                    "value":[
+                        {"gen_net_mw":0}
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "FFRA 10.3 test 3 - ERCOT scenario 2",
+            "testbeds": ["0"],
+            "steps": [  
+                {"controller": "twins", "action": "fims_set", "uri":"/components/grid/fcmd", "value":59.84}
+            ],
+            "result": [
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_get",
+                    "uri":"/ercot/outstation/gen_net_mw",
+                    "tolerance": "0.3",
+                    "waiting": 30,
+                    "value":[
+                        {"gen_net_mw":9.9}
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "name": "FFRA 10.3 test 3 - ERCOT scenario 2",
+            "testbeds": ["0"],
+            "steps": [  
+                {"controller": "twins", "action": "fims_set", "uri":"/components/grid/fcmd", "value":59.88}
+            ],
+            "result": [
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_get",
+                    "uri":"/ercot/outstation/gen_net_mw",
+                    "tolerance": "0.3",
+                    "waiting": 30,
+                    "value":[
+                        {"gen_net_mw":9.9}
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "name": "FFRA 10.3 test 3 - ERCOT scenario 2",
+            "testbeds": ["0"],
+            "steps": [  
+                {"controller": "twins", "action": "fims_set", "uri":"/components/grid/fcmd", "value":59.9}
+            ],
+            "result": [
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_get",
+                    "uri":"/ercot/outstation/gen_net_mw",
+                    "tolerance": "0.3",
+                    "waiting": 30,
+                    "value":[
+                        {"gen_net_mw":9.9}
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "name": "FFRA 10.3 test 3 - ERCOT scenario 2",
+            "testbeds": ["0"],
+            "steps": [  
+                {"controller": "twins", "action": "fims_set", "uri":"/components/grid/fcmd", "value":59.91}
+            ],
+            "result": [
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_get",
+                    "uri":"/ercot/outstation/gen_net_mw",
+                    "tolerance": "0.3",
+                    "waiting": 30,
+                    "value":[
+                        {"gen_net_mw":9.9}
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "7",
+            "name": "FFRA 10.3 test 3 - ERCOT scenario 2",
+            "testbeds": ["0"],
+            "steps": [  
+                {"controller": "twins", "action": "fims_set", "uri":"/components/grid/fcmd", "value":59.93}
+            ],
+            "result": [
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_get",
+                    "uri":"/ercot/outstation/gen_net_mw",
+                    "tolerance": "0.3",
+                    "waiting": 30,
+                    "value":[
+                        {"gen_net_mw":9.9}
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "8",
+            "name": "FFRA 10.3 test 3 - ERCOT scenario 2",
+            "testbeds": ["0"],
+            "steps": [  
+                {"controller": "twins", "action": "fims_set", "uri":"/components/grid/fcmd", "value":59.95}
+            ],
+            "result": [
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_get",
+                    "uri":"/ercot/outstation/gen_net_mw",
+                    "tolerance": "0.3",
+                    "waiting": 30,
+                    "value":[
+                        {"gen_net_mw":9.9}
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "9",
+            "name": "FFRA 10.3 test 3 - ERCOT scenario 2",
+            "testbeds": ["0"],
+            "steps": [  
+                {"controller": "twins", "action": "fims_set", "uri":"/components/grid/fcmd", "value":59.97}
+            ],
+            "result": [
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_get",
+                    "uri":"/ercot/outstation/gen_net_mw",
+                    "tolerance": "0.3",
+                    "waiting": 30,
+                    "value":[
+                        {"gen_net_mw":9.9}
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "10",
+            "name": "FFRA 10.3 test 3 - ERCOT scenario 2",
+            "testbeds": ["0"],
+            "steps": [  
+                {"controller": "twins", "action": "fims_set", "uri":"/components/grid/fcmd", "value":59.99}
+            ],
+            "result": [
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_get",
+                    "uri":"/ercot/outstation/gen_net_mw",
+                    "tolerance": "0.3",
+                    "waiting": 30,
+                    "value":[
+                        {"gen_net_mw":0}
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "11",
+            "name": "FFRA 10.3 test 3 - ERCOT scenario 2",
+            "testbeds": ["0"],
+            "steps": [  
+                {"controller": "twins", "action": "fims_set", "uri":"/components/grid/fcmd", "value":60}
+            ],
+            "result": [
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_get",
+                    "uri":"/ercot/outstation/gen_net_mw",
+                    "tolerance": "0.3",
+                    "waiting": 30,
+                    "value":[
+                        {"gen_net_mw":0}
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "12",
+            "name": "FFRA 10.3 test 3 - ERCOT scenario 2",
+            "testbeds": ["0"],
+            "steps": [  
+                {"controller": "twins", "action": "fims_set", "uri":"/components/grid/fcmd", "value":60.1}
+            ],
+            "result": [
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_get",
+                    "uri":"/ercot/outstation/gen_net_mw",
+                    "tolerance": "0.3",
+                    "waiting": 30,
+                    "value":[
+                        {"gen_net_mw":0}
+                    ]
+                }
+            ]
+        }
+    ],
+    "testbeds": [
+        {
+            "id": "0",
+            "name": "Local docker",
+            "controllers": [
+                {
+                    "id": "dnp3_client",
+                    "name": "DNP3 client",
+                    "user": "hybridos",
+                    "pass": "FlexGen2020!"
+                },
+                {
+                    "id": "twins",
+                    "name": "TWINS_Pueblo_1",
+                    "user": "hybridos",
+                    "pass": "FlexGen2020!"
+                }
+            ]
+        }
+    ]
+}

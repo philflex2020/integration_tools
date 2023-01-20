@@ -1,0 +1,9 @@
+{
+    "cmds": [
+        "ssst name 'this is my name'",
+        "showsteps",
+        "sstep name 'this is my name'",
+        "showsteps"
+    ],
+    "name": "this is my name"
+}

@@ -1,0 +1,356 @@
+{
+    "name": "Site Level Command - Start Site Test",
+    "tests": [
+        {
+            "id": "0",
+            "name": "Initial State -  Disable Site On, Site in Shutdown Status, No Faults Present, All ESS DC Contactors Closed, and Site under UI Control",
+            "testbeds": [
+                "0"
+            ],
+            "variables": [
+                {
+                    "var": "ess_id",
+                    "description": "range(1, 74, 1)",
+                    "type": "string",
+                    "size": 2
+                }
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/operation/disable_flag",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_<ess_id>/clear_faults",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_<ess_id>/close_dc_contactors",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "comments": "Multiple Inputs: UI Controls Enable",
+                    "uri": "/site/configuration/reserved_bool_11",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/input_sources/ui",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/site/operation/site_status",
+                    "value": [
+                        {
+                            "value": "Shutdown",
+                            "name": "Site Controller Status",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "string",
+                            "ui_type": "status"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/site/configuration/input_source_status",
+                    "value": [
+                        {
+                            "value": "UI",
+                            "name": "Command Source Selection Status",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "string",
+                            "ui_type": "status"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/assets/ess/summary/num_ess_available",
+                    "value": [
+                        {
+                            "naked_value": 74
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/assets/ess/ess_<ess_id>/status",
+                    "value": [
+                        {
+                            "naked_value": "Stop"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/assets/ess/ess_<ess_id>/dc_contactors_closed",
+                    "value": [
+                        {
+                            "naked_value": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "1",
+            "name": "Enable Site",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/operation/disable_flag",
+                    "value": false
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/site/operation/site_status",
+                    "value": [
+                        {
+                            "value": "Ready",
+                            "name": "Site Controller Status",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "string",
+                            "ui_type": "status"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/site/configuration/input_source_status",
+                    "value": [
+                        {
+                            "value": "UI",
+                            "name": "Command Source Selection Status",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "string",
+                            "ui_type": "status"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/site/operation/enable_flag_ui",
+                    "value": [
+                        {
+                            "value": false,
+                            "name": "Start Site: UI",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "enum_button",
+                            "ui_type": "control",
+                            "options": [
+                                {
+                                    "name": "Start Site",
+                                    "return_value": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/assets/ess/ess_<ess_id>/status",
+                    "value": [
+                        {
+                            "naked_value": "Ready"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Start Site",
+            "testbeds": [
+                "0"
+            ],
+            "variables": [
+                {
+                    "var": "ess_id",
+                    "description": "range(1, 74, 1)",
+                    "type": "string",
+                    "size": 2
+                }
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/operation/enable_flag_ui",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/site/operation/site_status",
+                    "value": [
+                        {
+                            "value": "Running - Grid",
+                            "name": "Site Controller Status",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "string",
+                            "ui_type": "status"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/site/operation/enable_flag_ui",
+                    "value": [
+                        {
+                            "value": false,
+                            "name": "Start Site: UI",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": false,
+                            "type": "enum_button",
+                            "ui_type": "control",
+                            "options": [
+                                {
+                                    "name": "Start Site",
+                                    "return_value": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/assets/ess/ess_<ess_id>/status",
+                    "value": [
+                        {
+                            "naked_value": "Grid power supply running"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Stop Site",
+            "testbeds": [
+                "0"
+            ],
+            "variables": [
+                {
+                    "var": "ess_id",
+                    "description": "range(1, 74, 1)",
+                    "type": "string",
+                    "size": 2
+                }
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/operation/disable_flag",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/site/operation/site_status",
+                    "value": [
+                        {
+                            "value": "Shutdown",
+                            "name": "Site Controller Status",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "string",
+                            "ui_type": "status"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/assets/ess/ess_<ess_id>/status",
+                    "value": [
+                        {
+                            "naked_value": "Stop"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "testbeds": [
+        {
+            "id": "0",
+            "name": "Local Site Docker",
+            "controllers": [
+                {
+                    "id": "site_controller",
+                    "name": "site_controller",
+                    "user": "flexgen",
+                    "pass": "flexgen1A!"
+                },
+                {
+                    "id": "twins",
+                    "name": "twins",
+                    "user": "",
+                    "pass": ""
+                }
+            ]
+        }
+    ]
+}

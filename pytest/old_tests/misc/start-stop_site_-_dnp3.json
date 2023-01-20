@@ -1,0 +1,219 @@
+{
+    "name": "Start-Stop site - DNP3",
+    "tests": [
+        {
+            "id": "0",
+            "name": "Initial State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {"controller": "site_controller", "action": "fims_set", "uri":"/site/operation/disable_flag", "value":true},
+                {"controller": "fleet_manager", "action": "fims_set", "uri":"/sites/ranchtown/remote_enable_flag", "value":false},
+                {"controller": "site_controller", "action": "fims_set", "uri":"/site/configuration/reserved_bool_11", "value":false}
+            ],
+            "result": [
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/site/operation/site_status",
+                    "value": [
+                        {"value":"Shutdown","name":"Site Controller Status","unit":"","scaler":1,"enabled":true,"type":"string","ui_type":"status"}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/site/configuration/input_source_status",
+                    "value": [
+                        {"value":"BRP DNP3","name":"Command Source Selection Status","unit":"","scaler":1,"enabled":true,"type":"string","ui_type":"status"}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/assets/ess/summary/num_ess_available",
+                    "value": [
+                        {"naked_value":4}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/assets/ess/ess_01/status",
+                    "value": [
+                        {"naked_value":"Stop"}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/assets/ess/ess_01/dc_contactors_closed",
+                    "value": [
+                        {"naked_value":true}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/assets/ess/ess_02/status",
+                    "value": [
+                        {"naked_value":"Stop"}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/assets/ess/ess_02/dc_contactors_closed",
+                    "value": [
+                        {"naked_value":true}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/assets/ess/ess_03/status",
+                    "value": [
+                        {"naked_value":"Stop"}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/assets/ess/ess_03/dc_contactors_closed",
+                    "value": [
+                        {"naked_value":true}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/assets/ess/ess_04/status",
+                    "value": [
+                        {"naked_value":"Stop"}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/assets/ess/ess_04/dc_contactors_closed",
+                    "value": [
+                        {"naked_value":true}
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "1",
+            "name": "Enable Site",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {"controller": "fleet_manager", "action": "fims_set", "uri":"/sites/ranchtown/remote_disable_flag", "value":false}
+            ],
+            "result": [
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/site/operation/site_status",
+                    "value": [
+                        {"value":"Ready","name":"Site Controller Status","unit":"","scaler":1,"enabled":true,"type":"string","ui_type":"status"}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/site/operation/enable_flag_ui",
+                    "value": [
+                        {"value":false,"name":"Start Site: UI","unit":"","scaler":1,"enabled":false,"type":"enum_button","ui_type":"control","options":[{"name":"Start Site","return_value":true}]}
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Start Site",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {"controller": "fleet_manager", "action": "fims_set", "uri":"/sites/ranchtown/remote_enable_flag", "value":true}
+            ],
+            "result": [
+                {
+                    "controller": "site_controller", "action": "fims_get", "waiting": 20, "uri": "/site/operation/site_status",
+                    "value": [
+                        {"value":"Running - Grid","name":"Site Controller Status","unit":"","scaler":1,"enabled":true,"type":"string","ui_type":"status"}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "waiting": 20, "uri": "/site/operation/enable_flag_ui",
+                    "value": [
+                        {"value":false,"name":"Start Site: UI","unit":"","scaler":1,"enabled":false,"type":"enum_button","ui_type":"control","options":[{"name":"Start Site","return_value":true}]}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "waiting": 20, "uri": "/assets/ess/ess_01/status",
+                    "value": [
+                        {"naked_value":"Grid power supply running"}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "waiting": 20, "uri": "/assets/ess/ess_02/status",
+                    "value": [
+                        {"naked_value":"Grid power supply running"}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "waiting": 20, "uri": "/assets/ess/ess_03/status",
+                    "value": [
+                        {"naked_value":"Grid power supply running"}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "waiting": 20, "uri": "/assets/ess/ess_04/status",
+                    "value": [
+                        {"naked_value":"Grid power supply running"}
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Stop Site",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {"controller": "fleet_manager", "action": "fims_set", "uri":"/sites/ranchtown/remote_disable_flag", "value":true}
+            ],
+            "result": [
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/site/operation/site_status",
+                    "value": [
+                        {"value":"Shutdown","name":"Site Controller Status","unit":"","scaler":1,"enabled":true,"type":"string","ui_type":"status"}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/assets/ess/ess_01/status",
+                    "value": [
+                        {"naked_value":"Stop"}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/assets/ess/ess_02/status",
+                    "value": [
+                        {"naked_value":"Stop"}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/assets/ess/ess_03/status",
+                    "value": [
+                        {"naked_value":"Stop"}
+                    ]
+                },
+                {
+                    "controller": "site_controller", "action": "fims_get", "uri": "/assets/ess/ess_04/status",
+                    "value": [
+                        {"naked_value":"Stop"}
+                    ]
+                }
+            ]
+        }
+    ],
+    "testbeds": [
+        {
+            "id": "0",
+            "name": "Local docker",
+            "controllers": [
+                {
+                    "id": "fleet_manager",
+                    "name": "Fleet_Manager",
+                    "user": "hybridos",
+                    "pass": "FlexGen2020!"
+                },
+                {
+                    "id": "site_controller",
+                    "name": "sc_ranchtown_vm",
+                    "user": "hybridos",
+                    "pass": "FlexGen2020!"
+                }
+            ]
+        }
+    ]
+}

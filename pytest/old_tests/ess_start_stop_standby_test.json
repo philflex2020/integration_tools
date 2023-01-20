@@ -1,0 +1,165 @@
+{
+    "name": "Maintenance Mode Commands - ESS Start, Stop, and Standby Test",
+    "tests": [
+        {
+            "id": "0",
+            "name": "Initial State - open BMS DC contactors and stop PCS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/stop",
+                    "value": true
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/shutdown",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary/power_state",
+                    "value": [
+                        {
+                            "naked_value": "Off Ready"
+                        }
+                    ]
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/pcs/summary/status",
+                    "value": [
+                        {
+                            "naked_value": "Off"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "1",
+            "name": "Put PCS Summary (PCS 01 and 02) into maintenance mode",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_mode",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/pcs/summary/maint_mode",
+                    "value": [
+                        {
+                            "naked_value": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Start PCS Summary (PCS 01 and 02)",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/start",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/pcs/summary/status",
+                    "value": [
+                        {
+                            "naked_value": "Running"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Shutdown PCS Summary (PCS 01 and 02)",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/shutdown",
+                    "value": true
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_mode",
+                    "value": false
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/pcs/summary/status",
+                    "value": [
+                        {
+                            "naked_value": "Off"
+                        }
+                    ]
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/pcs/summary/maint_mode",
+                    "value": [
+                        {
+                            "naked_value": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "testbeds": [
+        {
+            "id": "0",
+            "name": "Local ESS Docker",
+            "controllers": [
+                {
+                    "id": "ess_controller",
+                    "name": "ess_controller",
+                    "user": "fgdefault",
+                    "pass": "fgdefault1A!"
+                }
+            ]
+        }
+    ]
+}

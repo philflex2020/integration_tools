@@ -1,0 +1,3429 @@
+{
+    "name": "Test",
+    "tests": [
+        {
+            "id": "1",
+            "name": "Test default sites",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/sites/ranchtown/watchdog_pet",
+                    "value": 0.0
+                }
+            ],
+            "result": [
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_get",
+                    "uri": "/sites",
+                    "waiting": 20,
+                    "value": [
+                        {
+                            "alvin": {},
+                            "brazoria": {},
+                            "magnolia": {},
+                            "batcave": {},
+                            "pueblo1": {},
+                            "pueblo2": {},
+                            "lopeno": {},
+                            "zapata2": {},
+                            "zapata1": {},
+                            "northfork": {},
+                            "ranchtown": {
+                                "watchdog_pet": 0,
+                                "site_dischargeable_mw": 0,
+                                "site_chargeable_mw": 0,
+                                "running_status_flag": false,
+                                "running_ess_num": 0,
+                                "remote_enable_flag": false,
+                                "remote_disable_flag": false,
+                                "remote_clear_faults": false,
+                                "reactive_power": 0,
+                                "num_ess_available": 0,
+                                "mwh_received": 0,
+                                "mwh_delivered": 0,
+                                "heartbeat_counter": 0,
+                                "gross_reactive_power": 0,
+                                "gross_active_power": 0,
+                                "grid_voltage_l3_l1": 0,
+                                "grid_voltage_l2_l3": 0,
+                                "grid_voltage_l1_l2": 0,
+                                "frequency": 0,
+                                "fr_response_enable_mask_in": 0,
+                                "fr_response_enable_mask": 24,
+                                "fr_pfr_up_status_flag": false,
+                                "fr_pfr_up_cooldown_status": false,
+                                "fr_pfr_up_active_cmd_mw_in": 0,
+                                "fr_pfr_up_active_cmd_mw": 0,
+                                "fr_pfr_down_status_flag": false,
+                                "fr_pfr_down_cooldown_status": false,
+                                "fr_pfr_down_active_cmd_mw_in": 0,
+                                "fr_pfr_down_active_cmd_mw": 0,
+                                "fr_frrs_up_status_flag": false,
+                                "fr_frrs_up_inactive_cmd_mw_in": 0,
+                                "fr_frrs_up_inactive_cmd_mw": 0,
+                                "fr_frrs_up_cooldown_status": false,
+                                "fr_frrs_up_active_cmd_mw_in": 0,
+                                "fr_frrs_up_active_cmd_mw": 0,
+                                "fr_frrs_down_status_flag": false,
+                                "fr_frrs_down_inactive_cmd_mw_in": 0,
+                                "fr_frrs_down_inactive_cmd_mw": 0,
+                                "fr_frrs_down_cooldown_status": false,
+                                "fr_frrs_down_active_cmd_mw_in": 0,
+                                "fr_frrs_down_active_cmd_mw": 0,
+                                "fr_ffr_status_flag": false,
+                                "fr_ffr_inactive_cmd_mw_in": 0,
+                                "fr_ffr_inactive_cmd_mw": 0,
+                                "fr_ffr_cooldown_status": false,
+                                "fr_ffr_active_cmd_mw_in": 0,
+                                "fr_ffr_active_cmd_mw": 0,
+                                "fr_baseload_cmd_mw_in": 0,
+                                "fr_baseload_cmd_mw": 0,
+                                "fm_timestamp": 0,
+                                "fault_status_flag": false,
+                                "ess_total_reactive_power": 0,
+                                "ess_total_apparent_power": 0,
+                                "ess_total_active_power": 0,
+                                "ess_dischargeable_power": 0,
+                                "ess_dischargeable_energy": 0,
+                                "ess_chargeable_power": 0,
+                                "ess_chargeable_energy": 0,
+                                "ess_average_soc": 0,
+                                "ess_4_status": 0,
+                                "ess_4_soc": 0,
+                                "ess_4_racks": 0,
+                                "ess_4_faults": false,
+                                "ess_4_alarms": false,
+                                "ess_3_status": 0,
+                                "ess_3_soc": 0,
+                                "ess_3_racks": 0,
+                                "ess_3_faults": false,
+                                "ess_3_alarms": false,
+                                "ess_2_status": 0,
+                                "ess_2_soc": 0,
+                                "ess_2_racks": 0,
+                                "ess_2_faults": false,
+                                "ess_2_alarms": false,
+                                "ess_1_status": 0,
+                                "ess_1_soc": 0,
+                                "ess_1_racks": 0,
+                                "ess_1_faults": false,
+                                "ess_1_alarms": false,
+                                "breaker_status": false,
+                                "apparent_power": 0,
+                                "alarm_status_flag": false,
+                                "active_power": 0
+                            },
+                            "sweeny": {},
+                            "loop463": {},
+                            "heights": {},
+                            "odessa": {},
+                            "angleton": {},
+                            "dickinson": {}
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Test default components",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/sites/ranchtown/watchdog_pet",
+                    "value": 0.0
+                }
+            ],
+            "result": [
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_get",
+                    "uri": "/components",
+                    "waiting": 20,
+                    "value": [
+                        {
+                            "alvin": {},
+                            "brazoria": {},
+                            "magnolia": {},
+                            "batcave": {},
+                            "pueblo1": {},
+                            "pueblo2": {},
+                            "lopeno": {},
+                            "zapata2": {},
+                            "zapata1": {},
+                            "northfork": {},
+                            "ranchtown": {
+                                "baseload_cmd_max_limit_mw": 9.9,
+                                "baseload_cmd_min_limit_mw": -9.9,
+                                "baseload_cmd_mw": 0,
+                                "calculated_gen_rdpf": 0,
+                                "calculated_gen_rdrs": 0,
+                                "calculated_gen_rupf": 0,
+                                "calculated_gen_rurs": 0,
+                                "calculated_load_rdpf": 0,
+                                "calculated_load_rdrs": 0,
+                                "calculated_load_rupf": 0,
+                                "calculated_load_rurs": 0,
+                                "gen_52m_status": false,
+                                "gen_aux_mvar": 0,
+                                "gen_aux_mw": 0,
+                                "gen_avr_status": false,
+                                "gen_basepoint": 0,
+                                "gen_basepoint_deviation": 0,
+                                "gen_basepoint_manual": 0,
+                                "gen_basepoint_override": false,
+                                "gen_basepoint_select": 0,
+                                "gen_curtailment_flag": false,
+                                "gen_ds1_status": false,
+                                "gen_emergency_down_ramp_rate": 9.9,
+                                "gen_emergency_down_ramp_rate_manual": 0,
+                                "gen_emergency_down_ramp_rate_override": false,
+                                "gen_emergency_down_ramp_rate_select": 9.9,
+                                "gen_emergency_up_ramp_rate": 9.9,
+                                "gen_emergency_up_ramp_rate_manual": 0,
+                                "gen_emergency_up_ramp_rate_override": false,
+                                "gen_emergency_up_ramp_rate_select": 9.9,
+                                "gen_ffr_requirement": 0,
+                                "gen_ffr_responsibility": 0,
+                                "gen_ffr_schedule": 0,
+                                "gen_frrs_down_participation_factor": 0,
+                                "gen_frrs_down_requirement": 0,
+                                "gen_frrs_down_requirement_manual": 0,
+                                "gen_frrs_down_requirement_override": false,
+                                "gen_frrs_down_requirement_select": 0,
+                                "gen_frrs_down_responsibility": 0,
+                                "gen_frrs_down_responsibility_manual": 0,
+                                "gen_frrs_down_responsibility_override": false,
+                                "gen_frrs_down_responsibility_select": 0,
+                                "gen_frrs_up_participation_factor": 0,
+                                "gen_frrs_up_requirement": 0,
+                                "gen_frrs_up_requirement_manual": 0,
+                                "gen_frrs_up_requirement_override": false,
+                                "gen_frrs_up_requirement_select": 0,
+                                "gen_frrs_up_responsibility": 0,
+                                "gen_frrs_up_responsibility_manual": 0,
+                                "gen_frrs_up_responsibility_override": false,
+                                "gen_frrs_up_responsibility_select": 0,
+                                "gen_gross_mvar": 0,
+                                "gen_gross_mw": 0,
+                                "gen_line_flows_mvar": 0,
+                                "gen_line_flows_mw": 0,
+                                "gen_lmp": 0,
+                                "gen_max_charge_mw": 0,
+                                "gen_max_charge_mw_manual": 0,
+                                "gen_max_charge_mw_override": false,
+                                "gen_max_charge_mw_select": 0,
+                                "gen_max_discharge_mw": 0,
+                                "gen_max_discharge_mw_manual": 0,
+                                "gen_max_discharge_mw_override": false,
+                                "gen_max_discharge_mw_select": 0,
+                                "gen_max_operating_soc": 0,
+                                "gen_min_operating_soc": 0,
+                                "gen_net_mvar": 0,
+                                "gen_net_mw": 0,
+                                "gen_normal_down_ramp_rate": 2,
+                                "gen_normal_down_ramp_rate_manual": 0,
+                                "gen_normal_down_ramp_rate_override": false,
+                                "gen_normal_down_ramp_rate_select": 2,
+                                "gen_normal_up_ramp_rate": 2,
+                                "gen_normal_up_ramp_rate_manual": 0,
+                                "gen_normal_up_ramp_rate_override": false,
+                                "gen_normal_up_ramp_rate_select": 2,
+                                "gen_ns_deployed_flag": false,
+                                "gen_ns_requirement": 0,
+                                "gen_ns_requirement_manual": 0,
+                                "gen_ns_requirement_override": false,
+                                "gen_ns_requirement_select": 0,
+                                "gen_ns_responsibility": 0,
+                                "gen_ns_responsibility_manual": 0,
+                                "gen_ns_responsibility_override": false,
+                                "gen_ns_responsibility_select": 0,
+                                "gen_ns_schedule": 0,
+                                "gen_pseudo_switch_status": false,
+                                "gen_reg_down_participation": 0,
+                                "gen_reg_down_requirement": 0,
+                                "gen_reg_down_requirement_manual": 0,
+                                "gen_reg_down_requirement_override": false,
+                                "gen_reg_down_requirement_select": 0,
+                                "gen_reg_down_responsibility": 0,
+                                "gen_reg_down_responsibility_manual": 0,
+                                "gen_reg_down_responsibility_override": false,
+                                "gen_reg_down_responsibility_select": 0,
+                                "gen_reg_up_participation_factor": 0,
+                                "gen_reg_up_requirement": 0,
+                                "gen_reg_up_requirement_manual": 0,
+                                "gen_reg_up_requirement_override": false,
+                                "gen_reg_up_requirement_select": 0,
+                                "gen_reg_up_responsibility": 0,
+                                "gen_reg_up_responsibility_manual": 0,
+                                "gen_reg_up_responsibility_override": false,
+                                "gen_reg_up_responsibility_select": 0,
+                                "gen_resource_status": 0,
+                                "gen_resource_status_manual": 0,
+                                "gen_resource_status_override": false,
+                                "gen_resource_status_select": 0,
+                                "gen_rrs_requirement": 0,
+                                "gen_rrs_responsibility": 0,
+                                "gen_rrs_schedule": 0,
+                                "gen_scct_flag": false,
+                                "gen_soc": 0,
+                                "gen_updated_basepoint": 0,
+                                "gen_updated_basepoint_manual": 0,
+                                "gen_updated_basepoint_override": false,
+                                "gen_updated_basepoint_select": 0,
+                                "gen_voltage": 0,
+                                "inactive_cmd_max_limit_mw": 9.9,
+                                "inactive_cmd_min_limit_mw": -9.9,
+                                "load_basepoint": 0,
+                                "load_basepoint_deviation": 0,
+                                "load_basepoint_manual": 0,
+                                "load_basepoint_override": false,
+                                "load_basepoint_select": 0,
+                                "load_curtailment_flag": false,
+                                "load_emergency_down_ramp_rate": 9.9,
+                                "load_emergency_down_ramp_rate_manual": 0,
+                                "load_emergency_down_ramp_rate_override": false,
+                                "load_emergency_down_ramp_rate_select": 9.9,
+                                "load_emergency_up_ramp_rate": 9.9,
+                                "load_emergency_up_ramp_rate_manual": 0,
+                                "load_emergency_up_ramp_rate_override": false,
+                                "load_emergency_up_ramp_rate_select": 9.9,
+                                "load_ffr_requirement": 0,
+                                "load_ffr_responsibility": 0,
+                                "load_ffr_schedule": 0,
+                                "load_frrs_down_participation_factor": 0,
+                                "load_frrs_down_requirement": 0,
+                                "load_frrs_down_requirement_manual": 0,
+                                "load_frrs_down_requirement_override": false,
+                                "load_frrs_down_requirement_select": 0,
+                                "load_frrs_down_responsibility": 0,
+                                "load_frrs_down_responsibility_manual": 0,
+                                "load_frrs_down_responsibility_override": false,
+                                "load_frrs_down_responsibility_select": 0,
+                                "load_frrs_up_participation_factor": 0,
+                                "load_frrs_up_requirement": 0,
+                                "load_frrs_up_requirement_manual": 0,
+                                "load_frrs_up_requirement_override": false,
+                                "load_frrs_up_requirement_select": 0,
+                                "load_frrs_up_responsibility": 0,
+                                "load_frrs_up_responsibility_manual": 0,
+                                "load_frrs_up_responsibility_override": false,
+                                "load_frrs_up_responsibility_select": 0,
+                                "load_lmp": 0,
+                                "load_net_mvar": 0,
+                                "load_net_mw": 0,
+                                "load_normal_down_ramp_rate": 2,
+                                "load_normal_down_ramp_rate_manual": 0,
+                                "load_normal_down_ramp_rate_override": false,
+                                "load_normal_down_ramp_rate_select": 2,
+                                "load_normal_up_ramp_rate": 2,
+                                "load_normal_up_ramp_rate_manual": 0,
+                                "load_normal_up_ramp_rate_override": false,
+                                "load_normal_up_ramp_rate_select": 2,
+                                "load_ns_deployed_flag": false,
+                                "load_ns_requirement": 0,
+                                "load_ns_requirement_manual": 0,
+                                "load_ns_requirement_override": false,
+                                "load_ns_requirement_select": 0,
+                                "load_ns_responsibility": 0,
+                                "load_ns_responsibility_manual": 0,
+                                "load_ns_responsibility_override": false,
+                                "load_ns_responsibility_select": 0,
+                                "load_ns_schedule": 0,
+                                "load_pseudo_switch_status": false,
+                                "load_pseudo_switch_status_manual": false,
+                                "load_pseudo_switch_status_override": false,
+                                "load_pseudo_switch_status_select": false,
+                                "load_reg_down_participation": 0,
+                                "load_reg_down_requirement": 0,
+                                "load_reg_down_requirement_manual": 0,
+                                "load_reg_down_requirement_override": false,
+                                "load_reg_down_requirement_select": 0,
+                                "load_reg_down_responsibility": 0,
+                                "load_reg_down_responsibility_manual": 0,
+                                "load_reg_down_responsibility_override": false,
+                                "load_reg_down_responsibility_select": 0,
+                                "load_reg_up_participation_factor": 0,
+                                "load_reg_up_requirement": 0,
+                                "load_reg_up_requirement_manual": 0,
+                                "load_reg_up_requirement_override": false,
+                                "load_reg_up_requirement_select": 0,
+                                "load_reg_up_responsibility": 0,
+                                "load_reg_up_responsibility_manual": 0,
+                                "load_reg_up_responsibility_override": false,
+                                "load_reg_up_responsibility_select": 0,
+                                "load_resource_status": 0,
+                                "load_resource_status_manual": 0,
+                                "load_resource_status_override": false,
+                                "load_resource_status_select": 0,
+                                "load_rrs_deployed_flag": false,
+                                "load_rrs_requirement": 0,
+                                "load_rrs_responsibility": 0,
+                                "load_rrs_schedule": 0,
+                                "load_scct_flag": false,
+                                "load_scheduled_mw": 0,
+                                "load_scheduled_mw_2hr": 0,
+                                "load_updated_basepoint": 0,
+                                "load_updated_basepoint_manual": 0,
+                                "load_updated_basepoint_override": false,
+                                "load_updated_basepoint_select": 0,
+                                "reg_manual_override": false,
+                                "reg_manual_override_feedback": false,
+                                "updated_basepoint_sced": 0
+                            },
+                            "sweeny": {},
+                            "loop463": {},
+                            "heights": {},
+                            "odessa": {},
+                            "angleton": {},
+                            "dickinson": {}
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "3",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_reg_down_responsibility",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_reg_down_requirement",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_reg_down_participation",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_rrs_responsibility",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_rrs_requirement",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_rrs_schedule",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_reg_up_responsibility",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_reg_up_requirement",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_reg_up_participation_factor",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_frrs_down_responsibility",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_frrs_down_requirement",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_frrs_down_participation_factor",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_frrs_up_responsibility",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_frrs_up_requirement",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_frrs_up_participation_factor",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_lmp",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_basepoint",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_updated_basepoint",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_resource_status",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_ns_responsibility",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_ns_requirement",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_ns_schedule",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_reg_down_responsibility",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_reg_down_requirement",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_reg_down_participation",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_rrs_responsibility",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_rrs_requirement",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_rrs_schedule",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_reg_up_responsibility",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_reg_up_requirement",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_reg_up_participation_factor",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_frrs_down_responsibility",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_frrs_down_requirement",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_frrs_down_participation_factor",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_frrs_up_responsibility",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_frrs_up_requirement",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_frrs_up_participation_factor",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_lmp",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_basepoint",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_updated_basepoint",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_resource_status",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/calculated_gen_rurs",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/calculated_gen_rupf",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/calculated_gen_rdrs",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/calculated_gen_rdpf",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/calculated_load_rurs",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/calculated_load_rupf",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/calculated_load_rdrs",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/calculated_load_rdpf",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_ffr_responsibility",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_ffr_requirement",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_ffr_schedule",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_ffr_responsibility",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_ffr_requirement",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_ffr_schedule",
+                    "value": 1.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_curtailment_flag",
+                    "value": true
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_scct_flag",
+                    "value": true
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_ns_deployed_flag",
+                    "value": true
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_curtailment_flag",
+                    "value": true
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_scct_flag",
+                    "value": true
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_ns_deployed_flag",
+                    "value": true
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_rrs_deployed_flag",
+                    "value": true
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/reg_manual_override_feedback",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_get",
+                    "uri": "/components",
+                    "waiting": 20,
+                    "value": [
+                        {
+                            "alvin": {},
+                            "brazoria": {},
+                            "magnolia": {},
+                            "batcave": {},
+                            "pueblo1": {},
+                            "pueblo2": {},
+                            "lopeno": {},
+                            "zapata2": {},
+                            "zapata1": {},
+                            "northfork": {},
+                            "ranchtown": {
+                                "baseload_cmd_max_limit_mw": 9.9,
+                                "baseload_cmd_min_limit_mw": -9.9,
+                                "baseload_cmd_mw": 0,
+                                "calculated_gen_rdpf": 1,
+                                "calculated_gen_rdrs": 1,
+                                "calculated_gen_rupf": 1,
+                                "calculated_gen_rurs": 1,
+                                "calculated_load_rdpf": 1,
+                                "calculated_load_rdrs": 1,
+                                "calculated_load_rupf": 1,
+                                "calculated_load_rurs": 1,
+                                "gen_52m_status": false,
+                                "gen_aux_mvar": 0,
+                                "gen_aux_mw": 0,
+                                "gen_avr_status": false,
+                                "gen_basepoint": 1,
+                                "gen_basepoint_deviation": -1,
+                                "gen_basepoint_manual": 0,
+                                "gen_basepoint_override": false,
+                                "gen_basepoint_select": 1,
+                                "gen_curtailment_flag": true,
+                                "gen_ds1_status": false,
+                                "gen_emergency_down_ramp_rate": 9.9,
+                                "gen_emergency_down_ramp_rate_manual": 0,
+                                "gen_emergency_down_ramp_rate_override": false,
+                                "gen_emergency_down_ramp_rate_select": 9.9,
+                                "gen_emergency_up_ramp_rate": 9.9,
+                                "gen_emergency_up_ramp_rate_manual": 0,
+                                "gen_emergency_up_ramp_rate_override": false,
+                                "gen_emergency_up_ramp_rate_select": 9.9,
+                                "gen_ffr_requirement": 1,
+                                "gen_ffr_responsibility": 1,
+                                "gen_ffr_schedule": 1,
+                                "gen_frrs_down_participation_factor": 1,
+                                "gen_frrs_down_requirement": 1,
+                                "gen_frrs_down_requirement_manual": 0,
+                                "gen_frrs_down_requirement_override": false,
+                                "gen_frrs_down_requirement_select": 1,
+                                "gen_frrs_down_responsibility": 1,
+                                "gen_frrs_down_responsibility_manual": 0,
+                                "gen_frrs_down_responsibility_override": false,
+                                "gen_frrs_down_responsibility_select": 1,
+                                "gen_frrs_up_participation_factor": 1,
+                                "gen_frrs_up_requirement": 1,
+                                "gen_frrs_up_requirement_manual": 0,
+                                "gen_frrs_up_requirement_override": false,
+                                "gen_frrs_up_requirement_select": 1,
+                                "gen_frrs_up_responsibility": 1,
+                                "gen_frrs_up_responsibility_manual": 0,
+                                "gen_frrs_up_responsibility_override": false,
+                                "gen_frrs_up_responsibility_select": 1,
+                                "gen_gross_mvar": 0,
+                                "gen_gross_mw": 0,
+                                "gen_line_flows_mvar": 0,
+                                "gen_line_flows_mw": 0,
+                                "gen_lmp": 1,
+                                "gen_max_charge_mw": 0,
+                                "gen_max_charge_mw_manual": 0,
+                                "gen_max_charge_mw_override": false,
+                                "gen_max_charge_mw_select": 0,
+                                "gen_max_discharge_mw": 0,
+                                "gen_max_discharge_mw_manual": 0,
+                                "gen_max_discharge_mw_override": false,
+                                "gen_max_discharge_mw_select": 0,
+                                "gen_max_operating_soc": 0,
+                                "gen_min_operating_soc": 0,
+                                "gen_net_mvar": 0,
+                                "gen_net_mw": 0,
+                                "gen_normal_down_ramp_rate": 2,
+                                "gen_normal_down_ramp_rate_manual": 0,
+                                "gen_normal_down_ramp_rate_override": false,
+                                "gen_normal_down_ramp_rate_select": 2,
+                                "gen_normal_up_ramp_rate": 2,
+                                "gen_normal_up_ramp_rate_manual": 0,
+                                "gen_normal_up_ramp_rate_override": false,
+                                "gen_normal_up_ramp_rate_select": 2,
+                                "gen_ns_deployed_flag": true,
+                                "gen_ns_requirement": 0,
+                                "gen_ns_requirement_manual": 0,
+                                "gen_ns_requirement_override": false,
+                                "gen_ns_requirement_select": 0,
+                                "gen_ns_responsibility": 0,
+                                "gen_ns_responsibility_manual": 0,
+                                "gen_ns_responsibility_override": false,
+                                "gen_ns_responsibility_select": 0,
+                                "gen_ns_schedule": 0,
+                                "gen_pseudo_switch_status": false,
+                                "gen_reg_down_participation": 1,
+                                "gen_reg_down_requirement": 1,
+                                "gen_reg_down_requirement_manual": 0,
+                                "gen_reg_down_requirement_override": false,
+                                "gen_reg_down_requirement_select": 1,
+                                "gen_reg_down_responsibility": 1,
+                                "gen_reg_down_responsibility_manual": 0,
+                                "gen_reg_down_responsibility_override": false,
+                                "gen_reg_down_responsibility_select": 1,
+                                "gen_reg_up_participation_factor": 1,
+                                "gen_reg_up_requirement": 1,
+                                "gen_reg_up_requirement_manual": 0,
+                                "gen_reg_up_requirement_override": false,
+                                "gen_reg_up_requirement_select": 1,
+                                "gen_reg_up_responsibility": 1,
+                                "gen_reg_up_responsibility_manual": 0,
+                                "gen_reg_up_responsibility_override": false,
+                                "gen_reg_up_responsibility_select": 1,
+                                "gen_resource_status": 1,
+                                "gen_resource_status_manual": 0,
+                                "gen_resource_status_override": false,
+                                "gen_resource_status_select": 1,
+                                "gen_rrs_requirement": 1,
+                                "gen_rrs_responsibility": 1,
+                                "gen_rrs_schedule": 1,
+                                "gen_scct_flag": true,
+                                "gen_soc": 0,
+                                "gen_updated_basepoint": 1,
+                                "gen_updated_basepoint_manual": 0,
+                                "gen_updated_basepoint_override": false,
+                                "gen_updated_basepoint_select": 1,
+                                "gen_voltage": 0,
+                                "inactive_cmd_max_limit_mw": 9.9,
+                                "inactive_cmd_min_limit_mw": -9.9,
+                                "load_basepoint": 1,
+                                "load_basepoint_deviation": -1,
+                                "load_basepoint_manual": 0,
+                                "load_basepoint_override": false,
+                                "load_basepoint_select": 1,
+                                "load_curtailment_flag": true,
+                                "load_emergency_down_ramp_rate": 9.9,
+                                "load_emergency_down_ramp_rate_manual": 0,
+                                "load_emergency_down_ramp_rate_override": false,
+                                "load_emergency_down_ramp_rate_select": 9.9,
+                                "load_emergency_up_ramp_rate": 9.9,
+                                "load_emergency_up_ramp_rate_manual": 0,
+                                "load_emergency_up_ramp_rate_override": false,
+                                "load_emergency_up_ramp_rate_select": 9.9,
+                                "load_ffr_requirement": 1,
+                                "load_ffr_responsibility": 1,
+                                "load_ffr_schedule": 1,
+                                "load_frrs_down_participation_factor": 1,
+                                "load_frrs_down_requirement": 1,
+                                "load_frrs_down_requirement_manual": 0,
+                                "load_frrs_down_requirement_override": false,
+                                "load_frrs_down_requirement_select": 1,
+                                "load_frrs_down_responsibility": 1,
+                                "load_frrs_down_responsibility_manual": 0,
+                                "load_frrs_down_responsibility_override": false,
+                                "load_frrs_down_responsibility_select": 1,
+                                "load_frrs_up_participation_factor": 1,
+                                "load_frrs_up_requirement": 1,
+                                "load_frrs_up_requirement_manual": 0,
+                                "load_frrs_up_requirement_override": false,
+                                "load_frrs_up_requirement_select": 1,
+                                "load_frrs_up_responsibility": 1,
+                                "load_frrs_up_responsibility_manual": 0,
+                                "load_frrs_up_responsibility_override": false,
+                                "load_frrs_up_responsibility_select": 1,
+                                "load_lmp": 1,
+                                "load_net_mvar": 0,
+                                "load_net_mw": 0,
+                                "load_normal_down_ramp_rate": 2,
+                                "load_normal_down_ramp_rate_manual": 0,
+                                "load_normal_down_ramp_rate_override": false,
+                                "load_normal_down_ramp_rate_select": 2,
+                                "load_normal_up_ramp_rate": 2,
+                                "load_normal_up_ramp_rate_manual": 0,
+                                "load_normal_up_ramp_rate_override": false,
+                                "load_normal_up_ramp_rate_select": 2,
+                                "load_ns_deployed_flag": true,
+                                "load_ns_requirement": 1,
+                                "load_ns_requirement_manual": 0,
+                                "load_ns_requirement_override": false,
+                                "load_ns_requirement_select": 1,
+                                "load_ns_responsibility": 1,
+                                "load_ns_responsibility_manual": 0,
+                                "load_ns_responsibility_override": false,
+                                "load_ns_responsibility_select": 1,
+                                "load_ns_schedule": 1,
+                                "load_pseudo_switch_status": false,
+                                "load_pseudo_switch_status_manual": false,
+                                "load_pseudo_switch_status_override": false,
+                                "load_pseudo_switch_status_select": false,
+                                "load_reg_down_participation": 1,
+                                "load_reg_down_requirement": 1,
+                                "load_reg_down_requirement_manual": 0,
+                                "load_reg_down_requirement_override": false,
+                                "load_reg_down_requirement_select": 1,
+                                "load_reg_down_responsibility": 1,
+                                "load_reg_down_responsibility_manual": 0,
+                                "load_reg_down_responsibility_override": false,
+                                "load_reg_down_responsibility_select": 1,
+                                "load_reg_up_participation_factor": 1,
+                                "load_reg_up_requirement": 1,
+                                "load_reg_up_requirement_manual": 0,
+                                "load_reg_up_requirement_override": false,
+                                "load_reg_up_requirement_select": 1,
+                                "load_reg_up_responsibility": 1,
+                                "load_reg_up_responsibility_manual": 0,
+                                "load_reg_up_responsibility_override": false,
+                                "load_reg_up_responsibility_select": 1,
+                                "load_resource_status": 1,
+                                "load_resource_status_manual": 0,
+                                "load_resource_status_override": false,
+                                "load_resource_status_select": 1,
+                                "load_rrs_deployed_flag": true,
+                                "load_rrs_requirement": 1,
+                                "load_rrs_responsibility": 1,
+                                "load_rrs_schedule": 1,
+                                "load_scct_flag": true,
+                                "load_scheduled_mw": 0,
+                                "load_scheduled_mw_2hr": 0,
+                                "load_updated_basepoint": 1,
+                                "load_updated_basepoint_manual": 0,
+                                "load_updated_basepoint_override": false,
+                                "load_updated_basepoint_select": 1,
+                                "reg_manual_override": false,
+                                "reg_manual_override_feedback": true,
+                                "updated_basepoint_sced": 0
+                            },
+                            "sweeny": {},
+                            "loop463": {},
+                            "heights": {},
+                            "odessa": {},
+                            "angleton": {},
+                            "dickinson": {}
+                        }
+                    ]
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/components/ranchtown",
+                    "waiting": 20,
+                    "value": [
+                        {
+                        "baseload_cmd_max_limit_mw": 9.9,
+                        "baseload_cmd_min_limit_mw": -9.9,
+                        "baseload_cmd_mw": 0,
+                        "calculated_gen_rdpf": 1,
+                        "calculated_gen_rdrs": 1,
+                        "calculated_gen_rupf": 1,
+                        "calculated_gen_rurs": 1,
+                        "calculated_load_rdpf": 1,
+                        "calculated_load_rdrs": 1,
+                        "calculated_load_rupf": 1,
+                        "calculated_load_rurs": 1,
+                        "gen_52m_status": false,
+                        "gen_aux_mvar": 0,
+                        "gen_aux_mw": 0,
+                        "gen_avr_status": false,
+                        "gen_basepoint": 1,
+                        "gen_basepoint_deviation": -1,
+                        "gen_basepoint_manual": 0,
+                        "gen_basepoint_override": false,
+                        "gen_basepoint_select": 1,
+                        "gen_curtailment_flag": true,
+                        "gen_ds1_status": false,
+                        "gen_emergency_down_ramp_rate": 9.9,
+                        "gen_emergency_down_ramp_rate_manual": 0,
+                        "gen_emergency_down_ramp_rate_override": false,
+                        "gen_emergency_down_ramp_rate_select": 9.9,
+                        "gen_emergency_up_ramp_rate": 9.9,
+                        "gen_emergency_up_ramp_rate_manual": 0,
+                        "gen_emergency_up_ramp_rate_override": false,
+                        "gen_emergency_up_ramp_rate_select": 9.9,
+                        "gen_ffr_requirement": 1,
+                        "gen_ffr_responsibility": 1,
+                        "gen_ffr_schedule": 1,
+                        "gen_frrs_down_participation_factor": 1,
+                        "gen_frrs_down_requirement": 1,
+                        "gen_frrs_down_requirement_manual": 0,
+                        "gen_frrs_down_requirement_override": false,
+                        "gen_frrs_down_requirement_select": 1,
+                        "gen_frrs_down_responsibility": 1,
+                        "gen_frrs_down_responsibility_manual": 0,
+                        "gen_frrs_down_responsibility_override": false,
+                        "gen_frrs_down_responsibility_select": 1,
+                        "gen_frrs_up_participation_factor": 1,
+                        "gen_frrs_up_requirement": 1,
+                        "gen_frrs_up_requirement_manual": 0,
+                        "gen_frrs_up_requirement_override": false,
+                        "gen_frrs_up_requirement_select": 1,
+                        "gen_frrs_up_responsibility": 1,
+                        "gen_frrs_up_responsibility_manual": 0,
+                        "gen_frrs_up_responsibility_override": false,
+                        "gen_frrs_up_responsibility_select": 1,
+                        "gen_gross_mvar": 0,
+                        "gen_gross_mw": 0,
+                        "gen_line_flows_mvar": 0,
+                        "gen_line_flows_mw": 0,
+                        "gen_lmp": 1,
+                        "gen_max_charge_mw": 0,
+                        "gen_max_charge_mw_manual": 0,
+                        "gen_max_charge_mw_override": false,
+                        "gen_max_charge_mw_select": 0,
+                        "gen_max_discharge_mw": 0,
+                        "gen_max_discharge_mw_manual": 0,
+                        "gen_max_discharge_mw_override": false,
+                        "gen_max_discharge_mw_select": 0,
+                        "gen_max_operating_soc": 0,
+                        "gen_min_operating_soc": 0,
+                        "gen_net_mvar": 0,
+                        "gen_net_mw": 0,
+                        "gen_normal_down_ramp_rate": 2,
+                        "gen_normal_down_ramp_rate_manual": 0,
+                        "gen_normal_down_ramp_rate_override": false,
+                        "gen_normal_down_ramp_rate_select": 2,
+                        "gen_normal_up_ramp_rate": 2,
+                        "gen_normal_up_ramp_rate_manual": 0,
+                        "gen_normal_up_ramp_rate_override": false,
+                        "gen_normal_up_ramp_rate_select": 2,
+                        "gen_ns_deployed_flag": true,
+                        "gen_ns_requirement": 0,
+                        "gen_ns_requirement_manual": 0,
+                        "gen_ns_requirement_override": false,
+                        "gen_ns_requirement_select": 0,
+                        "gen_ns_responsibility": 0,
+                        "gen_ns_responsibility_manual": 0,
+                        "gen_ns_responsibility_override": false,
+                        "gen_ns_responsibility_select": 0,
+                        "gen_ns_schedule": 0,
+                        "gen_pseudo_switch_status": false,
+                        "gen_reg_down_participation": 1,
+                        "gen_reg_down_requirement": 1,
+                        "gen_reg_down_requirement_manual": 0,
+                        "gen_reg_down_requirement_override": false,
+                        "gen_reg_down_requirement_select": 1,
+                        "gen_reg_down_responsibility": 1,
+                        "gen_reg_down_responsibility_manual": 0,
+                        "gen_reg_down_responsibility_override": false,
+                        "gen_reg_down_responsibility_select": 1,
+                        "gen_reg_up_participation_factor": 1,
+                        "gen_reg_up_requirement": 1,
+                        "gen_reg_up_requirement_manual": 0,
+                        "gen_reg_up_requirement_override": false,
+                        "gen_reg_up_requirement_select": 1,
+                        "gen_reg_up_responsibility": 1,
+                        "gen_reg_up_responsibility_manual": 0,
+                        "gen_reg_up_responsibility_override": false,
+                        "gen_reg_up_responsibility_select": 1,
+                        "gen_resource_status": 1,
+                        "gen_resource_status_manual": 0,
+                        "gen_resource_status_override": false,
+                        "gen_resource_status_select": 1,
+                        "gen_rrs_requirement": 1,
+                        "gen_rrs_responsibility": 1,
+                        "gen_rrs_schedule": 1,
+                        "gen_scct_flag": true,
+                        "gen_soc": 0,
+                        "gen_updated_basepoint": 1,
+                        "gen_updated_basepoint_manual": 0,
+                        "gen_updated_basepoint_override": false,
+                        "gen_updated_basepoint_select": 1,
+                        "gen_voltage": 0,
+                        "inactive_cmd_max_limit_mw": 9.9,
+                        "inactive_cmd_min_limit_mw": -9.9,
+                        "load_basepoint": 1,
+                        "load_basepoint_deviation": -1,
+                        "load_basepoint_manual": 0,
+                        "load_basepoint_override": false,
+                        "load_basepoint_select": 1,
+                        "load_curtailment_flag": true,
+                        "load_emergency_down_ramp_rate": 9.9,
+                        "load_emergency_down_ramp_rate_manual": 0,
+                        "load_emergency_down_ramp_rate_override": false,
+                        "load_emergency_down_ramp_rate_select": 9.9,
+                        "load_emergency_up_ramp_rate": 9.9,
+                        "load_emergency_up_ramp_rate_manual": 0,
+                        "load_emergency_up_ramp_rate_override": false,
+                        "load_emergency_up_ramp_rate_select": 9.9,
+                        "load_ffr_requirement": 1,
+                        "load_ffr_responsibility": 1,
+                        "load_ffr_schedule": 1,
+                        "load_frrs_down_participation_factor": 1,
+                        "load_frrs_down_requirement": 1,
+                        "load_frrs_down_requirement_manual": 0,
+                        "load_frrs_down_requirement_override": false,
+                        "load_frrs_down_requirement_select": 1,
+                        "load_frrs_down_responsibility": 1,
+                        "load_frrs_down_responsibility_manual": 0,
+                        "load_frrs_down_responsibility_override": false,
+                        "load_frrs_down_responsibility_select": 1,
+                        "load_frrs_up_participation_factor": 1,
+                        "load_frrs_up_requirement": 1,
+                        "load_frrs_up_requirement_manual": 0,
+                        "load_frrs_up_requirement_override": false,
+                        "load_frrs_up_requirement_select": 1,
+                        "load_frrs_up_responsibility": 1,
+                        "load_frrs_up_responsibility_manual": 0,
+                        "load_frrs_up_responsibility_override": false,
+                        "load_frrs_up_responsibility_select": 1,
+                        "load_lmp": 1,
+                        "load_net_mvar": 0,
+                        "load_net_mw": 0,
+                        "load_normal_down_ramp_rate": 2,
+                        "load_normal_down_ramp_rate_manual": 0,
+                        "load_normal_down_ramp_rate_override": false,
+                        "load_normal_down_ramp_rate_select": 2,
+                        "load_normal_up_ramp_rate": 2,
+                        "load_normal_up_ramp_rate_manual": 0,
+                        "load_normal_up_ramp_rate_override": false,
+                        "load_normal_up_ramp_rate_select": 2,
+                        "load_ns_deployed_flag": true,
+                        "load_ns_requirement": 1,
+                        "load_ns_requirement_manual": 0,
+                        "load_ns_requirement_override": false,
+                        "load_ns_requirement_select": 1,
+                        "load_ns_responsibility": 1,
+                        "load_ns_responsibility_manual": 0,
+                        "load_ns_responsibility_override": false,
+                        "load_ns_responsibility_select": 1,
+                        "load_ns_schedule": 1,
+                        "load_pseudo_switch_status": false,
+                        "load_pseudo_switch_status_manual": false,
+                        "load_pseudo_switch_status_override": false,
+                        "load_pseudo_switch_status_select": false,
+                        "load_reg_down_participation": 1,
+                        "load_reg_down_requirement": 1,
+                        "load_reg_down_requirement_manual": 0,
+                        "load_reg_down_requirement_override": false,
+                        "load_reg_down_requirement_select": 1,
+                        "load_reg_down_responsibility": 1,
+                        "load_reg_down_responsibility_manual": 0,
+                        "load_reg_down_responsibility_override": false,
+                        "load_reg_down_responsibility_select": 1,
+                        "load_reg_up_participation_factor": 1,
+                        "load_reg_up_requirement": 1,
+                        "load_reg_up_requirement_manual": 0,
+                        "load_reg_up_requirement_override": false,
+                        "load_reg_up_requirement_select": 1,
+                        "load_reg_up_responsibility": 1,
+                        "load_reg_up_responsibility_manual": 0,
+                        "load_reg_up_responsibility_override": false,
+                        "load_reg_up_responsibility_select": 1,
+                        "load_resource_status": 1,
+                        "load_resource_status_manual": 0,
+                        "load_resource_status_override": false,
+                        "load_resource_status_select": 1,
+                        "load_rrs_deployed_flag": true,
+                        "load_rrs_requirement": 1,
+                        "load_rrs_responsibility": 1,
+                        "load_rrs_schedule": 1,
+                        "load_scct_flag": true,
+                        "load_scheduled_mw": 0,
+                        "load_scheduled_mw_2hr": 0,
+                        "load_updated_basepoint": 1,
+                        "load_updated_basepoint_manual": 0,
+                        "load_updated_basepoint_override": false,
+                        "load_updated_basepoint_select": 1,
+                        "reg_manual_override": false,
+                        "reg_manual_override_feedback": true,
+                        "updated_basepoint_sced": 0
+                    }
+                ]
+
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "4",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_max_discharge_mw_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_max_charge_mw_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_normal_up_ramp_rate_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_ns_responsibility_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_normal_down_ramp_rate_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_ns_requirement_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_reg_down_responsibility_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_reg_down_requirement_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_reg_up_responsibility_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_reg_up_requirement_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_frrs_down_responsibility_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_frrs_down_requirement_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_frrs_up_responsibility_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_frrs_up_requirement_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_basepoint_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_updated_basepoint_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_resource_status_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_normal_up_ramp_rate_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_normal_down_ramp_rate_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_ns_responsibility_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_ns_requirement_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_reg_down_responsibility_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_reg_down_requirement_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_reg_up_responsibility_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_reg_up_requirement_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_frrs_down_responsibility_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_frrs_down_requirement_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_frrs_up_responsibility_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_frrs_up_requirement_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_basepoint_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_updated_basepoint_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_resource_status_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_emergency_up_ramp_rate_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_emergency_down_ramp_rate_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_emergency_up_ramp_rate_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_emergency_down_ramp_rate_manual",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_max_discharge_mw_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_max_charge_mw_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_normal_up_ramp_rate_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_normal_down_ramp_rate_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_ns_responsibility_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_ns_requirement_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_reg_down_responsibility_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_reg_down_requirement_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_reg_up_responsibility_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_reg_up_requirement_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_frrs_down_responsibility_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_frrs_down_requirement_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_frrs_up_responsibility_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_frrs_up_requirement_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_basepoint_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_updated_basepoint_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_resource_status_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_normal_up_ramp_rate_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_normal_down_ramp_rate_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_ns_responsibility_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_ns_requirement_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_reg_down_responsibility_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_reg_down_requirement_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_reg_up_responsibility_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_reg_up_requirement_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_frrs_down_responsibility_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_frrs_down_requirement_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_frrs_up_responsibility_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_frrs_up_requirement_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_pseudo_switch_status_manual",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_pseudo_switch_status_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_basepoint_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_updated_basepoint_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_resource_status_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_emergency_up_ramp_rate_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_emergency_down_ramp_rate_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_emergency_up_ramp_rate_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_emergency_down_ramp_rate_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/reg_manual_override",
+                    "value": true
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_emergency_up_ramp_rate_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_emergency_down_ramp_rate_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_emergency_up_ramp_rate_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_emergency_down_ramp_rate_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/components/ranchtown/gen_normal_up_ramp_rate_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/components/ranchtown/gen_normal_down_ramp_rate_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/components/ranchtown/gen_max_discharge_mw_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/components/ranchtown/gen_max_charge_mw_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/components/ranchtown/gen_ns_responsibility_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/components/ranchtown/gen_ns_requirement_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/components/ranchtown/gen_reg_down_responsibility_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/components/ranchtown/gen_reg_down_requirement_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/components/ranchtown/gen_reg_up_responsibility_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/components/ranchtown/gen_reg_up_requirement_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/components/ranchtown/gen_frrs_down_responsibility_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/components/ranchtown/gen_frrs_down_requirement_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/components/ranchtown/gen_frrs_up_responsibility_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/components/ranchtown/gen_frrs_up_requirement_select",
+                    "value": 5.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/reg_manual_override",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_get",
+                    "uri": "/components",
+                    "waiting": 20,
+                    "value": [
+                        {
+                            "alvin": {},
+                            "brazoria": {},
+                            "magnolia": {},
+                            "batcave": {},
+                            "pueblo1": {},
+                            "pueblo2": {},
+                            "lopeno": {},
+                            "zapata2": {},
+                            "zapata1": {},
+                            "northfork": {},
+                            "ranchtown": {
+                                "baseload_cmd_max_limit_mw": 9.9,
+                                "baseload_cmd_min_limit_mw": -9.9,
+                                "baseload_cmd_mw": 0,
+                                "calculated_gen_rdpf": 1,
+                                "calculated_gen_rdrs": 1,
+                                "calculated_gen_rupf": 1,
+                                "calculated_gen_rurs": 1,
+                                "calculated_load_rdpf": 1,
+                                "calculated_load_rdrs": 1,
+                                "calculated_load_rupf": 1,
+                                "calculated_load_rurs": 1,
+                                "gen_52m_status": false,
+                                "gen_aux_mvar": 0,
+                                "gen_aux_mw": 0,
+                                "gen_avr_status": false,
+                                "gen_basepoint": 1,
+                                "gen_basepoint_deviation": -5,
+                                "gen_basepoint_manual": 5,
+                                "gen_basepoint_override": true,
+                                "gen_basepoint_select": 5,
+                                "gen_curtailment_flag": true,
+                                "gen_ds1_status": false,
+                                "gen_emergency_down_ramp_rate": 9.9,
+                                "gen_emergency_down_ramp_rate_manual": 5,
+                                "gen_emergency_down_ramp_rate_override": true,
+                                "gen_emergency_down_ramp_rate_select": 5,
+                                "gen_emergency_up_ramp_rate": 9.9,
+                                "gen_emergency_up_ramp_rate_manual": 5,
+                                "gen_emergency_up_ramp_rate_override": true,
+                                "gen_emergency_up_ramp_rate_select": 5,
+                                "gen_ffr_requirement": 1,
+                                "gen_ffr_responsibility": 1,
+                                "gen_ffr_schedule": 1,
+                                "gen_frrs_down_participation_factor": 1,
+                                "gen_frrs_down_requirement": 1,
+                                "gen_frrs_down_requirement_manual": 5,
+                                "gen_frrs_down_requirement_override": true,
+                                "gen_frrs_down_requirement_select": 5,
+                                "gen_frrs_down_responsibility": 1,
+                                "gen_frrs_down_responsibility_manual": 5,
+                                "gen_frrs_down_responsibility_override": true,
+                                "gen_frrs_down_responsibility_select": 5,
+                                "gen_frrs_up_participation_factor": 1,
+                                "gen_frrs_up_requirement": 1,
+                                "gen_frrs_up_requirement_manual": 5,
+                                "gen_frrs_up_requirement_override": true,
+                                "gen_frrs_up_requirement_select": 5,
+                                "gen_frrs_up_responsibility": 1,
+                                "gen_frrs_up_responsibility_manual": 5,
+                                "gen_frrs_up_responsibility_override": true,
+                                "gen_frrs_up_responsibility_select": 5,
+                                "gen_gross_mvar": 0,
+                                "gen_gross_mw": 0,
+                                "gen_line_flows_mvar": 0,
+                                "gen_line_flows_mw": 0,
+                                "gen_lmp": 1,
+                                "gen_max_charge_mw": 0,
+                                "gen_max_charge_mw_manual": 5,
+                                "gen_max_charge_mw_override": true,
+                                "gen_max_charge_mw_select": 5,
+                                "gen_max_discharge_mw": 0,
+                                "gen_max_discharge_mw_manual": 5,
+                                "gen_max_discharge_mw_override": true,
+                                "gen_max_discharge_mw_select": 5,
+                                "gen_max_operating_soc": 0,
+                                "gen_min_operating_soc": 0,
+                                "gen_net_mvar": 0,
+                                "gen_net_mw": 0,
+                                "gen_normal_down_ramp_rate": 2,
+                                "gen_normal_down_ramp_rate_manual": 5,
+                                "gen_normal_down_ramp_rate_override": true,
+                                "gen_normal_down_ramp_rate_select": 5,
+                                "gen_normal_up_ramp_rate": 2,
+                                "gen_normal_up_ramp_rate_manual": 5,
+                                "gen_normal_up_ramp_rate_override": true,
+                                "gen_normal_up_ramp_rate_select": 5,
+                                "gen_ns_deployed_flag": true,
+                                "gen_ns_requirement": 0,
+                                "gen_ns_requirement_manual": 5,
+                                "gen_ns_requirement_override": true,
+                                "gen_ns_requirement_select": 5,
+                                "gen_ns_responsibility": 0,
+                                "gen_ns_responsibility_manual": 5,
+                                "gen_ns_responsibility_override": true,
+                                "gen_ns_responsibility_select": 5,
+                                "gen_ns_schedule": 0,
+                                "gen_pseudo_switch_status": false,
+                                "gen_reg_down_participation": 1,
+                                "gen_reg_down_requirement": 1,
+                                "gen_reg_down_requirement_manual": 5,
+                                "gen_reg_down_requirement_override": true,
+                                "gen_reg_down_requirement_select": 5,
+                                "gen_reg_down_responsibility": 1,
+                                "gen_reg_down_responsibility_manual": 5,
+                                "gen_reg_down_responsibility_override": true,
+                                "gen_reg_down_responsibility_select": 5,
+                                "gen_reg_up_participation_factor": 1,
+                                "gen_reg_up_requirement": 1,
+                                "gen_reg_up_requirement_manual": 5,
+                                "gen_reg_up_requirement_override": true,
+                                "gen_reg_up_requirement_select": 5,
+                                "gen_reg_up_responsibility": 1,
+                                "gen_reg_up_responsibility_manual": 5,
+                                "gen_reg_up_responsibility_override": true,
+                                "gen_reg_up_responsibility_select": 5,
+                                "gen_resource_status": 1,
+                                "gen_resource_status_manual": 5,
+                                "gen_resource_status_override": true,
+                                "gen_resource_status_select": 5,
+                                "gen_rrs_requirement": 1,
+                                "gen_rrs_responsibility": 1,
+                                "gen_rrs_schedule": 1,
+                                "gen_scct_flag": true,
+                                "gen_soc": 0,
+                                "gen_updated_basepoint": 1,
+                                "gen_updated_basepoint_manual": 5,
+                                "gen_updated_basepoint_override": true,
+                                "gen_updated_basepoint_select": 5,
+                                "gen_voltage": 0,
+                                "inactive_cmd_max_limit_mw": 9.9,
+                                "inactive_cmd_min_limit_mw": -9.9,
+                                "load_basepoint": 1,
+                                "load_basepoint_deviation": -5,
+                                "load_basepoint_manual": 5,
+                                "load_basepoint_override": true,
+                                "load_basepoint_select": 5,
+                                "load_curtailment_flag": true,
+                                "load_emergency_down_ramp_rate": 9.9,
+                                "load_emergency_down_ramp_rate_manual": 5,
+                                "load_emergency_down_ramp_rate_override": true,
+                                "load_emergency_down_ramp_rate_select": 5,
+                                "load_emergency_up_ramp_rate": 9.9,
+                                "load_emergency_up_ramp_rate_manual": 5,
+                                "load_emergency_up_ramp_rate_override": true,
+                                "load_emergency_up_ramp_rate_select": 5,
+                                "load_ffr_requirement": 1,
+                                "load_ffr_responsibility": 1,
+                                "load_ffr_schedule": 1,
+                                "load_frrs_down_participation_factor": 1,
+                                "load_frrs_down_requirement": 1,
+                                "load_frrs_down_requirement_manual": 5,
+                                "load_frrs_down_requirement_override": true,
+                                "load_frrs_down_requirement_select": 5,
+                                "load_frrs_down_responsibility": 1,
+                                "load_frrs_down_responsibility_manual": 5,
+                                "load_frrs_down_responsibility_override": true,
+                                "load_frrs_down_responsibility_select": 5,
+                                "load_frrs_up_participation_factor": 1,
+                                "load_frrs_up_requirement": 1,
+                                "load_frrs_up_requirement_manual": 5,
+                                "load_frrs_up_requirement_override": true,
+                                "load_frrs_up_requirement_select": 5,
+                                "load_frrs_up_responsibility": 1,
+                                "load_frrs_up_responsibility_manual": 5,
+                                "load_frrs_up_responsibility_override": true,
+                                "load_frrs_up_responsibility_select": 5,
+                                "load_lmp": 1,
+                                "load_net_mvar": 0,
+                                "load_net_mw": 0,
+                                "load_normal_down_ramp_rate": 2,
+                                "load_normal_down_ramp_rate_manual": 5,
+                                "load_normal_down_ramp_rate_override": true,
+                                "load_normal_down_ramp_rate_select": 5,
+                                "load_normal_up_ramp_rate": 2,
+                                "load_normal_up_ramp_rate_manual": 5,
+                                "load_normal_up_ramp_rate_override": true,
+                                "load_normal_up_ramp_rate_select": 5,
+                                "load_ns_deployed_flag": true,
+                                "load_ns_requirement": 1,
+                                "load_ns_requirement_manual": 5,
+                                "load_ns_requirement_override": true,
+                                "load_ns_requirement_select": 5,
+                                "load_ns_responsibility": 1,
+                                "load_ns_responsibility_manual": 5,
+                                "load_ns_responsibility_override": true,
+                                "load_ns_responsibility_select": 5,
+                                "load_ns_schedule": 1,
+                                "load_pseudo_switch_status": false,
+                                "load_pseudo_switch_status_manual": true,
+                                "load_pseudo_switch_status_override": true,
+                                "load_pseudo_switch_status_select": true,
+                                "load_reg_down_participation": 1,
+                                "load_reg_down_requirement": 1,
+                                "load_reg_down_requirement_manual": 5,
+                                "load_reg_down_requirement_override": true,
+                                "load_reg_down_requirement_select": 5,
+                                "load_reg_down_responsibility": 1,
+                                "load_reg_down_responsibility_manual": 5,
+                                "load_reg_down_responsibility_override": true,
+                                "load_reg_down_responsibility_select": 5,
+                                "load_reg_up_participation_factor": 1,
+                                "load_reg_up_requirement": 1,
+                                "load_reg_up_requirement_manual": 5,
+                                "load_reg_up_requirement_override": true,
+                                "load_reg_up_requirement_select": 5,
+                                "load_reg_up_responsibility": 1,
+                                "load_reg_up_responsibility_manual": 5,
+                                "load_reg_up_responsibility_override": true,
+                                "load_reg_up_responsibility_select": 5,
+                                "load_resource_status": 1,
+                                "load_resource_status_manual": 5,
+                                "load_resource_status_override": true,
+                                "load_resource_status_select": 5,
+                                "load_rrs_deployed_flag": true,
+                                "load_rrs_requirement": 1,
+                                "load_rrs_responsibility": 1,
+                                "load_rrs_schedule": 1,
+                                "load_scct_flag": true,
+                                "load_scheduled_mw": 0,
+                                "load_scheduled_mw_2hr": 0,
+                                "load_updated_basepoint": 1,
+                                "load_updated_basepoint_manual": 5,
+                                "load_updated_basepoint_override": true,
+                                "load_updated_basepoint_select": 5,
+                                "reg_manual_override": true,
+                                "reg_manual_override_feedback": true,
+                                "updated_basepoint_sced": 0
+                            },
+                            "sweeny": {},
+                            "loop463": {},
+                            "heights": {},
+                            "odessa": {},
+                            "angleton": {},
+                            "dickinson": {}
+                        }
+                    ]
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_get",
+                    "uri": "/ercot/outstation/reg_manual_override",
+                    "waiting": 20,
+                    "value": [
+                        {
+                            "reg_manual_override": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "name": "5",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_max_discharge_mw_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_max_charge_mw_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_normal_up_ramp_rate_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_ns_responsibility_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_normal_down_ramp_rate_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_ns_requirement_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_reg_down_responsibility_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_reg_down_requirement_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_reg_up_responsibility_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_reg_up_requirement_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_frrs_down_responsibility_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_frrs_down_requirement_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_frrs_up_responsibility_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_frrs_up_requirement_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_basepoint_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_updated_basepoint_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_resource_status_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_normal_up_ramp_rate_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_normal_down_ramp_rate_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_ns_responsibility_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_ns_requirement_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_reg_down_responsibility_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_reg_down_requirement_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_reg_up_responsibility_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_reg_up_requirement_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_frrs_down_responsibility_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_frrs_down_requirement_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_frrs_up_responsibility_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_frrs_up_requirement_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_basepoint_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_updated_basepoint_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_resource_status_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_emergency_up_ramp_rate_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_emergency_down_ramp_rate_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_emergency_up_ramp_rate_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_emergency_down_ramp_rate_manual",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_max_discharge_mw_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_max_charge_mw_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_normal_up_ramp_rate_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_normal_down_ramp_rate_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_ns_responsibility_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_ns_requirement_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_reg_down_responsibility_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_reg_down_requirement_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_reg_up_responsibility_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_reg_up_requirement_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_frrs_down_responsibility_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_frrs_down_requirement_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_frrs_up_responsibility_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_frrs_up_requirement_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_basepoint_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_updated_basepoint_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_resource_status_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_normal_up_ramp_rate_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_normal_down_ramp_rate_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_ns_responsibility_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_ns_requirement_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_reg_down_responsibility_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_reg_down_requirement_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_reg_up_responsibility_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_reg_up_requirement_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_frrs_down_responsibility_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_frrs_down_requirement_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_frrs_up_responsibility_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_frrs_up_requirement_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_pseudo_switch_status_manual",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_pseudo_switch_status_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_basepoint_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_updated_basepoint_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_resource_status_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_emergency_up_ramp_rate_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/gen_emergency_down_ramp_rate_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_emergency_up_ramp_rate_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/load_emergency_down_ramp_rate_override",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_put",
+                    "uri": "/components/ranchtown/reg_manual_override",
+                    "value": false
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_reg_down_responsibility",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_reg_down_requirement",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_reg_down_participation",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_rrs_responsibility",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_rrs_requirement",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_rrs_schedule",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_reg_up_responsibility",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_reg_up_requirement",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_reg_up_participation_factor",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_frrs_down_responsibility",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_frrs_down_requirement",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_frrs_down_participation_factor",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_frrs_up_responsibility",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_frrs_up_requirement",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_frrs_up_participation_factor",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_lmp",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_basepoint",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_updated_basepoint",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_resource_status",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_ns_responsibility",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_ns_requirement",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_ns_schedule",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_reg_down_responsibility",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_reg_down_requirement",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_reg_down_participation",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_rrs_responsibility",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_rrs_requirement",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_rrs_schedule",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_reg_up_responsibility",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_reg_up_requirement",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_reg_up_participation_factor",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_frrs_down_responsibility",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_frrs_down_requirement",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_frrs_down_participation_factor",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_frrs_up_responsibility",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_frrs_up_requirement",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_frrs_up_participation_factor",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_lmp",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_basepoint",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_updated_basepoint",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_resource_status",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/calculated_gen_rurs",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/calculated_gen_rupf",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/calculated_gen_rdrs",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/calculated_gen_rdpf",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/calculated_load_rurs",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/calculated_load_rupf",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/calculated_load_rdrs",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/calculated_load_rdpf",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_ffr_responsibility",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_ffr_requirement",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_ffr_schedule",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_ffr_responsibility",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_ffr_requirement",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_ffr_schedule",
+                    "value": 0.0
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_curtailment_flag",
+                    "value": false
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_scct_flag",
+                    "value": false
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/gen_ns_deployed_flag",
+                    "value": false
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_curtailment_flag",
+                    "value": false
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_scct_flag",
+                    "value": false
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_ns_deployed_flag",
+                    "value": false
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/load_rrs_deployed_flag",
+                    "value": false
+                },
+                {
+                    "controller": "dnp3_client",
+                    "action": "fims_set",
+                    "uri": "/ercot/outstation/reg_manual_override_feedback",
+                    "value": false
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_get",
+                    "uri": "/sites/ranchtown/watchdog_pet",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_ffr_active_cmd_mw_in",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_ffr_active_cmd_mw",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_response_enable_mask_in",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_response_enable_mask",
+                    "value": 24.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_frrs_up_inactive_cmd_mw_in",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_frrs_up_inactive_cmd_mw",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_frrs_up_active_cmd_mw_in",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_frrs_up_active_cmd_mw",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_frrs_down_inactive_cmd_mw_in",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_frrs_down_inactive_cmd_mw",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_frrs_down_active_cmd_mw_in",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_frrs_down_active_cmd_mw",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_ffr_inactive_cmd_mw_in",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_ffr_inactive_cmd_mw",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_baseload_cmd_mw_in",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_baseload_cmd_mw",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_pfr_up_active_cmd_mw_in",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_pfr_up_active_cmd_mw",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_pfr_down_active_cmd_mw_in",
+                    "value": 0.0
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "fims_set",
+                    "uri": "/sites/ranchtown/fr_pfr_down_active_cmd_mw",
+                    "value": 0.0
+                }
+            ],
+            "result": [
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_get",
+                    "uri": "/sites",
+                    "waiting": 20,
+                    "value": [
+                        {
+                            "alvin": {},
+                            "brazoria": {},
+                            "magnolia": {},
+                            "batcave": {},
+                            "pueblo1": {},
+                            "pueblo2": {},
+                            "lopeno": {},
+                            "zapata2": {},
+                            "zapata1": {},
+                            "northfork": {},
+                            "ranchtown": {
+                                "watchdog_pet": 0,
+                                "site_dischargeable_mw": 0,
+                                "site_chargeable_mw": 0,
+                                "running_status_flag": false,
+                                "running_ess_num": 0,
+                                "remote_enable_flag": false,
+                                "remote_disable_flag": false,
+                                "remote_clear_faults": false,
+                                "reactive_power": 0,
+                                "num_ess_available": 0,
+                                "mwh_received": 0,
+                                "mwh_delivered": 0,
+                                "heartbeat_counter": 0,
+                                "gross_reactive_power": 0,
+                                "gross_active_power": 0,
+                                "grid_voltage_l3_l1": 0,
+                                "grid_voltage_l2_l3": 0,
+                                "grid_voltage_l1_l2": 0,
+                                "frequency": 0,
+                                "fr_response_enable_mask_in": 0,
+                                "fr_response_enable_mask": 24,
+                                "fr_pfr_up_status_flag": false,
+                                "fr_pfr_up_cooldown_status": false,
+                                "fr_pfr_up_active_cmd_mw_in": 0,
+                                "fr_pfr_up_active_cmd_mw": 0,
+                                "fr_pfr_down_status_flag": false,
+                                "fr_pfr_down_cooldown_status": false,
+                                "fr_pfr_down_active_cmd_mw_in": 0,
+                                "fr_pfr_down_active_cmd_mw": 0,
+                                "fr_frrs_up_status_flag": false,
+                                "fr_frrs_up_inactive_cmd_mw_in": 0,
+                                "fr_frrs_up_inactive_cmd_mw": 0,
+                                "fr_frrs_up_cooldown_status": false,
+                                "fr_frrs_up_active_cmd_mw_in": 0,
+                                "fr_frrs_up_active_cmd_mw": 0,
+                                "fr_frrs_down_status_flag": false,
+                                "fr_frrs_down_inactive_cmd_mw_in": 0,
+                                "fr_frrs_down_inactive_cmd_mw": 0,
+                                "fr_frrs_down_cooldown_status": false,
+                                "fr_frrs_down_active_cmd_mw_in": 0,
+                                "fr_frrs_down_active_cmd_mw": 0,
+                                "fr_ffr_status_flag": false,
+                                "fr_ffr_inactive_cmd_mw_in": 0,
+                                "fr_ffr_inactive_cmd_mw": 0,
+                                "fr_ffr_cooldown_status": false,
+                                "fr_ffr_active_cmd_mw_in": 0,
+                                "fr_ffr_active_cmd_mw": 0,
+                                "fr_baseload_cmd_mw_in": 0,
+                                "fr_baseload_cmd_mw": 0,
+                                "fm_timestamp": 0,
+                                "fault_status_flag": false,
+                                "ess_total_reactive_power": 0,
+                                "ess_total_apparent_power": 0,
+                                "ess_total_active_power": 0,
+                                "ess_dischargeable_power": 0,
+                                "ess_dischargeable_energy": 0,
+                                "ess_chargeable_power": 0,
+                                "ess_chargeable_energy": 0,
+                                "ess_average_soc": 0,
+                                "ess_4_status": 0,
+                                "ess_4_soc": 0,
+                                "ess_4_racks": 0,
+                                "ess_4_faults": false,
+                                "ess_4_alarms": false,
+                                "ess_3_status": 0,
+                                "ess_3_soc": 0,
+                                "ess_3_racks": 0,
+                                "ess_3_faults": false,
+                                "ess_3_alarms": false,
+                                "ess_2_status": 0,
+                                "ess_2_soc": 0,
+                                "ess_2_racks": 0,
+                                "ess_2_faults": false,
+                                "ess_2_alarms": false,
+                                "ess_1_status": 0,
+                                "ess_1_soc": 0,
+                                "ess_1_racks": 0,
+                                "ess_1_faults": false,
+                                "ess_1_alarms": false,
+                                "breaker_status": false,
+                                "apparent_power": 0,
+                                "alarm_status_flag": false,
+                                "active_power": 0
+                            },
+                            "sweeny": {},
+                            "loop463": {},
+                            "heights": {},
+                            "odessa": {},
+                            "angleton": {},
+                            "dickinson": {}
+                        }
+                    ]
+                },
+                {
+                    "controller": "fleet_manager",
+                    "action": "rest_get",
+                    "uri": "/components",
+                    "waiting": 20,
+                    "value": [
+                        {
+                            "alvin": {},
+                            "brazoria": {},
+                            "magnolia": {},
+                            "batcave": {},
+                            "pueblo1": {},
+                            "pueblo2": {},
+                            "lopeno": {},
+                            "zapata2": {},
+                            "zapata1": {},
+                            "northfork": {},
+                            "ranchtown": {
+                                "baseload_cmd_max_limit_mw": 9.9,
+                                "baseload_cmd_min_limit_mw": -9.9,
+                                "baseload_cmd_mw": 0,
+                                "calculated_gen_rdpf": 0,
+                                "calculated_gen_rdrs": 0,
+                                "calculated_gen_rupf": 0,
+                                "calculated_gen_rurs": 0,
+                                "calculated_load_rdpf": 0,
+                                "calculated_load_rdrs": 0,
+                                "calculated_load_rupf": 0,
+                                "calculated_load_rurs": 0,
+                                "gen_52m_status": false,
+                                "gen_aux_mvar": 0,
+                                "gen_aux_mw": 0,
+                                "gen_avr_status": false,
+                                "gen_basepoint": 0,
+                                "gen_basepoint_deviation": 0,
+                                "gen_basepoint_manual": 0,
+                                "gen_basepoint_override": false,
+                                "gen_basepoint_select": 0,
+                                "gen_curtailment_flag": false,
+                                "gen_ds1_status": false,
+                                "gen_emergency_down_ramp_rate": 9.9,
+                                "gen_emergency_down_ramp_rate_manual": 0,
+                                "gen_emergency_down_ramp_rate_override": false,
+                                "gen_emergency_down_ramp_rate_select": 9.9,
+                                "gen_emergency_up_ramp_rate": 9.9,
+                                "gen_emergency_up_ramp_rate_manual": 0,
+                                "gen_emergency_up_ramp_rate_override": false,
+                                "gen_emergency_up_ramp_rate_select": 9.9,
+                                "gen_ffr_requirement": 0,
+                                "gen_ffr_responsibility": 0,
+                                "gen_ffr_schedule": 0,
+                                "gen_frrs_down_participation_factor": 0,
+                                "gen_frrs_down_requirement": 0,
+                                "gen_frrs_down_requirement_manual": 0,
+                                "gen_frrs_down_requirement_override": false,
+                                "gen_frrs_down_requirement_select": 0,
+                                "gen_frrs_down_responsibility": 0,
+                                "gen_frrs_down_responsibility_manual": 0,
+                                "gen_frrs_down_responsibility_override": false,
+                                "gen_frrs_down_responsibility_select": 0,
+                                "gen_frrs_up_participation_factor": 0,
+                                "gen_frrs_up_requirement": 0,
+                                "gen_frrs_up_requirement_manual": 0,
+                                "gen_frrs_up_requirement_override": false,
+                                "gen_frrs_up_requirement_select": 0,
+                                "gen_frrs_up_responsibility": 0,
+                                "gen_frrs_up_responsibility_manual": 0,
+                                "gen_frrs_up_responsibility_override": false,
+                                "gen_frrs_up_responsibility_select": 0,
+                                "gen_gross_mvar": 0,
+                                "gen_gross_mw": 0,
+                                "gen_line_flows_mvar": 0,
+                                "gen_line_flows_mw": 0,
+                                "gen_lmp": 0,
+                                "gen_max_charge_mw": 0,
+                                "gen_max_charge_mw_manual": 0,
+                                "gen_max_charge_mw_override": false,
+                                "gen_max_charge_mw_select": 0,
+                                "gen_max_discharge_mw": 0,
+                                "gen_max_discharge_mw_manual": 0,
+                                "gen_max_discharge_mw_override": false,
+                                "gen_max_discharge_mw_select": 0,
+                                "gen_max_operating_soc": 0,
+                                "gen_min_operating_soc": 0,
+                                "gen_net_mvar": 0,
+                                "gen_net_mw": 0,
+                                "gen_normal_down_ramp_rate": 2,
+                                "gen_normal_down_ramp_rate_manual": 0,
+                                "gen_normal_down_ramp_rate_override": false,
+                                "gen_normal_down_ramp_rate_select": 2,
+                                "gen_normal_up_ramp_rate": 2,
+                                "gen_normal_up_ramp_rate_manual": 0,
+                                "gen_normal_up_ramp_rate_override": false,
+                                "gen_normal_up_ramp_rate_select": 2,
+                                "gen_ns_deployed_flag": false,
+                                "gen_ns_requirement": 0,
+                                "gen_ns_requirement_manual": 0,
+                                "gen_ns_requirement_override": false,
+                                "gen_ns_requirement_select": 0,
+                                "gen_ns_responsibility": 0,
+                                "gen_ns_responsibility_manual": 0,
+                                "gen_ns_responsibility_override": false,
+                                "gen_ns_responsibility_select": 0,
+                                "gen_ns_schedule": 0,
+                                "gen_pseudo_switch_status": false,
+                                "gen_reg_down_participation": 0,
+                                "gen_reg_down_requirement": 0,
+                                "gen_reg_down_requirement_manual": 0,
+                                "gen_reg_down_requirement_override": false,
+                                "gen_reg_down_requirement_select": 0,
+                                "gen_reg_down_responsibility": 0,
+                                "gen_reg_down_responsibility_manual": 0,
+                                "gen_reg_down_responsibility_override": false,
+                                "gen_reg_down_responsibility_select": 0,
+                                "gen_reg_up_participation_factor": 0,
+                                "gen_reg_up_requirement": 0,
+                                "gen_reg_up_requirement_manual": 0,
+                                "gen_reg_up_requirement_override": false,
+                                "gen_reg_up_requirement_select": 0,
+                                "gen_reg_up_responsibility": 0,
+                                "gen_reg_up_responsibility_manual": 0,
+                                "gen_reg_up_responsibility_override": false,
+                                "gen_reg_up_responsibility_select": 0,
+                                "gen_resource_status": 0,
+                                "gen_resource_status_manual": 0,
+                                "gen_resource_status_override": false,
+                                "gen_resource_status_select": 0,
+                                "gen_rrs_requirement": 0,
+                                "gen_rrs_responsibility": 0,
+                                "gen_rrs_schedule": 0,
+                                "gen_scct_flag": false,
+                                "gen_soc": 0,
+                                "gen_updated_basepoint": 0,
+                                "gen_updated_basepoint_manual": 0,
+                                "gen_updated_basepoint_override": false,
+                                "gen_updated_basepoint_select": 0,
+                                "gen_voltage": 0,
+                                "inactive_cmd_max_limit_mw": 9.9,
+                                "inactive_cmd_min_limit_mw": -9.9,
+                                "load_basepoint": 0,
+                                "load_basepoint_deviation": 0,
+                                "load_basepoint_manual": 0,
+                                "load_basepoint_override": false,
+                                "load_basepoint_select": 0,
+                                "load_curtailment_flag": false,
+                                "load_emergency_down_ramp_rate": 9.9,
+                                "load_emergency_down_ramp_rate_manual": 0,
+                                "load_emergency_down_ramp_rate_override": false,
+                                "load_emergency_down_ramp_rate_select": 9.9,
+                                "load_emergency_up_ramp_rate": 9.9,
+                                "load_emergency_up_ramp_rate_manual": 0,
+                                "load_emergency_up_ramp_rate_override": false,
+                                "load_emergency_up_ramp_rate_select": 9.9,
+                                "load_ffr_requirement": 0,
+                                "load_ffr_responsibility": 0,
+                                "load_ffr_schedule": 0,
+                                "load_frrs_down_participation_factor": 0,
+                                "load_frrs_down_requirement": 0,
+                                "load_frrs_down_requirement_manual": 0,
+                                "load_frrs_down_requirement_override": false,
+                                "load_frrs_down_requirement_select": 0,
+                                "load_frrs_down_responsibility": 0,
+                                "load_frrs_down_responsibility_manual": 0,
+                                "load_frrs_down_responsibility_override": false,
+                                "load_frrs_down_responsibility_select": 0,
+                                "load_frrs_up_participation_factor": 0,
+                                "load_frrs_up_requirement": 0,
+                                "load_frrs_up_requirement_manual": 0,
+                                "load_frrs_up_requirement_override": false,
+                                "load_frrs_up_requirement_select": 0,
+                                "load_frrs_up_responsibility": 0,
+                                "load_frrs_up_responsibility_manual": 0,
+                                "load_frrs_up_responsibility_override": false,
+                                "load_frrs_up_responsibility_select": 0,
+                                "load_lmp": 0,
+                                "load_net_mvar": 0,
+                                "load_net_mw": 0,
+                                "load_normal_down_ramp_rate": 2,
+                                "load_normal_down_ramp_rate_manual": 0,
+                                "load_normal_down_ramp_rate_override": false,
+                                "load_normal_down_ramp_rate_select": 2,
+                                "load_normal_up_ramp_rate": 2,
+                                "load_normal_up_ramp_rate_manual": 0,
+                                "load_normal_up_ramp_rate_override": false,
+                                "load_normal_up_ramp_rate_select": 2,
+                                "load_ns_deployed_flag": false,
+                                "load_ns_requirement": 0,
+                                "load_ns_requirement_manual": 0,
+                                "load_ns_requirement_override": false,
+                                "load_ns_requirement_select": 0,
+                                "load_ns_responsibility": 0,
+                                "load_ns_responsibility_manual": 0,
+                                "load_ns_responsibility_override": false,
+                                "load_ns_responsibility_select": 0,
+                                "load_ns_schedule": 0,
+                                "load_pseudo_switch_status": false,
+                                "load_pseudo_switch_status_manual": false,
+                                "load_pseudo_switch_status_override": false,
+                                "load_pseudo_switch_status_select": false,
+                                "load_reg_down_participation": 0,
+                                "load_reg_down_requirement": 0,
+                                "load_reg_down_requirement_manual": 0,
+                                "load_reg_down_requirement_override": false,
+                                "load_reg_down_requirement_select": 0,
+                                "load_reg_down_responsibility": 0,
+                                "load_reg_down_responsibility_manual": 0,
+                                "load_reg_down_responsibility_override": false,
+                                "load_reg_down_responsibility_select": 0,
+                                "load_reg_up_participation_factor": 0,
+                                "load_reg_up_requirement": 0,
+                                "load_reg_up_requirement_manual": 0,
+                                "load_reg_up_requirement_override": false,
+                                "load_reg_up_requirement_select": 0,
+                                "load_reg_up_responsibility": 0,
+                                "load_reg_up_responsibility_manual": 0,
+                                "load_reg_up_responsibility_override": false,
+                                "load_reg_up_responsibility_select": 0,
+                                "load_resource_status": 0,
+                                "load_resource_status_manual": 0,
+                                "load_resource_status_override": false,
+                                "load_resource_status_select": 0,
+                                "load_rrs_deployed_flag": false,
+                                "load_rrs_requirement": 0,
+                                "load_rrs_responsibility": 0,
+                                "load_rrs_schedule": 0,
+                                "load_scct_flag": false,
+                                "load_scheduled_mw": 0,
+                                "load_scheduled_mw_2hr": 0,
+                                "load_updated_basepoint": 0,
+                                "load_updated_basepoint_manual": 0,
+                                "load_updated_basepoint_override": false,
+                                "load_updated_basepoint_select": 0,
+                                "reg_manual_override": false,
+                                "reg_manual_override_feedback": false,
+                                "updated_basepoint_sced": 0
+                            },
+                            "sweeny": {},
+                            "loop463": {},
+                            "heights": {},
+                            "odessa": {},
+                            "angleton": {},
+                            "dickinson": {}
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "testbeds": [
+        {
+            "id": "1",
+            "name": "TODO",
+            "controllers": [
+                {
+                    "id": "fleet_manager",
+                    "name": "Fleet Manager",
+                    "user": "hybridos",
+                    "pass": "FlexGen2020!"
+                },
+                {
+                    "id": "dnp3_client",
+                    "name": "APX simulator",
+                    "user": "hybridos",
+                    "pass": "FlexGen2020!"
+                }
+            ]
+        }
+    ]
+}

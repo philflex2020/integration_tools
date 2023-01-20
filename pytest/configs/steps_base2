@@ -1,0 +1,11 @@
+{
+    "cmds": [
+        "runsteps test4",
+        "if var2 < var1 then myval = 45",
+        "show vars",
+        "todo",
+        "show scenarios",
+        "show steps",
+        "save steps called base as base2"
+    ]
+}

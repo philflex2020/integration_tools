@@ -1,0 +1,327 @@
+{
+    "name": "Site Level Command - Site POI Limit Test",
+    "tests": [
+        {
+            "id": "0",
+            "name": "Initial State - Site Started, All ESS Units Running, POI Limits Enabled (Max: 225MW, Min: -225MW)",
+            "testbeds": [
+                "0"
+            ],
+            "variables": [
+                {
+                    "var": "ess_id",
+                    "description": "range(1, 74, 1)",
+                    "type": "string",
+                    "size": 2
+                }
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/operation/disable_flag",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/operation/disable_flag",
+                    "value": false
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/operation/enable_flag_ui",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/standalone_power/poi_limits_enable",
+                    "value": false
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "comments": "Multiple Inputs: UI Controls Enable",
+                    "uri": "/site/configuration/reserved_bool_11",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/input_sources/ui",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_<ess_id>/start",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/summary/export_target_mode_enable_flag",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/summary/reactive_setpoint_mode_enable_flag",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/site/operation/site_status",
+                    "value": [
+                        {
+                            "value": "Running - Grid",
+                            "name": "Site Controller Status",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "string",
+                            "ui_type": "status"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/assets/ess/ess_<ess_id>/status",
+                    "value": [
+                        {
+                            "naked_value": "Grid power supply running"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/site/operation/enable_flag_ui",
+                    "value": [
+                        {
+                            "value": false,
+                            "name": "Start Site: UI",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "enum_button",
+                            "ui_type": "control",
+                            "options": [
+                                {
+                                    "name": "Start Site",
+                                    "return_value": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/ess/summary/num_ess_available",
+                    "value": [
+                        {
+                            "naked_value": 74
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/features/standalone_power/poi_limits_enable",
+                    "value": [
+                        {
+                            "value": false,
+                            "name": "Enable POI Limits",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "enum_slider",
+                            "ui_type": "control",
+                            "options": [
+                                {
+                                    "name": "False Case Not Used",
+                                    "return_value": false
+                                },
+                                {
+                                    "name": "POI Limit Protection",
+                                    "return_value": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/site/operation/export_target_mode_enable_flag",
+                    "value": [
+                        {
+                            "value": false,
+                            "name": "Site Export Target Mode Enable",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "enum_slider",
+                            "ui_type": "control",
+                            "options": [
+                                {
+                                    "name": "False Case Not Used",
+                                    "value": false
+                                },
+                                {
+                                    "name": "Site Export Target Mode Enable",
+                                    "value": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 5,
+                    "uri": "/site/operation/reactive_setpoint_mode_enable_flag",
+                    "value": [
+                        {
+                            "value": false,
+                            "name": "Reactive Power Setpoint Mode Enable",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "enum_slider",
+                            "ui_type": "control",
+                            "options": [
+                                {
+                                    "name": "False Case Not Used",
+                                    "value": false
+                                },
+                                {
+                                    "name": "Reactive Power Setpoint Mode Enable",
+                                    "value": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "1",
+            "name": "Give a real power command of 230MW - verify that real power is limited to 225 MW by POI limits",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/active_power/export_target_kW_cmd",
+                    "value": 230000000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/features/active_power/feeder_actual_kW",
+                    "tolerance": "2000000",
+                    "waiting": 5,
+                    "value": [
+                        {
+                            "naked_value": 225000000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Give a real power command of -230MW - verify that real power is limited to -225 MW by POI limits",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/active_power/export_target_kW_cmd",
+                    "value": -230000000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/features/active_power/feeder_actual_kW",
+                    "tolerance": "-2000000",
+                    "waiting": 5,
+                    "value": [
+                        {
+                            "naked_value": -225000000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Shutdown - Give a real power command of 0MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/active_power/export_target_kW_cmd",
+                    "value": 0
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/features/active_power/feeder_actual_kW",
+                    "tolerance": "2000000",
+                    "waiting": 5,
+                    "value": [
+                        {
+                            "naked_value": 0
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "testbeds": [
+        {
+            "id": "0",
+            "name": "Local Site Docker",
+            "controllers": [
+                {
+                    "id": "site_controller",
+                    "name": "site_controller",
+                    "user": "flexgen",
+                    "pass": "flexgen1A!"
+                },
+                {
+                    "id": "twins",
+                    "name": "twins",
+                    "user": "",
+                    "pass": ""
+                }
+            ]
+        }
+    ]
+}

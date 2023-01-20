@@ -1,0 +1,354 @@
+{
+    "name": "POI Limit Test",
+    "tests": [
+        {
+            "id": "0",
+            "name": "Initial State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/configuration/reserved_bool_11",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/operation/disable_flag",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/operation/disable_flag",
+                    "value": false
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/operation/enable_flag_ui",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/standalone_power/poi_limits_enable",
+                    "value": false
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/standalone_power/poi_limits_max_kW",
+                    "value": 8500
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/standalone_power/poi_limits_min_kW",
+                    "value": -7500
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/site/operation/site_status",
+                    "value": [
+                        {
+                            "value": "Running - Grid",
+                            "name": "Site Controller Status",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "string",
+                            "ui_type": "status"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/site/configuration/input_source_status",
+                    "value": [
+                        {
+                            "value": "UI",
+                            "name": "Command Source Selection Status",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "string",
+                            "ui_type": "status"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/ess/summary/num_ess_available",
+                    "value": [
+                        {
+                            "naked_value": 4
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/ess/ess_01/status",
+                    "value": [
+                        {
+                            "naked_value": "Grid power supply running"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/ess/ess_02/status",
+                    "value": [
+                        {
+                            "naked_value": "Grid power supply running"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/ess/ess_03/status",
+                    "value": [
+                        {
+                            "naked_value": "Grid power supply running"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/ess/ess_04/status",
+                    "value": [
+                        {
+                            "naked_value": "Grid power supply running"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/features/standalone_power/poi_limits_enable",
+                    "value": [
+                        {
+                            "value": false,
+                            "name": "Enable POI Limits",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "enum_slider",
+                            "ui_type": "control",
+                            "options": [
+                                {
+                                    "name": "False Case Not Used",
+                                    "return_value": false
+                                },
+                                {
+                                    "name": "POI Limit Protection",
+                                    "return_value": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "1",
+            "name": "Real Power 15MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/active_power/fr_baseload_cmd_kw_ui",
+                    "value": 15000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/ess/summary/ess_total_active_power",
+                    "tolerance": "10%",
+                    "waiting": 10,
+                    "value": [
+                        {
+                            "naked_value": 11000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Enable POI Limits",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/standalone_power/poi_limits_enable",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/ess/summary/ess_total_active_power",
+                    "tolerance": "10%",
+                    "waiting": 10,
+                    "value": [
+                        {
+                            "naked_value": 8500
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Disable POI Limits",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/standalone_power/poi_limits_enable",
+                    "value": false
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/ess/summary/ess_total_active_power",
+                    "tolerance": "10%",
+                    "waiting": 10,
+                    "value": [
+                        {
+                            "naked_value": 11000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "name": "Real Power -15MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/active_power/fr_baseload_cmd_kw_ui",
+                    "value": -15000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/ess/summary/ess_total_active_power",
+                    "tolerance": "10%",
+                    "waiting": 10,
+                    "value": [
+                        {
+                            "naked_value": -11000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "name": "Enable POI Limits",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/standalone_power/poi_limits_enable",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/ess/summary/ess_total_active_power",
+                    "tolerance": "10%",
+                    "waiting": 10,
+                    "value": [
+                        {
+                            "naked_value": -7500
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "name": "Disable POI Limits",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/standalone_power/poi_limits_enable",
+                    "value": false
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/assets/ess/summary/ess_total_active_power",
+                    "tolerance": "10%",
+                    "waiting": 10,
+                    "value": [
+                        {
+                            "naked_value": -11000
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "testbeds": [
+        {
+            "id": "0",
+            "name": "Local docker",
+            "controllers": [
+                {
+                    "id": "site_controller",
+                    "name": "sc_ranchtown_vm",
+                    "user": "hybridos",
+                    "pass": "FlexGen2020!"
+                }
+            ]
+        }
+    ]
+}

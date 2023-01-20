@@ -1,0 +1,1619 @@
+{
+    "name": "Faults/Alarms - ESS Asset Fault and Alarm Test",
+    "tests": [
+        {
+            "id": "0",
+            "name": "Initial State - PCS Summary (PCS 01 and 02) in maintenance mode and started / BMS Summary (BMS 01 and 02) DC contactors closed / Active Power = 0 and Reactive Power = 0",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_mode",
+                    "value": true
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/start",
+                    "value": true
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/start",
+                    "value": true
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": 0
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/pcs/summary/status",
+                    "value": [
+                        {
+                            "naked_value": "Running"
+                        }
+                    ]
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary/power_state",
+                    "value": [
+                        {
+                            "naked_value": "On Ready"
+                        }
+                    ]
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_active_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": 0
+                        }
+                    ]
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "tolerance": "10%",
+                    "uri": "/assets/pcs/summary/maint_reactive_power_setpoint",
+                    "value": [
+                        {
+                            "naked_value": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "1",
+            "name": "Set PCS 01 fault in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/pcs1_faults1",
+                    "value": 1
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/faults/pcs_1:sys_fault",
+                    "value": [
+                        {
+                            "value": 47,
+                            "string": "(WTCHDG) Watchdog uP - Fault in microcontroller"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Clear PCS 01 fault in TWINS and press the PCS Summary (PCS 01 and 02) Clear Faults button  - verify that the Fault state is cleared for PCS 01",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/pcs1_faults1",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "twins",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/faults/pcs_1:sys_fault",
+                    "value": [
+                        {
+                            "value": 0,
+                            "string": "(NOFLTS) No faults"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Set ESS Fault [0] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 1
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_faults[0]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "BMS Max Cell Voltage Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "name": "Clear ESS Fault [0] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Fault state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/site/ess_01_ls:ess_fault_active",
+                    "value": [
+                        {
+                            "naked_value": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "name": "Set ESS Fault [1] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 2
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_faults[1]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "BMS Min Cell Voltage Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "name": "Clear ESS Fault [1] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Fault state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/site/ess_01_ls:ess_fault_active",
+                    "value": [
+                        {
+                            "naked_value": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "7",
+            "name": "Set ESS Fault [2] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 4
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_faults[2]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "BMS Max Cell Temperature Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "8",
+            "name": "Clear ESS Fault [2] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Fault state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/site/ess_01_ls:ess_fault_active",
+                    "value": [
+                        {
+                            "naked_value": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "9",
+            "name": "Set ESS Fault [3] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 8
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_faults[3]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "BMS Min Cell Temperature Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "10",
+            "name": "Clear ESS Fault [3] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Fault state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/site/ess_01_ls:ess_fault_active",
+                    "value": [
+                        {
+                            "naked_value": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "11",
+            "name": "Set ESS Fault [4] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 16
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_faults[4]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "BMS Current Max Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "12",
+            "name": "Clear ESS Fault [4] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Fault state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/site/ess_01_ls:ess_fault_active",
+                    "value": [
+                        {
+                            "naked_value": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "13",
+            "name": "Set ESS Fault [5] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 32
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_faults[5]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "BMS Current Min Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "14",
+            "name": "Clear ESS Fault [5] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Fault state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/site/ess_01_ls:ess_fault_active",
+                    "value": [
+                        {
+                            "naked_value": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "15",
+            "name": "Set ESS Fault [6] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 64
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_faults[6]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "Number of Closed-in Battery Racks Below Threshold"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "16",
+            "name": "Clear ESS Fault [6] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Fault state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/site/ess_01_ls:ess_fault_active",
+                    "value": [
+                        {
+                            "naked_value": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "17",
+            "name": "Set ESS Fault [7] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 128
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_faults[7]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "BMS State of Health Below Threshold"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "18",
+            "name": "Clear ESS Fault [7] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Fault state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/site/ess_01_ls:ess_fault_active",
+                    "value": [
+                        {
+                            "naked_value": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "19",
+            "name": "Set ESS Fault [8] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 256
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_faults[8]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "PCS DC Voltage Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "20",
+            "name": "Clear ESS Fault [8] in TWINS and press the PCS Summary (PCS 01 and 02) Clear Faults button  - verify that the Fault state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/site/ess_01_ls:ess_fault_active",
+                    "value": [
+                        {
+                            "naked_value": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "21",
+            "name": "Set ESS Fault [9] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 512
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_faults[9]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "Number of PCS Modules Below Threshold"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "22",
+            "name": "Clear ESS Fault [9] in TWINS and press the PCS Summary (PCS 01 and 02) Clear Faults button  - verify that the Fault state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/site/ess_01_ls:ess_fault_active",
+                    "value": [
+                        {
+                            "naked_value": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "23",
+            "name": "Set ESS Fault [10] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 1024
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_faults[10]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "PCS Active Power Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "24",
+            "name": "Clear ESS Fault [10] in TWINS and press the PCS Summary (PCS 01 and 02) Clear Faults button  - verify that the Fault state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/site/ess_01_ls:ess_fault_active",
+                    "value": [
+                        {
+                            "naked_value": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "25",
+            "name": "Set ESS Fault [11] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 2048
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_faults[11]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "BMS Max Voltage Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "26",
+            "name": "Clear ESS Fault [11] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Fault state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/site/ess_01_ls:ess_fault_active",
+                    "value": [
+                        {
+                            "naked_value": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "27",
+            "name": "Set ESS Fault [12] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 4096
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_faults[12]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "BMS Min Voltage Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "28",
+            "name": "Clear ESS Fault [12] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Fault state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/site/ess_01_ls:ess_fault_active",
+                    "value": [
+                        {
+                            "naked_value": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "29",
+            "name": "Set ESS Alarm [0] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 1
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_alarms[0]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "BMS Max Cell Voltage Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "30",
+            "name": "Clear ESS Alarm [0] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Alarm state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary:alarms",
+                    "value": []
+                }
+            ]
+        },
+        {
+            "id": "31",
+            "name": "Set ESS Alarm [1] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 2
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_alarms[1]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "BMS Min Cell Voltage Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "32",
+            "name": "Clear ESS Alarm [1] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Alarm state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary:alarms",
+                    "value": []
+                }
+            ]
+        },
+        {
+            "id": "33",
+            "name": "Set ESS Alarm [2] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 4
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_alarms[2]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "BMS Max Cell Temperature Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "34",
+            "name": "Clear ESS Alarm [2] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Alarm state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary:alarms",
+                    "value": []
+                }
+            ]
+        },
+        {
+            "id": "35",
+            "name": "Set ESS Alarm [3] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 8
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_alarms[3]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "BMS Min Cell Temperature Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "36",
+            "name": "Clear ESS Alarm [3] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Alarm state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary:alarms",
+                    "value": []
+                }
+            ]
+        },
+        {
+            "id": "37",
+            "name": "Set ESS Alarm [4] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 16
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_alarms[4]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "BMS Current Max Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "38",
+            "name": "Clear ESS Alarm [4] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Alarm state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary:alarms",
+                    "value": []
+                }
+            ]
+        },
+        {
+            "id": "39",
+            "name": "Set ESS Alarm [5] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 32
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_alarms[5]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "BMS Current Min Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "40",
+            "name": "Clear ESS Alarm [5] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Alarm state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary:alarms",
+                    "value": []
+                }
+            ]
+        },
+        {
+            "id": "41",
+            "name": "Set ESS Alarm [6] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 64
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_alarms[6]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "Number of Closed-in Battery Racks Below Threshold"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "42",
+            "name": "Clear ESS Alarm [6] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Alarm state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary:alarms",
+                    "value": []
+                }
+            ]
+        },
+        {
+            "id": "43",
+            "name": "Set ESS Alarm [7] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 128
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_alarms[7]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "BMS State of Health Below Threshold"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "44",
+            "name": "Clear ESS Alarm [7] in TWINS and press the BMS Summary (BMS 01 and 02) Clear Faults button  - verify that the Alarm state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/bms/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/bms/summary:alarms",
+                    "value": []
+                }
+            ]
+        },
+        {
+            "id": "45",
+            "name": "Set ESS Alarm [8] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 256
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_alarms[8]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "PCS DC Voltage Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "46",
+            "name": "Clear ESS Alarm [8] in TWINS and press the PCS Summary (PCS 01 and 02) Clear Faults button  - verify that the Alarm state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/pcs/summary:alarms",
+                    "value": []
+                }
+            ]
+        },
+        {
+            "id": "47",
+            "name": "Set ESS Alarm [9] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 512
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_alarms[9]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "Number of PCS Modules Below Threshold"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "48",
+            "name": "Clear ESS Alarm [9] in TWINS and press the PCS Summary (PCS 01 and 02) Clear Faults button  - verify that the Alarm state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/pcs/summary:alarms",
+                    "value": []
+                }
+            ]
+        },
+        {
+            "id": "49",
+            "name": "Set ESS Alarm [10] in TWINS",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 1024
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "uri": "/master/flexgen_ess_01_ls:ess_alarms[10]",
+                    "value": [
+                        {
+                            "value": true,
+                            "string": "PCS Active Power Threshold Exceeded"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "50",
+            "name": "Clear ESS Alarm [10] in TWINS and press the PCS Summary (PCS 01 and 02) Clear Faults button  - verify that the Alarm state is cleared",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/flexgen_ess_01_ls/ess_1_alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/pcs/summary/clear_faults",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "ess_controller",
+                    "action": "fims_get",
+                    "waiting": 1,
+                    "uri": "/assets/pcs/summary:alarms",
+                    "value": []
+                }
+            ]
+        }
+    ],
+    "testbeds": [
+        {
+            "id": "0",
+            "name": "Local ESS Docker",
+            "controllers": [
+                {
+                    "id": "ess_controller",
+                    "name": "ess_controller",
+                    "user": "fgdefault",
+                    "pass": "fgdefault1A!"
+                },
+                {
+                    "id": "twins",
+                    "name": "twins",
+                    "user": "",
+                    "pass": ""
+                }
+            ]
+        }
+    ]
+}

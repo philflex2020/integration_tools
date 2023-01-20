@@ -1,0 +1,9 @@
+2023-01-11 11:01:05,179 [    INFO] There are 4 tests in the list.
+2023-01-11 11:01:05,181 [    INFO] Test environment includes 1 test beds.
+2023-01-11 11:01:05,407 [    INFO] Docker Name ess_controller ID is 94a6a984b45b.
+2023-01-11 11:01:05,855 [    INFO] Docker Name twins ID is ee0e3094f45c.
+2023-01-11 11:01:06,329 [    INFO] Docker Name DNP3_test ID is c527a328bf1d.
+2023-01-11 11:01:06,572 [    INFO] Docker Name DNP3_test ID is c527a328bf1d.
+2023-01-11 11:01:06,790 [    INFO] Docker Name DNP3_server ID is c33f248e6b88.
+2023-01-11 11:01:21,208 [    INFO] Docker Name DNP3_client ID is 6a2426b3cb94.
+2023-01-11 11:01:21,561 [    INFO] Error Executing command 'docker inspect -f '{range .NetworkSettings.Networks}{.IPAddress}{end}' 6a2426b3cb94'.

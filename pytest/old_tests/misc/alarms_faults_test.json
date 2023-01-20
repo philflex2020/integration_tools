@@ -1,0 +1,4315 @@
+{
+    "name": "Faults and Alarms Test",
+    "tests": [
+        {
+            "id": "1",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": []
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 1
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 0,
+                            "string": "PCS Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 4
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 2,
+                            "string": "PCS Address Conflict"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 16384
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 14,
+                            "string": "Reserved Address:10075 Bit:14"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 32768
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 15,
+                            "string": "Self Check Fail"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 65536
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 16,
+                            "string": "Self Check Timeout"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "7",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 131072
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 17,
+                            "string": "Micro Grid Start Timeout"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "8",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 262144
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 18,
+                            "string": "Micro Grid Start Fail"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "9",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 524288
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 19,
+                            "string": "Grid Start Timeout"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "10",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 4194304
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 22,
+                            "string": "Reserved Address:10075 Bit:22"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "11",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 134217728
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 27,
+                            "string": "Reserved Address:10075 Bit:27"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "12",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 268435456
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 28,
+                            "string": "Host PCS setting abnormal"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "13",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 536870912
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 29,
+                            "string": "PC Comm Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "14",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 1
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 32,
+                            "string": "Node 1 Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "15",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 2
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 33,
+                            "string": "Node 2 Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "16",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 4
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 34,
+                            "string": "Node 3 Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "17",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 8
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 35,
+                            "string": "Node 4 Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "18",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 16
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 36,
+                            "string": "Node 5 Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "19",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 32
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 37,
+                            "string": "Node 6 Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "20",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 64
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 38,
+                            "string": "Node 7 Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "21",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 128
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 39,
+                            "string": "Node 8 Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "22",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 256
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 40,
+                            "string": "Node 9 Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "23",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 512
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 41,
+                            "string": "Node 10 Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "24",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 1024
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 42,
+                            "string": "Node 11 Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "25",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 2048
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 43,
+                            "string": "Node 12 Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "26",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 4096
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 44,
+                            "string": "Node 13 Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "27",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 8192
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 45,
+                            "string": "Node 14 Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "28",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 16384
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 46,
+                            "string": "Node 15 Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "29",
+            "name": "Fault State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/faults_2",
+                    "value": 32768
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/faults",
+                    "value": [
+                        {
+                            "value": 47,
+                            "string": "Node 16 Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "30",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 1
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 0,
+                            "string": "PCS Fault / Alarm / Emergency Stop"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "31",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 2
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 1,
+                            "string": "PCS Communication Fault Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "32",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 64
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 6,
+                            "string": "PCS Grid-side Contact Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "33",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 128
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 7,
+                            "string": "One or More Low Battery Level 1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "34",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 256
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 8,
+                            "string": "One or More High Battery Level 1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "35",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 512
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 9,
+                            "string": "BMS/BCP Communication Fault Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "36",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 1024
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 10,
+                            "string": "BMS Fault Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "37",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 2048
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 11,
+                            "string": "BMS Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "38",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 32768
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 15,
+                            "string": "Ammeter Communication Fault Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "39",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 8
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 19,
+                            "string": "Node Collector Communication Fault Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "40",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 16
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 20,
+                            "string": "Node 1 Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "41",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 32
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 21,
+                            "string": "Node 2 Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "42",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 64
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 22,
+                            "string": "Node 3 Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "43",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 128
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 23,
+                            "string": "Node 4 Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "44",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 256
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 24,
+                            "string": "Node 5 Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "45",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 512
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 25,
+                            "string": "Node 6 Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "46",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 1024
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 26,
+                            "string": "Node 7 Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "48",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 2048
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 27,
+                            "string": "Node 8 Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "49",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 4096
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 28,
+                            "string": "One or More Low Battery Level 2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "50",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 8192
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 29,
+                            "string": "One or More High Battery Level 2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "51",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 16384
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 30,
+                            "string": "BCP Fault / Alarm / Emergency Stop"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "52",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 32768
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 31,
+                            "string": "Node Collector Node Abnormal"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "53",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 1
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 32,
+                            "string": "Battery Disconnected"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "54",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 2
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 33,
+                            "string": "PCS not ready"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "55",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 4
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 34,
+                            "string": "Battery DC voltage difference abnormal in group"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "56",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 8
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 35,
+                            "string": "HVAC Temp Abnormal"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "57",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 16
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 36,
+                            "string": "Host PCS setting abnormal"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "58",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 32
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 37,
+                            "string": "Low online rack num"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "59",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 64
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 38,
+                            "string": "Battery system stop alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "60",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 128
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 39,
+                            "string": "HVAC comm fault alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "61",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 256
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 40,
+                            "string": "HVAC fault alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "62",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 512
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 41,
+                            "string": "TTC comm fault alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "63",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 1024
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 42,
+                            "string": "BSC comm fault alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "64",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 2048
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 43,
+                            "string": "BSC fault/alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "65",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 4096
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 44,
+                            "string": "UPS comm fault alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "66",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 8192
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 45,
+                            "string": "TEMP & HUM  comm fault alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "67",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 16384
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 46,
+                            "string": "Measurement and control fault alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "68",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 32768
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 47,
+                            "string": "Control Box Node Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "69",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 256
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 56,
+                            "string": "Node 9 Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "70",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 512
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 57,
+                            "string": "Node 10 Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "71",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 1024
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 58,
+                            "string": "Node 11 Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "72",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 2048
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 59,
+                            "string": "Node 12 Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "73",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 4096
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 60,
+                            "string": "Node 13 Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "74",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 8192
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 61,
+                            "string": "Node 14 Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "75",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 16384
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 62,
+                            "string": "Node 15 Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "76",
+            "name": "Alarm State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_3",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1_hs/alarms_4",
+                    "value": 32768
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01_hs/alarms",
+                    "value": [
+                        {
+                            "value": 63,
+                            "string": "Node 16 Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "77",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": []
+                }
+            ]
+        },
+        {
+            "id": "78",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 1
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 0,
+                            "string": "UPS Mains Disconnect"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "79",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 2
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 1,
+                            "string": "Emergency Stop"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "80",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 4
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 2,
+                            "string": "Transformer Over Temperature"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "81",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 8
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 3,
+                            "string": "Auxiliary Power Off"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "82",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 16
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 4,
+                            "string": "AC SPD Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "83",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 32
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 5,
+                            "string": "DC SPD Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "84",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 64
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 6,
+                            "string": "DC Load Switch Off"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "85",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 128
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 7,
+                            "string": "DC Fuse"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "86",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 256
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 8,
+                            "string": "Travel Switch"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "87",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 512
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 9,
+                            "string": "Firefighting Ventilation"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "88",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 1024
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 10,
+                            "string": "Firefighting Alarm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "89",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 2048
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 11,
+                            "string": "Firefighting Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "90",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 4096
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 12,
+                            "string": "Input 13"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "91",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 8192
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 13,
+                            "string": "Input 14"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "92",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 16384
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 14,
+                            "string": "Input 15"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "93",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 32768
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 15,
+                            "string": "Input 16"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "94",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 16384
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 30,
+                            "string": "BMS Communication Fault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "95",
+            "name": "BSC 1 System Fault Status",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 0
+                },
+                {
+                    "controller": "twins",
+                    "action": "fims_set",
+                    "uri": "/components/sungrow_ess_1/bsc1_faults_2",
+                    "value": 32768
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "uri": "/components/sungrow_ess_01/bsc1_faults",
+                    "value": [
+                        {
+                            "value": 31,
+                            "string": "BMS Fault"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "testbeds": [
+        {
+            "id": "0",
+            "name": "Local docker",
+            "controllers": [
+                {
+                    "id": "site_controller",
+                    "name": "sc_ranchtown_vm",
+                    "user": "hybridos",
+                    "pass": "FlexGen2020!"
+                },
+                {
+                    "id": "twins",
+                    "name": "TWINS_Ranchtown",
+                    "user": "hybridos",
+                    "pass": "FlexGen2020!"
+                }
+            ]
+        }
+    ]
+}

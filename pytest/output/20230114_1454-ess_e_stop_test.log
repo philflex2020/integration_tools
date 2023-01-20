@@ -1,0 +1,1 @@
+2023-01-14 14:55:01,137 [    INFO] Error Executing command 'docker cp configs/var_file.json 6a2426b3cb94://home/docker/config/client/mb_client_test_10_3.json'.

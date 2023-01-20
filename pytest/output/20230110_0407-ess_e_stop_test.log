@@ -1,0 +1,12 @@
+2023-01-10 04:07:19,917 [    INFO] There are 4 tests in the list.
+2023-01-10 04:07:19,918 [    INFO] Test environment includes 1 test beds.
+2023-01-10 04:07:21,196 [ WARNING] Unable to get data for the test 'Initial State - PCS Summary (PCS 01 and 02) in maintenance mode and started / BMS Summary (BMS 01 and 02) DC contactors closed / Active Power = 0 and Reactive Power = 0' (id=0).
+2023-01-10 04:07:22,422 [    INFO] ====> Test case 'Initial State - PCS Summary (PCS 01 and 02) in maintenance mode and started / BMS Summary (BMS 01 and 02) DC contactors closed / Active Power = 0 and Reactive Power = 0 - 0' has 5 steps and will run on 1 test bed.
+2023-01-10 04:07:22,423 [    INFO] Controller to execute is ess_controller.
+2023-01-10 04:07:22,424 [    INFO] Executing FIMS SET for /assets/pcs/summary/maint_mode. Value is true.
+2023-01-10 04:07:54,821 [    INFO] There are 4 tests in the list.
+2023-01-10 04:07:54,822 [    INFO] Test environment includes 1 test beds.
+2023-01-10 04:07:56,044 [ WARNING] Unable to get data for the test 'Initial State - PCS Summary (PCS 01 and 02) in maintenance mode and started / BMS Summary (BMS 01 and 02) DC contactors closed / Active Power = 0 and Reactive Power = 0' (id=0).
+2023-01-10 04:07:57,230 [    INFO] ====> Test case 'Initial State - PCS Summary (PCS 01 and 02) in maintenance mode and started / BMS Summary (BMS 01 and 02) DC contactors closed / Active Power = 0 and Reactive Power = 0 - 0' has 5 steps and will run on 1 test bed.
+2023-01-10 04:07:57,232 [    INFO] Controller to execute is ess_controller.
+2023-01-10 04:07:57,232 [    INFO] Executing FIMS SET for /assets/pcs/summary/maint_mode. Value is true.

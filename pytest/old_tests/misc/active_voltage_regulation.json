@@ -1,0 +1,503 @@
+{
+    "name": "Active Voltage Regulation ",
+    "tests": [
+        {
+            "id": "0",
+            "name": "Initial State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/configuration/reserved_bool_11",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/operation/disable_flag",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "pause",
+                    "uri": "",
+                    "value": 5
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/operation/disable_flag",
+                    "value": false
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/operation/enable_flag_ui",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "pause",
+                    "uri": "",
+                    "value": 5
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/reactive_power/runmode1_kVAR_mode_cmd_ui",
+                    "value": 1
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 20,
+                    "uri": "/site/operation/site_status",
+                    "value": [
+                        {
+                            "value": "Running - Grid",
+                            "name": "Site Controller Status",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "string",
+                            "ui_type": "status"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "uri": "/assets/ess/summary/num_ess_running",
+                    "value": [
+                        {
+                            "naked_value": 4
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "uri": "/features/reactive_power/runmode1_kVAR_mode_cmd",
+                    "value": [
+                        {
+                            "value": 1,
+                            "name": "Mode Select - Run Mode 1 Reactive Power",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "enum",
+                            "ui_type": "none",
+                            "options": [
+                                {
+                                    "name": "Active Voltage Regulation",
+                                    "return_value": 0
+                                },
+                                {
+                                    "name": "Watt-VAR",
+                                    "return_value": 1
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "uri": "/features/reactive_power/active_voltage_actual_volts",
+                    "value": [
+                        {
+                            "value": 35000,
+                            "name": "Measured Voltage",
+                            "unit": "V",
+                            "scaler": 1,
+                            "enabled": false,
+                            "type": "number",
+                            "ui_type": "status"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "uri": "/features/reactive_power/active_voltage_cmd",
+                    "value": [
+                        {
+                            "value": 35000,
+                            "name": "Active Voltage Setpoint",
+                            "unit": "V",
+                            "scaler": 1,
+                            "enabled": false,
+                            "type": "number",
+                            "ui_type": "control"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "uri": "/site/summary/ess_kW_cmd",
+                    "value": [
+                        {
+                            "naked_value": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "1",
+            "name": "Switch to AVR mode",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/reactive_power/runmode1_kVAR_mode_cmd_ui",
+                    "value": 0
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "uri": "/assets/ess/summary/ess_total_reactive_power",
+                    "value": [
+                        {
+                            "naked_value": 0
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "uri": "/features/reactive_power/runmode1_kVAR_mode_cmd",
+                    "value": [
+                        {
+                            "value": 0,
+                            "name": "Mode Select - Run Mode 1 Reactive Power",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "enum",
+                            "ui_type": "none",
+                            "options": [
+                                {
+                                    "name": "Active Voltage Regulation",
+                                    "return_value": 0
+                                },
+                                {
+                                    "name": "Watt-VAR",
+                                    "return_value": 1
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Give an AVR command of 35278V (100.765%)",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/reactive_power/active_voltage_cmd",
+                    "value": 35278
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/summary/ess_total_reactive_power",
+                    "value": [
+                        {
+                            "naked_value": 1000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Give an AVR command of 35546V (101.53%)",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/reactive_power/active_voltage_cmd",
+                    "value": 35546
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/summary/ess_total_reactive_power",
+                    "value": [
+                        {
+                            "naked_value": 2000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "name": "Give an AVR command of 35710V (102.0%)",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/reactive_power/active_voltage_cmd",
+                    "value": 35710
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/summary/ess_total_reactive_power",
+                    "value": [
+                        {
+                            "naked_value": 2000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "name": "Return AVR command to 35000V (100.0%)",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/reactive_power/active_voltage_cmd",
+                    "value": 35000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "100",
+                    "uri": "/assets/ess/summary/ess_total_reactive_power",
+                    "value": [
+                        {
+                            "naked_value": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "name": "Give an AVR command of 34722V (99.235%)",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/reactive_power/active_voltage_cmd",
+                    "value": 34722
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/summary/ess_total_reactive_power",
+                    "value": [
+                        {
+                            "naked_value": -1000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "7",
+            "name": "Give an AVR command of 34518V (98.65%)",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/reactive_power/active_voltage_cmd",
+                    "value": 34518
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "15%",
+                    "uri": "/assets/ess/summary/ess_total_reactive_power",
+                    "value": [
+                        {
+                            "naked_value": -2000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "8",
+            "name": "Give an AVR command of 34290V (98.0%)",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/reactive_power/active_voltage_cmd",
+                    "value": 34290
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/summary/ess_total_reactive_power",
+                    "value": [
+                        {
+                            "naked_value": -2000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "9",
+            "name": "Return AVR command to 35000V (100.0%)",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/reactive_power/active_voltage_cmd",
+                    "value": 35000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "100",
+                    "uri": "/assets/ess/summary/ess_total_reactive_power",
+                    "value": [
+                        {
+                            "naked_value": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "10",
+            "name": "Return site to Watt-VAR mode",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/features/reactive_power/runmode1_kVAR_mode_cmd_ui",
+                    "value": 1
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "uri": "/features/reactive_power/runmode1_kVAR_mode_cmd",
+                    "value": [
+                        {
+                            "value": 1,
+                            "name": "Mode Select - Run Mode 1 Reactive Power",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "enum",
+                            "ui_type": "none",
+                            "options": [
+                                {
+                                    "name": "Active Voltage Regulation",
+                                    "return_value": 0
+                                },
+                                {
+                                    "name": "Watt-VAR",
+                                    "return_value": 1
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "testbeds": [
+        {
+            "id": "0",
+            "name": "Local docker",
+            "controllers": [
+                {
+                    "id": "site_controller",
+                    "name": "sc_ranchtown_vm",
+                    "user": "hybridos",
+                    "pass": "FlexGen2040!"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,63 @@
+{
+    "name": "Modbus Test Menu",
+    "items": [
+        {
+            "id": "ps",
+            "name": "List Processes (ps ax)",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "client",
+                    "action": "ps ax"
+                },
+                {
+                    "controller": "server",
+                    "action": "ps ax"
+                }
+            ],
+            "result": [
+            ]
+        },
+        {
+            "id": "top",
+            "name": "Show Top (top)",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+            {
+                "controller": "client",
+                "action": "top"
+            },
+            {
+                "controller": "server",
+                "action": "top"
+            }
+        ],
+        "result": [
+        ]
+        }
+    ],
+    "testbeds": [
+        {
+            "id": "0",
+            "name": "Local Modbus Docker",
+            "controllers": [
+                {
+                    "id": "client",
+                    "name": "DNP3_test",
+                    "user": "",
+                    "pass": ""
+                },
+                {
+                    "id": "server",
+                    "name": "DNP3_server",
+                    "user": "",
+                    "pass": ""
+                }
+            ]
+        }
+    ]
+}

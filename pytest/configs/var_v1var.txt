@@ -1,0 +1,1 @@
+/components/comp2/24_decode_id

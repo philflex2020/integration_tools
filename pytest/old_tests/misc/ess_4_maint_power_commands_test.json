@@ -1,0 +1,644 @@
+{
+    "name": "ESS Maintenance Mode - Power Commands",
+    "tests": [
+        {
+            "id": "0",
+            "name": "Initial State",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/operation/disable_flag",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "pause",
+                    "uri": "",
+                    "value": 5
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/site/operation/disable_flag",
+                    "value": false
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "uri": "/site/operation/site_status",
+                    "value": [
+                        {
+                            "value": "Ready",
+                            "name": "Site Controller Status",
+                            "unit": "",
+                            "scaler": 1,
+                            "enabled": true,
+                            "type": "string",
+                            "ui_type": "status"
+                        }
+                    ]
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "uri": "/assets/ess/summary/num_ess_available",
+                    "value": [
+                        {
+                            "naked_value": 4
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "1",
+            "name": "Put BESS 04 into maintenance mode, close DC contactors, unit start",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_mode",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/close_dc_contactors",
+                    "value": true
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "pause",
+                    "uri": "",
+                    "value": 5
+                },
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/start",
+                    "value": true
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "uri": "/assets/ess/ess_04/status",
+                    "value": [
+                        {
+                            "naked_value": "Grid power supply running"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Give a real power command of 0.2 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_active_power_setpoint",
+                    "value": 200
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/ess_04/active_power",
+                    "value": [
+                        {
+                            "naked_value": 200
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Give a real power command of 1.0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_active_power_setpoint",
+                    "value": 1000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/ess_04/active_power",
+                    "value": [
+                        {
+                            "naked_value": 1000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "name": "Give a real power command of 2.5 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_active_power_setpoint",
+                    "value": 2500
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/ess_04/active_power",
+                    "value": [
+                        {
+                            "naked_value": 2500
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "name": "Give a real power command of 3.0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_active_power_setpoint",
+                    "value": 3000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/ess_04/active_power",
+                    "value": [
+                        {
+                            "naked_value": 2750
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "name": "Give a real power command of -0.2 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_active_power_setpoint",
+                    "value": -200
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/ess_04/active_power",
+                    "value": [
+                        {
+                            "naked_value": -200
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "7",
+            "name": "Give a real power command of -1.0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_active_power_setpoint",
+                    "value": -1000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/ess_04/active_power",
+                    "value": [
+                        {
+                            "naked_value": -1000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "8",
+            "name": "Give a real power command of -2.5 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_active_power_setpoint",
+                    "value": -2500
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/ess_04/active_power",
+                    "value": [
+                        {
+                            "naked_value": -2500
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "9",
+            "name": "Give a real power command of -3.0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_active_power_setpoint",
+                    "value": -3000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/ess_04/active_power",
+                    "value": [
+                        {
+                            "naked_value": -2750
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "10",
+            "name": "Give a real power command of 0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_active_power_setpoint",
+                    "value": 0
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "50",
+                    "uri": "/assets/ess/ess_04/active_power",
+                    "value": [
+                        {
+                            "naked_value": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "11",
+            "name": "Give a reactive power command of 0.2 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_reactive_power_setpoint",
+                    "value": 200
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/ess_04/reactive_power",
+                    "value": [
+                        {
+                            "naked_value": 200
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "12",
+            "name": "Give a reactive power command of 1.0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_reactive_power_setpoint",
+                    "value": 500
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/ess_04/reactive_power",
+                    "value": [
+                        {
+                            "naked_value": 500
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "13",
+            "name": "Give a reactive power command of 2.5 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_reactive_power_setpoint",
+                    "value": 1000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/ess_04/reactive_power",
+                    "value": [
+                        {
+                            "naked_value": 500
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "14",
+            "name": "Give a reactive power command of 3.0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_reactive_power_setpoint",
+                    "value": 1000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/ess_04/reactive_power",
+                    "value": [
+                        {
+                            "naked_value": 500
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "15",
+            "name": "Give a reactive power command of -0.2 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_reactive_power_setpoint",
+                    "value": -200
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/ess_04/reactive_power",
+                    "value": [
+                        {
+                            "naked_value": -200
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "16",
+            "name": "Give a reactive power command of -1.0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_reactive_power_setpoint",
+                    "value": -500
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/ess_04/reactive_power",
+                    "value": [
+                        {
+                            "naked_value": -500
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "17",
+            "name": "Give a reactive power command of -2.5 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_reactive_power_setpoint",
+                    "value": -1000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/ess_04/reactive_power",
+                    "value": [
+                        {
+                            "naked_value": -500
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "18",
+            "name": "Give a reactive power command of -3.0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_reactive_power_setpoint",
+                    "value": -3000
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "10%",
+                    "uri": "/assets/ess/ess_04/reactive_power",
+                    "value": [
+                        {
+                            "naked_value": -500
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "19",
+            "name": "Give a reactive power command of 0 MW",
+            "testbeds": [
+                "0"
+            ],
+            "steps": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_set",
+                    "uri": "/assets/ess/ess_04/maint_reactive_power_setpoint",
+                    "value": 0
+                }
+            ],
+            "result": [
+                {
+                    "controller": "site_controller",
+                    "action": "fims_get",
+                    "waiting": 10,
+                    "tolerance": "50",
+                    "uri": "/assets/ess/ess_04/reactive_power",
+                    "value": [
+                        {
+                            "naked_value": 0
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "testbeds": [
+        {
+            "id": "0",
+            "name": "Local docker",
+            "controllers": [
+                {
+                    "id": "site_controller",
+                    "name": "sc_ranchtown_vm",
+                    "user": "hybridos",
+                    "pass": "FlexGen2040!"
+                }
+            ]
+        }
+    ]
+}

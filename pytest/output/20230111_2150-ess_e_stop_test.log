@@ -1,0 +1,53 @@
+2023-01-11 21:50:32,117 [    INFO] There are 4 tests in the list.
+2023-01-11 21:50:32,118 [    INFO] Test environment includes 1 test beds.
+2023-01-11 21:50:32,118 [    INFO] Executing command 'docker ps -aqf "name=ess_controller"'.
+2023-01-11 21:50:32,341 [    INFO] Docker Name ess_controller ID is 94a6a984b45b.
+2023-01-11 21:50:32,342 [    INFO] Executing command 'docker container ls --format "table {{.Ports}}" --filter "id=94a6a984b45b"'.
+2023-01-11 21:50:32,578 [    INFO] Executing command 'docker ps -aqf "name=twins"'.
+2023-01-11 21:50:32,801 [    INFO] Docker Name twins ID is ee0e3094f45c.
+2023-01-11 21:50:32,802 [    INFO] Executing command 'docker container ls --format "table {{.Ports}}" --filter "id=ee0e3094f45c"'.
+2023-01-11 21:50:33,002 [    INFO] Executing command 'docker ps -aqf "name=DNP3_test"'.
+2023-01-11 21:50:33,218 [    INFO] Docker Name DNP3_test ID is c527a328bf1d.
+2023-01-11 21:50:33,220 [    INFO] Executing command 'docker ps -aqf "name=DNP3_test"'.
+2023-01-11 21:50:33,465 [    INFO] Docker Name DNP3_test ID is c527a328bf1d.
+2023-01-11 21:50:33,465 [    INFO] Executing command 'docker ps -aqf "name=DNP3_server"'.
+2023-01-11 21:50:33,731 [    INFO] Docker Name DNP3_server ID is c33f248e6b88.
+2023-01-11 21:50:33,734 [    INFO] Executing command 'docker ps -aqf "name=DNP3_server"'.
+2023-01-11 21:50:34,004 [    INFO] Docker Name DNP3_server ID is c33f248e6b88.
+2023-01-11 21:50:34,004 [    INFO] Executing command 'docker inspect  c33f248e6b88'.
+2023-01-11 21:50:34,283 [    INFO] Executing command 'docker ps -aqf "name=DNP3_test"'.
+2023-01-11 21:50:34,591 [    INFO] Docker Name DNP3_test ID is c527a328bf1d.
+2023-01-11 21:50:34,592 [    INFO] Executing command 'docker inspect  c527a328bf1d'.
+2023-01-11 21:50:34,890 [    INFO] Executing command 'docker ps -aqf "name=DNP3_client"'.
+2023-01-11 21:50:35,161 [    INFO] Docker Name DNP3_client ID is 6a2426b3cb94.
+2023-01-11 21:50:35,161 [    INFO] Executing command 'docker inspect  6a2426b3cb94'.
+2023-01-11 21:50:37,777 [    INFO] Running command 'ps -ax' in docker 6a2426b3cb94.
+2023-01-11 21:50:37,777 [    INFO] Executing command 'docker exec 6a2426b3cb94 ps -ax'.
+2023-01-11 21:50:38,096 [    INFO] Response from running command is '['PID TTY      STAT   TIME COMMAND', '    1 pts/0    Ss+    0:00 /bin/bash', '   79 pts/1    Ss+    0:00 /bin/sh', '  605 ?        S      0:00 fims_server', '  639 ?        Rs     0:00 ps -ax']'.
+2023-01-11 21:50:50,056 [    INFO] Running command 'fims_send -m pub  -u /components/comp2/24_decode_id 2345' in docker 6a2426b3cb94.
+2023-01-11 21:50:50,057 [    INFO] Executing command 'docker exec 6a2426b3cb94 fims_send -m pub  -u /components/comp2/24_decode_id 2345'.
+2023-01-11 21:50:50,372 [    INFO] Response from running command is '[]'.
+2023-01-11 21:51:01,285 [    INFO] Running command 'fims_send -m set -r /59996 -u /components/comp2/24_decode_id 3456' in docker 6a2426b3cb94.
+2023-01-11 21:51:01,285 [    INFO] Executing command 'docker exec 6a2426b3cb94 fims_send -m set -r /59996 -u /components/comp2/24_decode_id 3456'.
+2023-01-11 21:51:06,757 [    INFO] Response from running command is '[]'.
+2023-01-11 21:51:15,251 [    INFO] Running command 'ps -ax' in docker 6a2426b3cb94.
+2023-01-11 21:51:15,251 [    INFO] Executing command 'docker exec 6a2426b3cb94 ps -ax'.
+2023-01-11 21:51:15,548 [    INFO] Response from running command is '['PID TTY      STAT   TIME COMMAND', '    1 pts/0    Ss+    0:00 /bin/bash', '   79 pts/1    Ss+    0:00 /bin/sh', '  605 ?        S      0:00 fims_server', '  659 ?        Rs     0:00 ps -ax']'.
+2023-01-11 21:51:21,164 [    INFO] Running command 'cat /home/docker/logs/fims_listen.log&' in docker 6a2426b3cb94.
+2023-01-11 21:51:21,165 [    INFO] Executing command 'docker exec 6a2426b3cb94 cat /home/docker/logs/fims_listen.log&'.
+2023-01-11 21:51:21,524 [    INFO] Response from running command is '[]'.
+2023-01-11 21:53:15,984 [    INFO] Running command 'ps -ax' in docker 6a2426b3cb94.
+2023-01-11 21:53:15,984 [    INFO] Executing command 'docker exec 6a2426b3cb94 ps -ax'.
+2023-01-11 21:53:16,301 [    INFO] Response from running command is '['PID TTY      STAT   TIME COMMAND', '    1 pts/0    Ss+    0:00 /bin/bash', '   79 pts/1    Ss+    0:00 /bin/sh', '  605 ?        S      0:00 fims_server', '  674 ?        Rs     0:00 ps -ax']'.
+2023-01-11 21:54:23,095 [    INFO] Running command 'fims_send -m pub  -u /components/comp2/24_decode_id 124' in docker 6a2426b3cb94.
+2023-01-11 21:54:23,096 [    INFO] Executing command 'docker exec 6a2426b3cb94 fims_send -m pub  -u /components/comp2/24_decode_id 124'.
+2023-01-11 21:54:23,413 [    INFO] Response from running command is '[]'.
+2023-01-11 21:54:39,971 [    INFO] Running command 'fims_send -m set -r /59996 -u /components/comp1/01 4456' in docker 6a2426b3cb94.
+2023-01-11 21:54:39,972 [    INFO] Executing command 'docker exec 6a2426b3cb94 fims_send -m set -r /59996 -u /components/comp1/01 4456'.
+2023-01-11 21:54:45,325 [    INFO] Response from running command is '[]'.
+2023-01-11 21:54:50,454 [    INFO] Running command 'fims_send -m set -r /59996 -u /components/comp1/01 'hello'' in docker 6a2426b3cb94.
+2023-01-11 21:54:50,455 [    INFO] Executing command 'docker exec 6a2426b3cb94 fims_send -m set -r /59996 -u /components/comp1/01 'hello''.
+2023-01-11 21:54:55,799 [    INFO] Response from running command is '[]'.
+2023-01-11 21:55:10,355 [    INFO] Running command 'fims_send -m get -r /59996 -u /components/comp2/24_decode_id' in docker 6a2426b3cb94.
+2023-01-11 21:55:10,356 [    INFO] Executing command 'docker exec 6a2426b3cb94 fims_send -m get -r /59996 -u /components/comp2/24_decode_id'.
+2023-01-11 21:55:15,709 [    INFO] Response from running command is '[]'.

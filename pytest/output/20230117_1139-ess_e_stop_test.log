@@ -1,0 +1,4 @@
+2023-01-17 11:39:27,251 [   ERROR] Unable to read config file 'configs/var_mb_server_test_echo.sh'.
+2023-01-17 11:39:27,251 [   ERROR] [Errno 2] No such file or directory: 'configs/var_mb_server_test_echo.sh'
+2023-01-17 11:39:43,711 [   ERROR] Unable to read config file 'configs/var_mb_server_test_echo.sh'.
+2023-01-17 11:39:43,712 [   ERROR] [Errno 2] No such file or directory: 'configs/var_mb_server_test_echo.sh'

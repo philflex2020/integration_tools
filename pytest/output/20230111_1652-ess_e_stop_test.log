@@ -1,0 +1,24 @@
+2023-01-11 16:52:25,037 [    INFO] There are 4 tests in the list.
+2023-01-11 16:52:25,038 [    INFO] Test environment includes 1 test beds.
+2023-01-11 16:52:25,039 [    INFO] Executing command 'docker ps -aqf "name=ess_controller"'.
+2023-01-11 16:52:25,375 [    INFO] Docker Name ess_controller ID is 94a6a984b45b.
+2023-01-11 16:52:25,375 [    INFO] Executing command 'docker container ls --format "table {{.Ports}}" --filter "id=94a6a984b45b"'.
+2023-01-11 16:52:25,701 [    INFO] Executing command 'docker ps -aqf "name=twins"'.
+2023-01-11 16:52:26,007 [    INFO] Docker Name twins ID is ee0e3094f45c.
+2023-01-11 16:52:26,009 [    INFO] Executing command 'docker container ls --format "table {{.Ports}}" --filter "id=ee0e3094f45c"'.
+2023-01-11 16:52:26,339 [    INFO] Executing command 'docker ps -aqf "name=DNP3_test"'.
+2023-01-11 16:52:26,689 [    INFO] Docker Name DNP3_test ID is c527a328bf1d.
+2023-01-11 16:52:26,693 [    INFO] Executing command 'docker ps -aqf "name=DNP3_test"'.
+2023-01-11 16:52:27,010 [    INFO] Docker Name DNP3_test ID is c527a328bf1d.
+2023-01-11 16:52:27,012 [    INFO] Executing command 'docker ps -aqf "name=DNP3_server"'.
+2023-01-11 16:52:27,335 [    INFO] Docker Name DNP3_server ID is c33f248e6b88.
+2023-01-11 16:52:39,022 [    INFO] Executing command 'docker ps -aqf "name=DNP3_client"'.
+2023-01-11 16:52:39,305 [    INFO] Docker Name DNP3_client ID is 6a2426b3cb94.
+2023-01-11 16:52:39,307 [    INFO] Executing command 'docker inspect  6a2426b3cb94'.
+2023-01-11 16:52:41,686 [    INFO] Running command 'ps -ax' in docker 6a2426b3cb94.
+2023-01-11 16:52:41,686 [    INFO] Executing command 'docker exec 6a2426b3cb94 ps -ax'.
+2023-01-11 16:52:42,104 [    INFO] Response from running command is '['PID TTY      STAT   TIME COMMAND', '    1 pts/0    Ss+    0:00 /bin/bash', '   79 pts/1    Ss+    0:00 /bin/sh', '  159 ?        Rs     0:00 ps -ax']'.
+2023-01-11 16:52:46,533 [    INFO] Running command '/usr/local/bin/fims_server' in docker 6a2426b3cb94.
+2023-01-11 16:52:46,534 [    INFO] Executing command 'docker exec 6a2426b3cb94 /usr/local/bin/fims_server'.
+2023-01-11 16:52:55,155 [    INFO] Error Executing command 'docker exec 6a2426b3cb94 /usr/local/bin/fims_server'.
+2023-01-11 16:52:55,156 [    INFO] Response from running command is '[]'.

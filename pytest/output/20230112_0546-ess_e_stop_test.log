@@ -1,0 +1,29 @@
+2023-01-12 05:46:28,668 [    INFO] There are 4 tests in the list.
+2023-01-12 05:46:28,669 [    INFO] Test environment includes 1 test beds.
+2023-01-12 05:46:28,669 [    INFO] Executing command 'docker ps -aqf "name=ess_controller"'.
+2023-01-12 05:46:28,903 [    INFO] Docker Name ess_controller ID is 94a6a984b45b.
+2023-01-12 05:46:28,904 [    INFO] Executing command 'docker container ls --format "table {{.Ports}}" --filter "id=94a6a984b45b"'.
+2023-01-12 05:46:29,116 [    INFO] Executing command 'docker ps -aqf "name=twins"'.
+2023-01-12 05:46:29,334 [    INFO] Docker Name twins ID is ee0e3094f45c.
+2023-01-12 05:46:29,337 [    INFO] Executing command 'docker container ls --format "table {{.Ports}}" --filter "id=ee0e3094f45c"'.
+2023-01-12 05:46:29,538 [    INFO] Executing command 'docker ps -aqf "name=DNP3_test"'.
+2023-01-12 05:46:29,736 [    INFO] Docker Name DNP3_test ID is c527a328bf1d.
+2023-01-12 05:46:29,738 [    INFO] Executing command 'docker ps -aqf "name=DNP3_test"'.
+2023-01-12 05:46:29,936 [    INFO] Docker Name DNP3_test ID is c527a328bf1d.
+2023-01-12 05:46:29,937 [    INFO] Executing command 'docker ps -aqf "name=DNP3_server"'.
+2023-01-12 05:46:30,143 [    INFO] Docker Name DNP3_server ID is c33f248e6b88.
+2023-01-12 05:46:30,145 [    INFO] Executing command 'docker ps -aqf "name=DNP3_server"'.
+2023-01-12 05:46:30,371 [    INFO] Docker Name DNP3_server ID is c33f248e6b88.
+2023-01-12 05:46:30,372 [    INFO] Executing command 'docker inspect  c33f248e6b88'.
+2023-01-12 05:46:30,587 [    INFO] Executing command 'docker ps -aqf "name=DNP3_test"'.
+2023-01-12 05:46:30,802 [    INFO] Docker Name DNP3_test ID is c527a328bf1d.
+2023-01-12 05:46:30,802 [    INFO] Executing command 'docker inspect  c527a328bf1d'.
+2023-01-12 05:46:31,020 [    INFO] Executing command 'docker ps -aqf "name=DNP3_client"'.
+2023-01-12 05:46:31,237 [    INFO] Docker Name DNP3_client ID is 6a2426b3cb94.
+2023-01-12 05:46:31,237 [    INFO] Executing command 'docker inspect  6a2426b3cb94'.
+2023-01-12 05:46:40,325 [    INFO] Running command 'cat /home/docker/logs/fims_listen.log' in docker 6a2426b3cb94.
+2023-01-12 05:46:40,325 [    INFO] Executing command 'docker exec 6a2426b3cb94 cat /home/docker/logs/fims_listen.log'.
+2023-01-12 05:46:40,680 [    INFO] Response from running command is '[]'.
+2023-01-12 05:46:57,110 [    INFO] Running command 'cat /home/docker/logs/modbus_interface/mb_client_test_10_3.log' in docker 6a2426b3cb94.
+2023-01-12 05:46:57,110 [    INFO] Executing command 'docker exec 6a2426b3cb94 cat /home/docker/logs/modbus_interface/mb_client_test_10_3.log'.
+2023-01-12 05:46:57,420 [    INFO] Response from running command is '['client "client_example_notmp": Connected to server with 3 total connections', 'Waiting 2 seconds to initialize the Mono clock before beginning the main program', "Mono clock finished synchronizing after a 2 second wait, this hardware's frequency = 2.304007871058599 GHz. Beginning main program", 'client "client_example_notmp", component "comp1": heartbeat no longer detected', 'client "client_example_notmp", component "comp1": reconnected after picking up a heartbeat change', 'Listener for "client_example_notmp", from sender: "fims_send": uri "comp1/05" could not be found. Message dropped', 'aggregator for comp "comp2", on thread #1: this thread didn\'t update on schedule. Consider increasing frequency. Skipping it.', 'aggregator thread for comp "comp2": got an errno while reading the server from thread #1, err_code = 104, err_str = "Connection reset by peer". skipping that decode', 'aggregator thread for comp "xyz_ip_device_id": got an errno while reading the server from thread #0, err_code = 104, err_str = "Connection reset by peer". skipping that decode', 'component "comp2", thread #0: got an error while writing to register(s) at offset 110, err = "Connection reset by peer"', 'aggregator for comp "comp2", on thread #0: this thread didn\'t update on schedule. Consider increasing frequency. Skipping it.', 'component "comp2", thread #0: got an error while writing to register(s) at offset 110, err = "Connection reset by peer"', 'aggregator thread for comp "xyz_ip_device_id": got an errno while reading the server from thread #0, err_code = 104, err_str = "Connection reset by peer". skipping that decode']'.

@@ -1,0 +1,32 @@
+{
+    "docker_host": "6a2426b3cb94",
+    "docker_id": "DNP3_client",
+    "servcfg": "/home/docker/configs/mb_server_test_10_3.json",
+    "clicfg": "/home/docker/configs/mb_client_test_10_3.json",
+    "servsh": "/home/docker/configs/mb_server_test_10_3.sh",
+    "logdir": "/home/docker/logs",
+    "srvlog": "/modbus_interface/mb_server_test_10_3.log",
+    "clilog": "/modbus_interface/mb_client_test_10_3.log",
+    "cmds": [
+        "setHost DNP3_client myclient\n",
+        "writecfg foo3\n"
+    ],
+    "hosts": {
+        "client": {
+            "docker_id": "DNP3_test",
+            "docker_host": "",
+            "ip_address": ""
+        },
+        "server": {
+            "docker_id": "DNP3_server",
+            "docker_host": "",
+            "ip_address": ""
+        },
+        "myclient": {
+            "docker_id": "DNP3_client",
+            "docker_host": "6a2426b3cb94",
+            "docker_ip": []
+        }
+    },
+    "docker_ip": []
+}
