@@ -327,6 +327,15 @@ def runHost(chost,cmd):
         res.append(x)
     return res
 
+def runCopyTo(chost,fwname,remote_path):
+    res = []
+    docker.copy_to(chost, fwname, remote_path)
+    return res
+def runCopyFrom(chost,fwname,remote_path):
+    res = []
+    docker.copy_from(chost, fwname, remote_path)
+    return res
+
 #run modbus_server with mbservcfg on client
 #run client/mb_server_test_10_3.sh type script logs echo on client
 # Done use con selected host for runRun 
@@ -416,7 +425,7 @@ def runRun(md,cmds):
         print(" run not understood")
     # try:
     #     cmd = "cat {}/{}.log ".format(cxlogs, clogname)
-    #     res = docker.exec_in(chost, cmd)
+    #     res = runHost(chost, cmd)
     #     print("chost [{}] cmd [{}] res = [{}]\n".format(chost,cmd, res) )
     # except:
     #     print(" runRun log  understood")
@@ -694,7 +703,7 @@ def runSend(md,cmds):
                     fwname = "configs/var_{}.json".format(ccalled)
                     helper.write_json(mdat, fwname)
                     remote_path = "home/docker/configs/{}".format(cto)
-                    docker.copy_to(docker_id, fwname, remote_path)
+                    runCopyTo(docker_id, fwname, remote_path)
                 elif cas == "file":
                     sys.stdout.write("Send file called [{}] \n".format(cdict))
 
@@ -706,7 +715,7 @@ def runSend(md,cmds):
 
                     remote_path = "home/docker/configs/{}".format(cto)
                     helper.write(mdat, fwname)
-                    docker.copy_to(docker_id, fwname, remote_path)
+                    runCopyTo(docker_id, fwname, remote_path)
 
 
                 sys.stdout.write("Send called [{}] \n".format(cdict))
@@ -767,7 +776,7 @@ def runGet(md,cmds):
                 fwname = "configs/var_{}.json".format(ccalled)
                 #helper.write_json(mdat, fwname)
                 remote_path = "home/docker/configs/{}".format(cfrom)
-                docker.copy_from(chost, fwname, remote_path)
+                runCopyFrom(chost, fwname, remote_path)
                 mdx = helper.read_json(fwname)
                 sys.stdout.write("get  {} read from [{}] \n".format(cwhat, fname))
                 #json_string = json.dumps(mdx,indent=4)
@@ -780,7 +789,7 @@ def runGet(md,cmds):
                 fwname = "configs/var_{}.file".format(ccalled)
                 #helper.write_json(mdat, fwname)
                 remote_path = "home/docker/configs/{}".format(cfrom)
-                docker.copy_from(chost, fwname, remote_path)
+                runCopyFrom(chost, fwname, remote_path)
                 mdx = helper.read(fwname)
                 sys.stdout.write("get  {} called {} read from [{}] \n".format(cwhat, ccalled, remote_path))
                 #json_string = json.dumps(mdx,indent=4)
@@ -1462,21 +1471,21 @@ def runCmd(md, line):
                comp=md["vars"][cmds[1]]
                cmd = "fims_send -m set -r /{} -u {} {}".format(os.getpid(), comp, cmds[2])
                print(cmd)
-               docker.exec_in(md["system_host"], cmd)
+               runHost(md["system_host"], cmd)
 
         elif cmds[0] == "pubVar" or cmds[0]== "pv":
             if len(cmds) > 2:
                comp=md["vars"][cmds[1]]
                cmd = "fims_send -m pub  -u {} {}".format(comp, cmds[2])
                print(cmd)
-               docker.exec_in(md["system_host"], cmd)
+               runHost(md["system_host"], cmd)
 
         elif cmds[0] == "getVar" or cmds[0]== "gv":
             if len(cmds) > 1:
                comp=md["vars"][cmds[1]]
                cmd = "fims_send -m get -r /{} -u {}".format(os.getpid(),comp)
                print(cmd)
-               docker.exec_in(md["system_host"], cmd)
+               runHost(md["system_host"], cmd)
 
         elif cmds[0] == "logfims":
             ltime="5"
@@ -1484,7 +1493,7 @@ def runCmd(md, line):
                 ltime = cmds[1]
             sys.stdout.write(" ltime [{}] \n".format(ltime))
 
-            docker.exec_in(md["system_host"],"{}/runlog.sh {} fims_listen {}{}".format(md["scripts"],ltime, md["logdir"], md["fimslog"]))
+            runHost(md["system_host"],"{}/runlog.sh {} fims_listen {}{}".format(md["scripts"],ltime, md["logdir"], md["fimslog"]))
 
         elif cmds[0] == "pkill":
             pkill="fims_server"
@@ -1555,7 +1564,7 @@ def runCmd(md, line):
             cmd = "cat {}{}".format(md["logdir"],md["clilog"])
             execRes(md["system_host"], cmd)
 
-            # res = docker.exec_in(system_host, "ps -ax")
+            # res = runHost(system_host, "ps -ax")
             # for x in  range(len(res)):
             #     sys.stdout.write("{}\n".format(res[x]))
         ## help
@@ -1579,7 +1588,7 @@ def runCmd(md, line):
             sys.stdout.write(" steps [{}] \n".format(json_string))
 
         elif cmds[0] == "runfims":
-            docker.exec_in(md["system_host"],"{}/runlog.sh 0 fims_server {}/fims.log".format(md["scripts"],md["logdir"]))
+            runHost(md["system_host"],"{}/runlog.sh 0 fims_server {}/fims.log".format(md["scripts"],md["logdir"]))
 
         elif cmds[0] == "logfims":
             ltime="5"
@@ -1587,7 +1596,7 @@ def runCmd(md, line):
                 ltime = cmds[1]
             sys.stdout.write(" ltime [{}] \n".format(ltime))
 
-            docker.exec_in(md["system_host"],"{}/runlog.sh {} fims_listen {}/fims_listen.log".format(md["scripts"],ltime, md["logdir"]))
+            runHost(md["system_host"],"{}/runlog.sh {} fims_listen {}/fims_listen.log".format(md["scripts"],ltime, md["logdir"]))
 
         elif cmds[0] == "pkill":
             pkill="fims_server"
