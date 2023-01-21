@@ -82,6 +82,10 @@ def useSteps(md, base):
         md["steps"][base] = {}
         md["steps"][base]["cmds"] = []
 
+
+# add scenario called myscenario [phase given[ op 'this is the first op' [ steps 'some name' from base] ]]
+# add scenario called myscenario phase given op 'this is the first op' steps 'some name' from base
+
 def runAdd(md,cmds):
     cdict = myDict(cmds)
     if "called" in cdict:
@@ -90,13 +94,92 @@ def runAdd(md,cmds):
         cwhat = cdict["add"]
         if cwhat == "scenario":
             if ccalled in md["scenarios"]:
-                sys.stdout.write(" MakeScenario running   [{}] \n".format(ccalled))
-                Scen.MakeScenario(md, cmds)
+                sys.stdout.write(" MakeScenario    [{}] \n".format(ccalled))
+                #Scen.MakeScenario(md, cmds)
             else:
-                sys.stdout.write(" AddScenario running   [{}] \n".format(ccalled))
-                Scen.AddScenario(md, cmds)
+                sys.stdout.write(" AddScenario    [{}] \n".format(ccalled))
+                #Scen.AddScenario(md, cmds)
+                md["scenarios"][ccalled]={}
+                md["scenarios"][ccalled]["name"]=ccalled
+
+
     except:
-        sys.stdout.write(" Add [{}] called  \n".format(cdict))
+        sys.stdout.write("Error  in Add [{}]   \n".format(cdict))
+    try:
+        cphase = cdict["phase"]
+        cop = cdict["op"]
+        if cop[0] =="'":
+            cop=cop[1:-1]
+        if cphase not in md["scenarios"][ccalled]:
+            sys.stdout.write(" Adding Scenario phase  [{}] \n".format(cphase))
+
+            md["scenarios"][ccalled][cphase] = []
+        else:
+            sys.stdout.write(" Using Scenario phase  [{}] \n".format(cphase))
+           
+        phase = md["scenarios"][ccalled][cphase]
+        opfound = False
+        op = {}
+        for xx in phase:
+            sys.stdout.write("    cop [{}] processing  phase [{}]   \n".format(cop,xx))
+            try:
+                foo = xx.keys()
+            except:
+                sys.stdout.write("  Error in   op name [{}]    \n".format(cop))
+                return []
+            sys.stdout.write("  xx keys [{}]    \n".format(foo))
+
+            if cop in foo:
+
+                sys.stdout.write("    op name [{}] found in  phase [{}]   \n".format(cop, cphase))
+                op = xx
+                opfound = True
+                break
+        if opfound == False:
+            op = {}
+            op[cop] = {}
+            op[cop]["name"] = cop
+            op[cop]["steps"] = []
+            phase.append(op)
+            sys.stdout.write("OK op created  [{}] appended to  [{}]   \n".format(cop,cphase))
+        sys.stdout.write("==> OK Phase [{}]   [{}]   \n".format(cphase,ccalled))
+
+    except:
+        sys.stdout.write("Error  in Phase [{}]   \n".format(cdict))
+    try:
+        sys.stdout.write("Processing op [{}] for cop [{}] \n".format(op, cop))
+        sys.stdout.write("Processing steps len [{}]  \n".format(len(op[cop]["steps"])))
+    except:
+        sys.stdout.write("Error getting op [{}]   \n".format(cdict))
+    try:
+        csteps = cdict["steps"]
+        stpfound = False
+        for xx in op[cop]["steps"]:
+            sys.stdout.write("    cstep [{}] processing  step [{}]   \n".format(csteps,xx))
+            if csteps == xx["name"]:
+                stp = xx
+                stpfound = True
+                break
+
+            sys.stdout.write("    processing  step [{}]   \n".format(csteps))
+        if stpfound == True:
+            sys.stdout.write("Found step [{}] in [{}] :[{}]  \n".format(csteps, cphase, ccalled))
+            return []
+
+        sys.stdout.write("    adding  step [{}]   \n".format(csteps))
+        stp = {}
+        stp["name"]=csteps
+        stp["run"]=False
+        stp["actions"]=[]
+        stp["results"]=[]
+
+        op[cop]["steps"].append(stp)
+        sys.stdout.write("OK steps [{}] appended to  [{}]   \n".format(csteps,ccalled))
+
+    except:
+        sys.stdout.write("Error  in steps [{}]   \n".format(cdict))
+
+
     return []
 
 def runUseHelp(md,cmds):

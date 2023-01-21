@@ -271,6 +271,14 @@ def setupMd(md):
     md["steps"]["test6"]["cmds"].append("log fims_listen")
 
     
+    md["steps"]["test7"]    = {}
+    md["steps"]["test7"]["cmds"]    = []
+    md["steps"]["test7"]["cmds"].append("add scenario called myscenario phase given op 'this is the given op' steps 'some name' from base")    
+    md["steps"]["test7"]["cmds"].append("add scenario called myscenario phase given op 'this is the given op' steps 'some name' from base")    
+    md["steps"]["test7"]["cmds"].append("add scenario called myscenario phase when op 'this is the when op' steps 'start when' from base")    
+    md["steps"]["test7"]["cmds"].append("add scenario called myscenario phase then op 'this is the then op' steps 'start when' from base")    
+    md["steps"]["test7"]["cmds"].append("showscn")
+
     md["steps"]["init"]    = {}
     md["steps"]["init"]["cmds"]    = []
     md["steps"]["init"]["cmds"].append  ("setHost DNP3_server as server")
