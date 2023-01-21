@@ -94,8 +94,8 @@ def fixUpString(str):
 
 # add scenario called myscenario description 'demo scenario' phase given op 'this is the first op' steps 'some name' from base
 # add cmd as 'run some shit' to scenarios.myscenario.given.'this is the first op'.'some name' 
-def runAdd(md,cmds):
-    fAdd = True
+def runAddF(md,cmds,fAdd):
+    #fAdd = True
     cdict = myDict(cmds)
     obj = None
     if "called" in cdict:
@@ -134,18 +134,35 @@ def runAdd(md,cmds):
     obj = Scen.UseArrayObj(obj, "steps", fAdd)
     try:
         csteps = cdict["steps"]
-        obj = Scen.UseObjInArray(obj, fixUpString(csteps), fAdd)
-        obj["run"] = False
-        Scen.UseArrayObj(obj, "cmds", fAdd)
-        Scen.UseArrayObj(obj, "results", fAdd)
+        sobj = Scen.UseObjInArray(obj, fixUpString(csteps), fAdd)
+        sobj["run"] = False
+        Scen.UseArrayObj(sobj, "cmds", fAdd)
+        Scen.UseArrayObj(sobj, "results", fAdd)
 
     except:
         sys.stdout.write("Error  in Phase [{}] steps  [{}]   \n".format(cphase,csteps))
 
-    if fAdd:
+    if not fAdd:
         return []
 
+    try:
+        cfrom = cdict["from"]
+        if cfrom in md["steps"]:
+            sys.stdout.write("Setup  in steps [{}] from  [{}]   \n".format(csteps, cfrom))
+            sxobj = copy.deepcopy(md["steps"][cfrom])
+            sys.stdout.write(" New steps [{}] from  [{}]   \n".format(sxobj, cfrom))
+
+            sobj["cmds"] = sxobj["cmds"]
+    except:
+        sys.stdout.write("Error  in steps [{}]   \n".format(csteps))
+    
+
     return []
+
+# add scenario called myscenario description 'demo scenario' phase given op 'this is the first op' steps 'some name' from base
+# add cmd as 'run some shit' to scenarios.myscenario.given.'this is the first op'.'some name' 
+def runAdd(md,cmds):
+    return runAddF(md,cmds,True)
 
 def runUseHelp(md,cmds):
 
