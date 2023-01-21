@@ -330,6 +330,73 @@ def createSStep(name):
     return sstep
 
 
+def UseNamedObj(md,obj,cname,fAdd):
+    if obj not in md:
+        md[obj]={}
+    if cname in md[obj]:
+        sys.stdout.write(" Use [{}] [{}]  found \n".format(obj, cname))
+        return md[obj][cname]
+    if fAdd:
+        md[obj][cname]={}
+        return md[obj][cname]        
+    return None
+
+def UseDictObj(md,cname,fAdd):
+    if cname in md:
+        sys.stdout.write(" Use [{}] found \n".format(cname))
+        return md[cname]
+    if fAdd:
+        md[cname]={}
+        return md[cname]        
+    return None
+
+# item:cname[]
+def UseArrayObj(md,cname,fAdd):
+    if cname in md:
+        sys.stdout.write(" Use [{}] found \n".format(cname))
+        return md[cname]
+    if fAdd:
+        md[cname]=[]
+        return md[cname]        
+    return None
+# item:[
+#   { "cfield"::cname}
+# ]
+def UseItemInArray(md,cfield, cname,fAdd):
+    for xx in md:
+        if cfield in xx:
+            if xx[cfield] == cname:
+
+                sys.stdout.write(" Use [{}] found \n".format(cname))
+                return xx
+    if fAdd:
+        xx = {}
+        xx[cfield]=cname
+        md.append(xx)
+        return xx        
+    return None
+
+# [
+#    { cname1:{}},
+#    { cname2:{}},
+#    { cname3:{}}
+# ]
+#  
+def UseObjInArray(md,cname,fAdd):
+    for xx in md:
+        if cname in xx.keys():
+            sys.stdout.write(" Use [{}] found \n".format(cname))
+            return xx[cname]
+    sys.stdout.write(" UseObj adding  [{}] \n".format(cname))
+    if fAdd:
+        xx = {}
+        xx[cname]={}
+        md.append(xx)
+        return xx[cname]        
+    return None
+
+
+###### probably all deprecated
 # add scenario called fooo 
 # add scenario called setup_system id given name 'Set up the Client' step 'kill processes' 
 def AddScenario(md,cmds):

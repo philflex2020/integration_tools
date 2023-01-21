@@ -84,101 +84,66 @@ def useSteps(md, base):
 
 
 # add scenario called myscenario [phase given[ op 'this is the first op' [ steps 'some name' from base] ]]
-# add scenario called myscenario phase given op 'this is the first op' steps 'some name' from base
+# add scenario called myscenario description 'demo scenario' phase given op 'this is the first op' steps 'some name' from base
 
+def fixUpString(str):
+    if len(str) > 0:
+        if str[0] == "'":
+            str=str[1:-1]
+    return str
+
+# add scenario called myscenario description 'demo scenario' phase given op 'this is the first op' steps 'some name' from base
+# add cmd as 'run some shit' to scenarios.myscenario.given.'this is the first op'.'some name' 
 def runAdd(md,cmds):
+    fAdd = True
     cdict = myDict(cmds)
+    obj = None
     if "called" in cdict:
         ccalled = cdict["called"]
+    cdesc = None
+    if "description" in cdict:
+        cdesc= cdict["description"]
     try:
         cwhat = cdict["add"]
         if cwhat == "scenario":
-            if ccalled in md["scenarios"]:
-                sys.stdout.write(" MakeScenario    [{}] \n".format(ccalled))
-                #Scen.MakeScenario(md, cmds)
+            sys.stdout.write(" UseScenario    [{}] \n".format(ccalled))
+            obj = Scen.UseNamedObj(md, cwhat+"s", ccalled, fAdd)
+            if obj == None:
+                sys.stdout.write("Error  in UseNamed [{}]   \n".format(cdict))
             else:
-                sys.stdout.write(" AddScenario    [{}] \n".format(ccalled))
-                #Scen.AddScenario(md, cmds)
-                md["scenarios"][ccalled]={}
-                md["scenarios"][ccalled]["name"]=ccalled
-
-
+                if cdesc:
+                    obj["desc"] = fixUpString (cdesc) 
+                #return []
     except:
         sys.stdout.write("Error  in Add [{}]   \n".format(cdict))
+
     try:
         cphase = cdict["phase"]
-        cop = cdict["op"]
-        if cop[0] =="'":
-            cop=cop[1:-1]
-        if cphase not in md["scenarios"][ccalled]:
-            sys.stdout.write(" Adding Scenario phase  [{}] \n".format(cphase))
-
-            md["scenarios"][ccalled][cphase] = []
-        else:
-            sys.stdout.write(" Using Scenario phase  [{}] \n".format(cphase))
-           
-        phase = md["scenarios"][ccalled][cphase]
-        opfound = False
-        op = {}
-        for xx in phase:
-            sys.stdout.write("    cop [{}] processing  phase [{}]   \n".format(cop,xx))
-            try:
-                foo = xx.keys()
-            except:
-                sys.stdout.write("  Error in   op name [{}]    \n".format(cop))
-                return []
-            sys.stdout.write("  xx keys [{}]    \n".format(foo))
-
-            if cop in foo:
-
-                sys.stdout.write("    op name [{}] found in  phase [{}]   \n".format(cop, cphase))
-                op = xx
-                opfound = True
-                break
-        if opfound == False:
-            op = {}
-            op[cop] = {}
-            op[cop]["name"] = cop
-            op[cop]["steps"] = []
-            phase.append(op)
-            sys.stdout.write("OK op created  [{}] appended to  [{}]   \n".format(cop,cphase))
-        sys.stdout.write("==> OK Phase [{}]   [{}]   \n".format(cphase,ccalled))
-
+        obj = Scen.UseArrayObj(obj, cphase, fAdd)
     except:
-        sys.stdout.write("Error  in Phase [{}]   \n".format(cdict))
+        sys.stdout.write("Error  in Phase  [{}]   \n".format(cdict))
+
+    sys.stdout.write("==> Phase  [{}] Ok  \n".format(cphase))
+
     try:
-        sys.stdout.write("Processing op [{}] for cop [{}] \n".format(op, cop))
-        sys.stdout.write("Processing steps len [{}]  \n".format(len(op[cop]["steps"])))
+        cop = cdict["op"]
+        obj = Scen.UseObjInArray(obj, fixUpString(cop), fAdd)
     except:
-        sys.stdout.write("Error getting op [{}]   \n".format(cdict))
+        sys.stdout.write("Error  in Phase [{}] op  [{}]   \n".format(cphase,cop))
+    
+    obj = Scen.UseArrayObj(obj, "steps", fAdd)
     try:
         csteps = cdict["steps"]
-        stpfound = False
-        for xx in op[cop]["steps"]:
-            sys.stdout.write("    cstep [{}] processing  step [{}]   \n".format(csteps,xx))
-            if csteps == xx["name"]:
-                stp = xx
-                stpfound = True
-                break
-
-            sys.stdout.write("    processing  step [{}]   \n".format(csteps))
-        if stpfound == True:
-            sys.stdout.write("Found step [{}] in [{}] :[{}]  \n".format(csteps, cphase, ccalled))
-            return []
-
-        sys.stdout.write("    adding  step [{}]   \n".format(csteps))
-        stp = {}
-        stp["name"]=csteps
-        stp["run"]=False
-        stp["actions"]=[]
-        stp["results"]=[]
-
-        op[cop]["steps"].append(stp)
-        sys.stdout.write("OK steps [{}] appended to  [{}]   \n".format(csteps,ccalled))
+        obj = Scen.UseObjInArray(obj, fixUpString(csteps), fAdd)
+        obj["run"] = False
+        Scen.UseArrayObj(obj, "cmds", fAdd)
+        Scen.UseArrayObj(obj, "results", fAdd)
 
     except:
-        sys.stdout.write("Error  in steps [{}]   \n".format(cdict))
+        sys.stdout.write("Error  in Phase [{}] steps  [{}]   \n".format(cphase,csteps))
 
+    if fAdd:
+        return []
 
     return []
 

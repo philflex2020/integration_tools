@@ -35,6 +35,7 @@ log_dir = config["output"]
 test_dir = config["dir"]
 test_file = config["file"]
 test_menu = config["menu"]
+test_menu = "true"
 
 test_list = []
 
