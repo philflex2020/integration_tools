@@ -93,6 +93,7 @@ def fixUpString(str):
     return str
 
 # add scenario called myscenario description 'demo scenario' phase given op 'this is the first op' steps 'some name' from base
+# seek ?? scenario called myscenario description 'demo scenario' phase given op 'this is the first op' steps 'some name' from base
 # add cmd as 'run some shit' to scenarios.myscenario.given.'this is the first op'.'some name' 
 def runAddF(md,cmds,fAdd):
     #fAdd = True
@@ -437,7 +438,55 @@ def runRunHelp(md,cmds):
     sys.stdout.write("\trun fims_server logs <log_file> on <client>\n")
     sys.stdout.write("\trun fims_server args 'special args' on <client>\n")
     sys.stdout.write("\trun fims_server type <exec|script> on <client> -- run an executable or a script\n")
-    sys.stdout.write("\trun steps called 'some name'\n")
+    sys.stdout.write("\trun steps called 'some name' mode ask|deug\n")
+
+def runStepsMode(md, cdict , steps):
+    ix = 0
+    while ix < len(steps):
+        sys.stdout.write(" run cmd [{}] : (y/n/q/i)".format(steps[ix]))
+        sys.stdout.flush()
+        line = sys.stdin.readline()
+        #sys.stdout.write("line {}\n".format(line))
+
+        if len(line)> 1:
+            if (line[0] == 'y' or line[0] == "Y"):
+                runCmd(md, steps[ix])
+                sys.stdout.write(" ran cmd [{}]\n\n".format(steps[ix]))
+
+            elif (line[0] == 'n' or line[0] == "N"):
+                sys.stdout.write(" skipped act [{}]\n\n".format(steps[ix]))
+
+            elif (line[0] == 'd' or line[0] == "D"):
+                sys.stdout.write(" deleted act [{}]\n\n".format(steps[ix]))
+                steps.pop(ix)
+
+            elif (line[0] == 's' or line[0] == "S"):
+                x = 0
+                while x < len(steps):
+                    if x == ix:
+                        xp = "=>"
+                    else:
+                        xp = "  "
+                    sys.stdout.write("{} [{}] [{}]\n".format(xp, x,steps[x]))
+                    x +=  1
+
+            elif (line[0] == 'i' or line[0] == "I"):
+                sys.stdout.write(" insert new act \n")
+                newact = sys.stdin.readline()
+                steps.append(steps[len(steps) - 1]) 
+                x = len(steps) - 1
+                while x > ix:
+                    steps[x] = steps[x - 1]
+                    x -= 1
+                steps[ix] = newact
+
+            elif (line[0] == 'e' or line[0] == "E"):
+                sys.stdout.write(" type replacement act \n")
+                newact = sys.stdin.readline()
+                steps[ix] = newact
+                ix = ix -1
+
+            ix = ix + 1
 
 
 def runRun(md,cmds):
@@ -451,6 +500,11 @@ def runRun(md,cmds):
             sys.stdout.write("\trun steps called {}\n".format(ccalled))
             if ccalled in md["steps"]:
                 sys.stdout.write("\tfound steps called {}\n".format(ccalled))
+        cmode = "debug"
+        if "mode" in cdict:
+            cmode = cdict["mode"]
+
+
         return []
 
 
