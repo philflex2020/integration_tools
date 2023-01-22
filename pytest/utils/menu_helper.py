@@ -422,6 +422,82 @@ def runCopyFrom(chost,fwname,remote_path):
     docker.copy_from(chost, fwname, remote_path)
     return res
 
+def runStepsMode(md, cdict , steps):
+    res = "Pass"
+    cmode = "debug"
+    if "mode" in cdict:
+        cmode = cdict["mode"]
+    ix = 0
+    cmds = steps["cmds"]
+    steps["results"] = ["Undef"] * len(cmds)
+    results = steps["results"]
+    while ix < len(cmds):
+        if cmode == "debug":
+            sys.stdout.write(" run cmd [{}] : (y/n/q/i)".format(cmds[ix]))
+            sys.stdout.flush()
+            line = sys.stdin.readline()
+            #sys.stdout.write("line {}\n".format(line))
+
+            if len(line)> 1:
+                if (line[0] == 'y' or line[0] == "Y"):
+                    cres = runCmd(md, cmds[ix])
+                    results[ix]=cres
+                    try:
+                        if cres == "Fail":
+                            res = "Fail"
+                    except:
+                        pass
+                    sys.stdout.write(" ran cmd [{}]\n\n".format(cmds[ix]))
+
+            elif (line[0] == 'n' or line[0] == "N"):
+                sys.stdout.write(" skipped act [{}]\n\n".format(cmds[ix]))
+
+            elif (line[0] == 'd' or line[0] == "D"):
+                sys.stdout.write(" deleted act [{}]\n\n".format(cmds[ix]))
+                cmds.pop(ix)
+                results.pop(ix)
+
+
+            elif (line[0] == 's' or line[0] == "S"):
+                x = 0
+                while x < len(cmds):
+                    if x == ix:
+                        xp = "--"
+                    else:
+                        xp = "  "
+                    sys.stdout.write("{} [{}] [{}] ==> [{}]\n".format(xp, x, cmds[x], results[x]))
+                    x +=  1
+
+            elif (line[0] == 'i' or line[0] == "I"):
+                sys.stdout.write(" insert new cmd \n")
+                newact = sys.stdin.readline()
+                cmds.append(cmds[len(cmds) - 1]) 
+                results.append(results[len(results) - 1]) 
+                x = len(cmds) - 1
+                while x > ix:
+                    cmds[x] = cmds[x - 1]
+                    results[x] = results[x - 1]
+                    x -= 1
+                cmds[ix] = newact
+                results[ix] = "Undef"
+
+            elif (line[0] == 'e' or line[0] == "E"):
+                sys.stdout.write(" type replacement act \n")
+                newact = sys.stdin.readline()
+                cmds[ix] = newact
+                results[ix] = "Undef"
+                ix = ix -1
+        else:
+            cres = runCmd(md, cmds[ix])
+            results[ix]=cres
+            try:
+                if cres == "Fail":
+                    res = "Fail"
+            except:
+                pass
+ 
+        ix = ix + 1
+
 #run modbus_server with mbservcfg on client
 #run client/mb_server_test_10_3.sh type script logs echo on client
 # Done use con selected host for runRun 
@@ -438,55 +514,8 @@ def runRunHelp(md,cmds):
     sys.stdout.write("\trun fims_server logs <log_file> on <client>\n")
     sys.stdout.write("\trun fims_server args 'special args' on <client>\n")
     sys.stdout.write("\trun fims_server type <exec|script> on <client> -- run an executable or a script\n")
-    sys.stdout.write("\trun steps called 'some name' mode ask|deug\n")
+    sys.stdout.write("\trun steps called 'some name' mode ask|debug\n")
 
-def runStepsMode(md, cdict , steps):
-    ix = 0
-    while ix < len(steps):
-        sys.stdout.write(" run cmd [{}] : (y/n/q/i)".format(steps[ix]))
-        sys.stdout.flush()
-        line = sys.stdin.readline()
-        #sys.stdout.write("line {}\n".format(line))
-
-        if len(line)> 1:
-            if (line[0] == 'y' or line[0] == "Y"):
-                runCmd(md, steps[ix])
-                sys.stdout.write(" ran cmd [{}]\n\n".format(steps[ix]))
-
-            elif (line[0] == 'n' or line[0] == "N"):
-                sys.stdout.write(" skipped act [{}]\n\n".format(steps[ix]))
-
-            elif (line[0] == 'd' or line[0] == "D"):
-                sys.stdout.write(" deleted act [{}]\n\n".format(steps[ix]))
-                steps.pop(ix)
-
-            elif (line[0] == 's' or line[0] == "S"):
-                x = 0
-                while x < len(steps):
-                    if x == ix:
-                        xp = "=>"
-                    else:
-                        xp = "  "
-                    sys.stdout.write("{} [{}] [{}]\n".format(xp, x,steps[x]))
-                    x +=  1
-
-            elif (line[0] == 'i' or line[0] == "I"):
-                sys.stdout.write(" insert new act \n")
-                newact = sys.stdin.readline()
-                steps.append(steps[len(steps) - 1]) 
-                x = len(steps) - 1
-                while x > ix:
-                    steps[x] = steps[x - 1]
-                    x -= 1
-                steps[ix] = newact
-
-            elif (line[0] == 'e' or line[0] == "E"):
-                sys.stdout.write(" type replacement act \n")
-                newact = sys.stdin.readline()
-                steps[ix] = newact
-                ix = ix -1
-
-            ix = ix + 1
 
 
 def runRun(md,cmds):
@@ -500,9 +529,10 @@ def runRun(md,cmds):
             sys.stdout.write("\trun steps called {}\n".format(ccalled))
             if ccalled in md["steps"]:
                 sys.stdout.write("\tfound steps called {}\n".format(ccalled))
-        cmode = "debug"
-        if "mode" in cdict:
-            cmode = cdict["mode"]
+                # cmode = "debug"
+                # if "mode" in cdict:
+                #     cmode = cdict["mode"]
+                runStepsMode(md, cdict , md["steps"][ccalled])
 
 
         return []
