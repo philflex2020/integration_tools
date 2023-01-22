@@ -103,8 +103,16 @@ def runAddF(md,cmds,fAdd):
     cdesc = None
     if "description" in cdict:
         cdesc= cdict["description"]
-    try:
+    if "add" in cdict:
         cwhat = cdict["add"]
+    elif "seek" in cdict:
+        cwhat = cdict["seek"]
+    else:
+        sys.stdout.write(" runAddF only works with add or seek  not   [{}] \n".format(cmds[0]))
+        return []
+
+    try:
+        #cwhat = cdict["add"]
         if cwhat == "scenario":
             sys.stdout.write(" UseScenario    [{}] \n".format(ccalled))
             obj = Scen.UseNamedObj(md, cwhat+"s", ccalled, fAdd)
@@ -132,9 +140,12 @@ def runAddF(md,cmds,fAdd):
         sys.stdout.write("Error  in Phase [{}] op  [{}]   \n".format(cphase,cop))
     
     obj = Scen.UseArrayObj(obj, "steps", fAdd)
+
     try:
-        csteps = cdict["steps"]
-        sobj = Scen.UseObjInArray(obj, fixUpString(csteps), fAdd)
+        csteps = fixUpString(cdict["steps"])
+        # if fAdd is false and sobj is None we did not find the steps.
+        sobj = Scen.UseObjInArray(obj, csteps, fAdd)
+
         sobj["run"] = False
         Scen.UseArrayObj(sobj, "cmds", fAdd)
         Scen.UseArrayObj(sobj, "results", fAdd)
@@ -144,13 +155,18 @@ def runAddF(md,cmds,fAdd):
 
     if not fAdd:
         return []
+ 
+    if "from" not in cdict:
+        sys.stdout.write(" OK stopping at from Phase [{}] steps  [{}]   \n".format(cphase,csteps))
+        md["steps"][csteps] = sobj
+        return []
 
     try:
         cfrom = cdict["from"]
         if cfrom in md["steps"]:
-            sys.stdout.write("Setup  in steps [{}] from  [{}]   \n".format(csteps, cfrom))
+            #sys.stdout.write("Setup  in steps [{}] from  [{}]   \n".format(csteps, cfrom))
             sxobj = copy.deepcopy(md["steps"][cfrom])
-            sys.stdout.write(" New steps [{}] from  [{}]   \n".format(sxobj, cfrom))
+            #sys.stdout.write(" New steps [{}] from  [{}]   \n".format(sxobj, cfrom))
 
             sobj["cmds"] = sxobj["cmds"]
     except:
@@ -163,6 +179,10 @@ def runAddF(md,cmds,fAdd):
 # add cmd as 'run some shit' to scenarios.myscenario.given.'this is the first op'.'some name' 
 def runAdd(md,cmds):
     return runAddF(md,cmds,True)
+
+# seek scenario called myscenario description 'demo scenario' phase given op 'this is the first op' steps 'some name' from base
+def runSeek(md,cmds):
+    return runAddF(md,cmds,False)
 
 def runUseHelp(md,cmds):
 
@@ -417,6 +437,7 @@ def runRunHelp(md,cmds):
     sys.stdout.write("\trun fims_server logs <log_file> on <client>\n")
     sys.stdout.write("\trun fims_server args 'special args' on <client>\n")
     sys.stdout.write("\trun fims_server type <exec|script> on <client> -- run an executable or a script\n")
+    sys.stdout.write("\trun steps called 'some name'\n")
 
 
 def runRun(md,cmds):
@@ -424,6 +445,14 @@ def runRun(md,cmds):
     if cmds[1] == "-help":
         runRunHelp(md,cmds)
         return []
+    if cmds[1] == "steps":
+        if "called" in cdict:
+            ccalled = fixUpString(cdict["called"])
+            sys.stdout.write("\trun steps called {}\n".format(ccalled))
+            if ccalled in md["steps"]:
+                sys.stdout.write("\tfound steps called {}\n".format(ccalled))
+        return []
+
 
     if "with" in cdict:
         cwith=cdict["with"]
@@ -1527,6 +1556,9 @@ def runCmd(md, line):
             #runSetip(md,cmds)
             runUse(md,cmds)
         elif cmds[0] == "add":
+            #runSetip(md,cmds)
+            runAdd(md,cmds)
+        elif cmds[0] == "seek":
             #runSetip(md,cmds)
             runAdd(md,cmds)
 
