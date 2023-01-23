@@ -306,7 +306,155 @@ def setupMd(md):
     md["hosts"]["server"]["ip_address"] = ""
     md["hosts"]["server"]["path"] = "docker"
 
+def RunSeqStepsInOp(md,cdict):
+    try:
+        cin = menu.fixUpString(cdict["in"])
+        #sys.stdout.write("\t seeing  scn {}\n".format(cin))
+        scn = md["scenarios"][cin]
+        #sys.stdout.write("\t     got scn \n")
+        cphase = cdict["phase"]
+        phase = scn[cphase]
+        #sys.stdout.write("\t     got phase \n")
+        cop = menu.fixUpString(cdict["op"])
+        ix = 0
+        pix = -1
+        while ix < len(phase):
+            if cop in phase[ix]:
+                #sys.stdout.write("\t\tfound op [{}] in phase ix [{}]\n".format(cop,ix))
+                pix = ix
+            ix += 1
+        if pix >= 0:
+            op = phase[pix][cop]
+        else:
+            sys.stdout.write("Error run steps no op {} found \n".format(cop))
+            return "Fail"
 
+        stix = op["steps"]
+        #sys.stdout.write("\t\tgot stix \n")
+
+        ccalled = menu.fixUpString(cdict["called"])
+        #sys.stdout.write("\t\tgot called [{}] \n".format(ccalled))
+        try:
+            lix = len(stix)
+            #sys.stdout.write("\t\tgot lix [{}] \n".format(lix))
+        except:
+            sys.stdout.write("Error getting lix from stix[{}] \n".format(stix))
+            return "Fail"
+
+        ix = 0
+        pix = -1
+        while ix < len(stix):
+            if ccalled in stix[ix]:
+                #sys.stdout.write("\t\tfound  called [{}]  in stix [{}] \n".format(ccalled,ix))
+                pix = ix
+            ix += 1
+        #sys.stdout.write("\t\tgot pix [{}] \n".format(pix))
+
+        if pix >= 0:
+            steps = stix[pix]
+            #sys.stdout.write("\t\tgot steps[{}] \n".format(steps))
+            sys.stdout.write("\t\t\trunning  steps called  [{}] in seq [{}] \n".format(ccalled,cin))
+            return "Pass"
+        else:
+            sys.stdout.write("Error run steps no op {} found \n".format(cop))
+            return "Fail"
+        # runCmd to run the steps
+        return "Pass"
+
+    except:
+        sys.stdout.write("Error in run steps  {}\n".format(cdict))
+        return "Fail"    
+
+# run steps  in myscenario   mode run
+def RunSeqSteps(md,cdict):
+    try:
+        cin = menu.fixUpString(cdict["in"])
+        #sys.stdout.write("\t seeing  scn {}\n".format(cin))
+        scn = md["scenarios"][cin]
+        sys.stdout.write("\tgot scn [{}]\n".format(cin))
+    except:
+        sys.stdout.write("\tError seeking scn {}\n".format( cin))
+        return "Fail"
+    phase_list=["given","when","then"]
+    for xp in range(len(phase_list)):
+        phase = phase_list[xp]
+        if phase in scn:
+            sys.stdout.write("\trunning   phase[{}]  in scn {} \n".format(phase, cin))
+            cdict["phase"] = phase
+            RunSeqPhaseSteps(md,cdict)
+            del cdict["phase"]
+        
+    #sys.stdout.write("\t After seeking scn {} ix is {} \n".format( cin))
+
+    return "Pass"
+
+# run steps  in myscenario phase given  mode run
+def RunSeqPhaseSteps(md,cdict):
+    try:
+        cin = menu.fixUpString(cdict["in"])
+        #sys.stdout.write("\t seeing  scn {}\n".format(cin))
+        scn = md["scenarios"][cin]
+        #sys.stdout.write("\t     got scn \n")
+        cphase = cdict["phase"]
+        phase = scn[cphase]
+    except:
+        sys.stdout.write("Error seeking  phase[{}] in scn {}\n".format(cphase, cin))
+        return "Fail"
+    ix = 0
+    #pix = -1
+    while ix < len(phase):
+        for ixx in phase[ix]:
+            sys.stdout.write("\t\trunning   phase[{}] op [{}]  in scn {} \n".format(cphase, ixx, cin))
+            cdict["op"] = ixx
+            RunSeqPhaseStepsInOp(md,cdict)
+            del cdict["op"]
+        ix += 1
+
+
+    return "Pass"
+# run steps op 'this is the first op'  in myscenario phase given  mode run
+def RunSeqPhaseStepsInOp(md,cdict):
+    try:
+        #sys.stdout.write("Starting RunSeqPhaseStepsInOP \n")
+        cin = menu.fixUpString(cdict["in"])
+        #sys.stdout.write("\t seeing  scn {}\n".format(cin))
+        scn = md["scenarios"][cin]
+        #sys.stdout.write("\t     got scn \n")
+        cphase = cdict["phase"]
+        phase = scn[cphase]
+        #sys.stdout.write("\t     got phase \n")
+        cop = menu.fixUpString(cdict["op"])
+        ix = 0
+        pix = -1
+        while ix < len(phase):
+            if cop in phase[ix]:
+                #sys.stdout.write("\t   found op in phase \n")
+                pix = ix
+            ix += 1
+        if pix >= 0:
+            op = phase[pix][cop]
+        else:
+            sys.stdout.write("Error run steps no op {} found \n".format(cop))
+            return "Fail"
+
+        stix = op["steps"]
+        #sys.stdout.write("\t     got stix \n")
+
+        ix = 0
+        while ix < len(stix):
+            xxx = stix[ix]
+            for xxname in xxx:
+                runc = "run steps op '{}'  in {} phase {}  called '{}' mode run".format(cop,cin,cphase,xxname)
+                sys.stdout.write("\t\t==>{} \n".format(runc))
+                cdict["called"] = xxname
+                RunSeqStepsInOp(md,cdict)
+                del cdict["called"]
+            ix += 1
+        return "Pass"
+
+    except:
+        sys.stdout.write("RunSeqPhaseStepsInOP run steps error  {}\n".format(cdict))
+        return "Fail"      
 
 
 

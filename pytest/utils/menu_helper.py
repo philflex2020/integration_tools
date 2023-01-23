@@ -531,9 +531,6 @@ def runRunHelp(md,cmds):
     sys.stdout.write("\trun steps called 'some name' op 'this is the first op'  in myscenario phase given  mode run\n")
     #description 'demo scenario' phase given op 'this is the first op' steps 'some name' from base\n")
 
-
-
-
 def runRun(md,cmds):
     cdict = myDict(cmds)
     if cmds[1] == "-help":
@@ -542,94 +539,19 @@ def runRun(md,cmds):
     if cmds[1] == "steps":
         if "op" in cdict and "in" in cdict and "phase" in cdict and "called" in cdict:
             sys.stdout.write("\trun steps in op \n\n")
-            try:
-                cin = fixUpString(cdict["in"])
-                #sys.stdout.write("\t seeing  scn {}\n".format(cin))
-                scn = md["scenarios"][cin]
-                #sys.stdout.write("\t     got scn \n")
-                cphase = cdict["phase"]
-                phase = scn[cphase]
-                #sys.stdout.write("\t     got phase \n")
-                cop = fixUpString(cdict["op"])
-                ix = 0
-                pix = -1
-                while ix < len(phase):
-                    if cop in phase[ix]:
-                        #sys.stdout.write("\t   found op in phase \n")
-                        pix = ix
-                    ix += 1
-                if pix >= 0:
-                    op = phase[pix][cop]
-                else:
-                    sys.stdout.write("\trun steps no op {} found \n".format(cop))
-                    return "Fail"
-
-                stix = op["steps"]
-                #sys.stdout.write("\t     got stix \n")
-
-                ix = 0
-                pix = -1
-                ccalled = fixUpString(cdict["called"])
-                while ix < len(stix):
-                    if ccalled in stix[ix]:
-                        pix = ix
-                    ix += 1
-                if pix >= 0:
-                    steps = stix[pix]
-                else:
-                    sys.stdout.write("\trun steps no op {} found \n".format(cop))
-                    return "Fail"
-                sys.stdout.write("\trunning  steps in seq \n")
-                return "Pass"
-
-            except:
-                sys.stdout.write("\trun steps  error  {}\n".format(cdict))
-                return "Fail"    
-
-        #run steps op 'this is the first op'  in myscenario phase given  mode run
+            Scen.RunSeqStepsInOP(md,cdict)
+#       #run steps op 'this is the first op'  in myscenario phase given  mode run
         elif "op" in cdict and "in" in cdict and "phase" in cdict:
-            sys.stdout.write("\trun steps in op \n\n")
-            try:
-                cin = fixUpString(cdict["in"])
-                #sys.stdout.write("\t seeing  scn {}\n".format(cin))
-                scn = md["scenarios"][cin]
-                #sys.stdout.write("\t     got scn \n")
-                cphase = cdict["phase"]
-                phase = scn[cphase]
-                #sys.stdout.write("\t     got phase \n")
-                cop = fixUpString(cdict["op"])
-                ix = 0
-                pix = -1
-                while ix < len(phase):
-                    if cop in phase[ix]:
-                        #sys.stdout.write("\t   found op in phase \n")
-                        pix = ix
-                    ix += 1
-                if pix >= 0:
-                    op = phase[pix][cop]
-                else:
-                    sys.stdout.write("\trun steps no op {} found \n".format(cop))
-                    return "Fail"
-
-                stix = op["steps"]
-                #sys.stdout.write("\t     got stix \n")
-
-                ix = 0
-                while ix < len(stix):
-                    xxx = stix[ix]
-                    for xxname in xxx:
-                        runc = "run steps op '{}'  in {} phase {}  called '{}' mode run".format(cop,cin,cphase,xxname)
-                        sys.stdout.write("\t     runc {} \n".format(runc))
-
-                        runCmd(md,runc)
-                    ix += 1
-                return "Pass"
-
-            except:
-                sys.stdout.write("\trun steps  error  {}\n".format(cdict))
-                return "Fail"      
-
-
+            sys.stdout.write("\trun steps in phase for op \n")
+            Scen.RunSeqPhaseStepsInOP(md,cdict)
+        elif "phase" in cdict and "in" in cdict:
+            sys.stdout.write("\trun steps in selected phase  \n")
+            Scen.RunSeqPhaseSteps(md,cdict)
+        elif  "in" in cdict:
+            sys.stdout.write("\trun all steps in all phases of scn [{}]\n".format(cdict["in"]))
+            Scen.RunSeqSteps(md,cdict)
+            return "Pass"
+#
         elif "called" in cdict:
             ccalled = fixUpString(cdict["called"])
             sys.stdout.write("\trun steps called {}\n".format(ccalled))
