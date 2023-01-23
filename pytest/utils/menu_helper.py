@@ -179,6 +179,7 @@ def runAddF(md,cmds,fAdd):
     return []
 
 def runAddHelp(md,cmds):
+    sys.stdout.write("add var called myvar value 234 type float\n")
     sys.stdout.write("add scenario called myscenario description 'demo scenario' phase given op 'this is the first op' steps 'some name' from base\n")
 
 # add cmd as 'run some shit' to scenarios.myscenario.given.'this is the first op'.'some name' 
@@ -189,7 +190,15 @@ def runAdd(md,cmds):
             return "Pass"
     except:
         pass
-    return runAddF(md,cmds,True)
+    cdict = myDict(cmds)
+
+    if cdict["add"] == "scenario":
+        return runAddF(md,cmds,True)
+    elif cdict["add"] == "var":  #
+        return runAv(md,cmds)
+
+
+    return "Fail"
 
 # seek scenario called myscenario description 'demo scenario' phase given op 'this is the first op' steps 'some name' from base
 def runSeek(md,cmds):
@@ -1140,44 +1149,68 @@ def runSet(md,cmds):
 
     return res
 
-# av foo 23 float
-def runAv(md,cmds):
-    if len(cmds) > 2:
-        if len(cmds) > 3:
-            if cmds[3] == "float":
-                try:
-                    md["vars"][cmds[1]] = float(cmds[2])
-                except:
-                    pass
-            elif cmds[3] == "int":
-                try:
-                    md["vars"][cmds[1]] = int(cmds[2])
-                except:
-                    pass
-            elif cmds[3] == "bool":
-                fval = 0
-                fvalok = True
-                try:
-                    fval = float(cmds[2])
-                except:
-                    fvalok = False
-                    pass
-                if cmds[2] == "false":
-                    md["vars"][cmds[1]] = False     
-                elif cmds[2] == "true":
-                    md["vars"][cmds[1]] = True
-                elif fvalok and float(cmds[2]) > 0:                    
-                    md["vars"][cmds[1]] = True     
-                elif fvalok and float(cmds[2]) <= 0:
-                    md["vars"][cmds[1]] = False     
-            else:
-               md["vars"][cmds[1]] = cmds[2]
+def setVar(cname,cval,ctype):
+    if cname == "" and cval == "":
+        return "Fail"
+    if ctype == "float":
+        try:
+            md["vars"][cname] = float(cval)
+        except:
+            pass
+    elif ctype == "int":
+        try:
+            md["vars"][cname] = int(cval)
+        except:
+            pass
+    elif ctype == "bool":
+        fval = 0
+        fvalok = True
+        try:
+            fval = float(cval)
+        except:
+            fvalok = False
+            pass
+        if cval == "false":
+            md["vars"][cname] = False     
+        elif cval == "true":
+            md["vars"][cname] = True
+        elif fvalok and fval > 0:                    
+            md["vars"][cname] = True     
+        elif fvalok and fval <= 0:
+            md["vars"][cname] = False     
+    else:
+        md["vars"][cname] = cval
 
-        else:        
-            md["vars"][cmds[1]] = cmds[2]
-    if cmds[1] in md["vars"]:
-        return  md["vars"][cmds[1]]
-    return []
+# av foo 23 float
+# add var called abc value 234 type float 
+def runAv(md,cmds):
+    cdict = myDict(cmds)
+    if "add" in cdict:
+        if cdict["add"] != "var":
+            return "Fail"
+        ccalled = ""
+        cval = ""
+        ctype = ""
+        if "called" in cdict:
+            ccalled = cdict["called"]
+        if "value" in cdict:
+            cval = cdict["value"]
+        if "type" in cdict:
+            ctype = cdict["type"]
+        setVar(ccalled,cval,ctype)
+        return "Pass"
+
+    else:
+        if len(cmds) > 2:
+            if len(cmds) > 3:
+
+                setVar(cmds[1],cmds[2],cmds[3])
+
+            else:        
+                md["vars"][cmds[1]] = cmds[2]
+        if cmds[1] in md["vars"]:
+            return  md["vars"][cmds[1]]
+    return "Pass"
 
 #runIfRes(md,cdict,"then", res)
 #runIfRes(md,cdict,"else", res)
@@ -1531,9 +1564,12 @@ def init_menu(test_list):
             #print(cmds)
             sset = md["stepset"]
             quit = runCmd(md,line)
-            if quit < 0:
-                md["steps"][sset]["cmds"].append(line[:-1])
-                quit = 0
+            try:
+                if quit < 0:
+                    md["steps"][sset]["cmds"].append(line[:-1])
+            except:
+                pass
+            quit = 0
 
 def mySplit(line):
     res = []
@@ -1763,6 +1799,7 @@ def runCmd(md, line):
         elif line == "q" or line == "quit":
             sys.stdout.write(" OK quitting\n")
             quit = 1
+            sys.exit(0)
         ## ps
         elif line == "ps" and md["system_host"] != "":
             res = execRes(md["system_host"],"ps -ax")
