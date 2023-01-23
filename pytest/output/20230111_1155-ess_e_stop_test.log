@@ -1,7 +1,0 @@
-2023-01-11 11:55:27,296 [    INFO] There are 4 tests in the list.
-2023-01-11 11:55:27,297 [    INFO] Test environment includes 1 test beds.
-2023-01-11 11:55:27,511 [    INFO] Docker Name ess_controller ID is 94a6a984b45b.
-2023-01-11 11:55:27,929 [    INFO] Docker Name twins ID is ee0e3094f45c.
-2023-01-11 11:55:28,422 [    INFO] Docker Name DNP3_test ID is c527a328bf1d.
-2023-01-11 11:55:28,652 [    INFO] Docker Name DNP3_test ID is c527a328bf1d.
-2023-01-11 11:55:28,883 [    INFO] Docker Name DNP3_server ID is c33f248e6b88.

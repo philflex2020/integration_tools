@@ -1,1 +1,0 @@
-2023-01-17 13:30:54,546 [    INFO] Error Executing command 'docker exec 6a2426b3cb94 pkill  modbus_client '.

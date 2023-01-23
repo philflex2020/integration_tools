@@ -1,3 +1,0 @@
-2023-01-12 14:29:21,536 [    INFO] Error Executing command 'docker ps -aqf "name=DNP3_test"'.
-2023-01-12 14:29:21,537 [    INFO] Error Executing command 'docker ps -aqf "name=DNP3_server"'.
-2023-01-12 14:29:21,538 [    INFO] Error Executing command 'docker inspect  []'.

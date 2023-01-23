@@ -1,8 +1,0 @@
-2023-01-10 22:05:21,977 [    INFO] There are 4 tests in the list.
-2023-01-10 22:05:21,977 [    INFO] Test environment includes 1 test beds.
-2023-01-10 22:05:22,204 [    INFO] Docker Name ess_controller ID is 94a6a984b45b.
-2023-01-10 22:05:22,586 [    INFO] Docker Name twins ID is ee0e3094f45c.
-2023-01-10 22:05:23,004 [    INFO] Docker Name DNP3_test ID is c527a328bf1d.
-2023-01-10 22:05:23,205 [    INFO] Docker Name DNP3_server ID is c33f248e6b88.
-2023-01-10 22:05:34,156 [    INFO] Docker Name DNP3_test ID is c527a328bf1d.
-2023-01-10 22:05:36,628 [    INFO] Response from running command is '['PID TTY      STAT   TIME COMMAND', '    1 pts/0    Ss+    0:00 /bin/bash', '   19 pts/1    Ss+    0:01 /bin/sh', ' 6004 pts/2    Ss+    0:00 /bin/sh', ' 8925 pts/1    Sl   614:03 /usr/local/bin/fims_server', ' 8941 pts/1    Sl   1086:38 /usr/local/bin/modbus_client configs/mb_client_test_10_3.json', ' 9737 pts/1    S      0:00 /usr/local/bin/fims_echo -u /comptest/comp1 -b {       "01":0 }', ' 9739 pts/1    S      0:01 /usr/local/bin/fims_echo -u /components/comp2 -b {       "24_decode_id":0,       "25":0  }', ' 9741 pts/1    S      0:00 /usr/local/bin/fims_echo -u /components/xyz_ip_device_id -b {       "26":0  }', ' 9743 pts/1    S      0:00 /usr/local/bin/fims_echo -u /components/comp1 -b {       "02":0,       "03":0,       "10":0,       "13":0,       "04":0 }', ' 9760 ?        Rs     0:00 ps -ax']'.

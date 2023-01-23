@@ -1,2 +1,0 @@
-2023-01-19 10:05:24,442 [    INFO] Error Executing command 'docker exec 6a2426b3cb94 fims_send -m set -u /components/pcs/myval myvar'.
-2023-01-19 10:05:48,923 [    INFO] Error Executing command 'docker exec 6a2426b3cb94 fims_send -m set -u /components/pcs '{ "myval": myvar }''.
