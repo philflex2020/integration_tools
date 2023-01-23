@@ -55,41 +55,41 @@ def setupMd(md):
     sstep["kill processes"]={}
     sstep["kill processes"]["name"] = "kill processes"
     sstep["kill processes"]["run"] = False
-    sstep["kill processes"]["actions"] = []
+    sstep["kill processes"]["cmds"] = []
     sstep["kill processes"]["results"] = {}
 
-    sstep["kill processes"]["actions"].append("stop modbus_client on client")
-    sstep["kill processes"]["actions"].append("stop modbus_server on client")
-    sstep["kill processes"]["actions"].append("stop fims_server on client")
-    sstep["kill processes"]["actions"].append("stop fims_echo on client")
+    sstep["kill processes"]["cmds"].append("stop modbus_client on client")
+    sstep["kill processes"]["cmds"].append("stop modbus_server on client")
+    sstep["kill processes"]["cmds"].append("stop fims_server on client")
+    sstep["kill processes"]["cmds"].append("stop fims_echo on client")
     sscen["Set up the Client"]["steps"].append(copy.deepcopy(sstep))
 
     sstep = {}
     sstep["set up configs"]={}
     sstep["set up configs"]["name"] = "set up configs"
     sstep["set up configs"]["run"] = False
-    sstep["set up configs"]["actions"] = []
+    sstep["set up configs"]["cmds"] = []
     sstep["set up configs"]["results"] = {}
-    sstep["set up configs"]["actions"].append("load var called mb_server_test_10_3 from mb_server_test as json")
-    sstep["set up configs"]["actions"].append("load var called mb_server_test_10_3_echo from mb_server_test_echo.sh as file")
-    sstep["set up configs"]["actions"].append("load var called mb_client_test_10_3 from mb_client_test as json")
-    sstep["set up configs"]["actions"].append("set value called connection.ip_address in mb_client_test_10_3 from config.hosts.client.system_ip saveas  mb_client_tmp") 
-    sstep["set up configs"]["actions"].append("set value called connection.ip_address in mb_server_test_10_3 from config.hosts.client.system_ip_ saveas  mb_server_tmp") 
-    sstep["set up configs"]["actions"].append("send var called mb_client_tmp as json to client/mb_client_test_10_3.json in client") 
-    sstep["set up configs"]["actions"].append("send var called mb_server_tmp as json to client/mb_server_test_10_3.json in client") 
-    sstep["set up configs"]["actions"].append("send var called mb_server_test_10_3_echo as file to client/mb_server_test_10_3_echo.sh in client") 
+    sstep["set up configs"]["cmds"].append("load var called mb_server_test_10_3 from mb_server_test as json")
+    sstep["set up configs"]["cmds"].append("load var called mb_server_test_10_3_echo from mb_server_test_echo.sh as file")
+    sstep["set up configs"]["cmds"].append("load var called mb_client_test_10_3 from mb_client_test as json")
+    sstep["set up configs"]["cmds"].append("set value called connection.ip_address in mb_client_test_10_3 from config.hosts.client.system_ip saveas  mb_client_tmp") 
+    sstep["set up configs"]["cmds"].append("set value called connection.ip_address in mb_server_test_10_3 from config.hosts.client.system_ip_ saveas  mb_server_tmp") 
+    sstep["set up configs"]["cmds"].append("send var called mb_client_tmp as json to client/mb_client_test_10_3.json in client") 
+    sstep["set up configs"]["cmds"].append("send var called mb_server_tmp as json to client/mb_server_test_10_3.json in client") 
+    sstep["set up configs"]["cmds"].append("send var called mb_server_test_10_3_echo as file to client/mb_server_test_10_3_echo.sh in client") 
     sscen["Set up the Client"]["steps"].append(copy.deepcopy(sstep))
 
     sstep = {}
     sstep["run system"]={}
     sstep["run system"]["name"] = "run system"
     sstep["run system"]["run"] = False
-    sstep["run system"]["actions"] = []
+    sstep["run system"]["cmds"] = []
     sstep["run system"]["results"] = {}
-    sstep["run system"]["actions"].append("run fims_server on client")
-    sstep["run system"]["actions"].append("run fims_echo with client/mb_server_test_10_3.sh on client")
-    sstep["run system"]["actions"].append("run modbus_server with client/mb_server_test_10_3 on client")
-    sstep["run system"]["actions"].append("run modbus_client with client/mb_client_test_10_3 on client")
+    sstep["run system"]["cmds"].append("run fims_server on client")
+    sstep["run system"]["cmds"].append("run fims_echo with client/mb_server_test_10_3.sh on client")
+    sstep["run system"]["cmds"].append("run modbus_server with client/mb_server_test_10_3 on client")
+    sstep["run system"]["cmds"].append("run modbus_client with client/mb_client_test_10_3 on client")
 
     sscen["Set up the Client"]["steps"].append(copy.deepcopy(sstep))
 
@@ -102,12 +102,12 @@ def setupMd(md):
     sstep["run system"]={}
     sstep["run system"]["name"] = "run system"
     sstep["run system"]["run"] = False
-    sstep["run system"]["actions"] = []
+    sstep["run system"]["cmds"] = []
     sstep["run system"]["results"] = {}
-    sstep["run system"]["actions"].append("run fims_server on client")
-    sstep["run system"]["actions"].append("run fims_echo with client/mb_server_test_10_3.sh on client")
-    sstep["run system"]["actions"].append("run modbus_server with client/mb_server_test_10_3 on client")
-    sstep["run system"]["actions"].append("run modbus_client with client/mb_client_test_10_3 on client")
+    sstep["run system"]["cmds"].append("run fims_server on client")
+    sstep["run system"]["cmds"].append("run fims_echo with client/mb_server_test_10_3.sh on client")
+    sstep["run system"]["cmds"].append("run modbus_server with client/mb_server_test_10_3 on client")
+    sstep["run system"]["cmds"].append("run modbus_client with client/mb_client_test_10_3 on client")
     #scen["given"]["steps"].append("run modbus_server with mb_server_test")
     #scen["given"]["steps"].append(copy.deepcopy(sstep))
 
@@ -137,45 +137,45 @@ def setupMd(md):
 
     # sstep = {}
     # sstep["name"] = " set up server"
-    # sstep["actions"] = []
-    # sstep["actions"].append = ("use server")
+    # sstep["cmds"] = []
+    # sstep["cmds"].append = ("use server")
     # sstep["results"] = {}
     # scen2["given"]["steps"].append(copy.deepcopy(sstep))
 
     # sstep["name"] = " kill tasks"
-    # sstep["actions"] = []
-    # sstep["actions"].append = ("pkill modbus_client")
-    # sstep["actions"].append = ("pkill modbus_server")
-    # sstep["actions"].append = ("pkill modbus_client")
-    # sstep["actions"].append = ("pkill fims_echo")
-    # sstep["actions"].append = ("pkill fims_server")
-    # sstep["actions"].append = ("pkill fims_listen")
-    # sstep["actions"].append = ("wait 1 second")
+    # sstep["cmds"] = []
+    # sstep["cmds"].append = ("pkill modbus_client")
+    # sstep["cmds"].append = ("pkill modbus_server")
+    # sstep["cmds"].append = ("pkill modbus_client")
+    # sstep["cmds"].append = ("pkill fims_echo")
+    # sstep["cmds"].append = ("pkill fims_server")
+    # sstep["cmds"].append = ("pkill fims_listen")
+    # sstep["cmds"].append = ("wait 1 second")
     # sstep["results"] = {}
     # scen2["given"]["steps"].append(copy.deepcopy(sstep))
 
     # sstep["name"] = " setup client configs"
-    # sstep["actions"] = []
-    # sstep["actions"].append = ("setip  clicfg from client")
-    # sstep["actions"].append = ("setip  srvcfg from client")
-    # sstep["actions"].append = ("send clicfg to client")
-    # sstep["actions"].append = ("send servcfg to client")
-    # sstep["actions"].append = ("wait 1 second")
+    # sstep["cmds"] = []
+    # sstep["cmds"].append = ("setip  clicfg from client")
+    # sstep["cmds"].append = ("setip  srvcfg from client")
+    # sstep["cmds"].append = ("send clicfg to client")
+    # sstep["cmds"].append = ("send servcfg to client")
+    # sstep["cmds"].append = ("wait 1 second")
     # sstep["results"] = {}
     # scen2["given"]["steps"].append(copy.deepcopy(sstep))
 
     # sstep["name"] = "run tasks"
-    # sstep["actions"] = []
-    # sstep["actions"].append = ("run fims_server on client")
-    # sstep["actions"].append = ("run fims_echo on client")
-    # sstep["actions"].append = ("run modbus_client with mbclicfg on server")
-    # sstep["actions"].append = ("run modbus_client with mbclicfg on server")
-    # sstep["actions"].append = ("wait 5 -> seconds")
-    # sstep["actions"].append = ("get modbus_server logs from client")
-    # sstep["actions"].append = ("get modbus_client logs from client")
-    # sstep["actions"].append = ("run fims_listen for 5 -> seconds")
-    # sstep["actions"].append = ("wait 6 -> seconds")
-    # sstep["actions"].append = ("get fims_listen logs from client")
+    # sstep["cmds"] = []
+    # sstep["cmds"].append = ("run fims_server on client")
+    # sstep["cmds"].append = ("run fims_echo on client")
+    # sstep["cmds"].append = ("run modbus_client with mbclicfg on server")
+    # sstep["cmds"].append = ("run modbus_client with mbclicfg on server")
+    # sstep["cmds"].append = ("wait 5 -> seconds")
+    # sstep["cmds"].append = ("get modbus_server logs from client")
+    # sstep["cmds"].append = ("get modbus_client logs from client")
+    # sstep["cmds"].append = ("run fims_listen for 5 -> seconds")
+    # sstep["cmds"].append = ("wait 6 -> seconds")
+    # sstep["cmds"].append = ("get fims_listen logs from client")
     # sstep["results"] = {}
     # scen2["given"]["steps"].append(copy.deepcopy(sstep))
     # md["scenarios"]["setup_server"] = copy.deepcopy(scen2)
@@ -322,11 +322,10 @@ def createSScen(name):
 def createSStep(name):
     sstep = {}
     sstep[name]={}
-    sstep[name]["name"] = name
     sstep[name]["run"] = False
-    sstep[name]["actions"] = []
+    sstep[name]["cmds"] = []
     sstep[name]["results"] = {}
-    sstep[name]["actions"].append("this is a test action")
+    sstep[name]["cmds"].append("this is a test action")
     return sstep
 
 

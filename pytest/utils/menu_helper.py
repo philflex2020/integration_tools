@@ -63,6 +63,7 @@ def execRes(dock,cmd):
     res = docker.exec_in(dock, cmd)
     for x in  range(len(res)):
         sys.stdout.write("{}\n".format(res[x]))
+    return res
 
 def xrunSteps(md, base):
     try:
@@ -148,6 +149,7 @@ def runAddF(md,cmds,fAdd):
         sobj = Scen.UseObjInArray(obj, csteps, fAdd)
 
         sobj["run"] = False
+        sobj["name"] = csteps
         Scen.UseArrayObj(sobj, "cmds", fAdd)
         Scen.UseArrayObj(sobj, "results", fAdd)
 
@@ -176,9 +178,17 @@ def runAddF(md,cmds,fAdd):
 
     return []
 
-# add scenario called myscenario description 'demo scenario' phase given op 'this is the first op' steps 'some name' from base
+def runAddHelp(md,cmds):
+    sys.stdout.write("add scenario called myscenario description 'demo scenario' phase given op 'this is the first op' steps 'some name' from base\n")
+
 # add cmd as 'run some shit' to scenarios.myscenario.given.'this is the first op'.'some name' 
 def runAdd(md,cmds):
+    try:
+        if cmds[1] == "-help":
+            runAddHelp(md,cmds)
+            return "Pass"
+    except:
+        pass
     return runAddF(md,cmds,True)
 
 # seek scenario called myscenario description 'demo scenario' phase given op 'this is the first op' steps 'some name' from base
@@ -515,6 +525,12 @@ def runRunHelp(md,cmds):
     sys.stdout.write("\trun fims_server args 'special args' on <client>\n")
     sys.stdout.write("\trun fims_server type <exec|script> on <client> -- run an executable or a script\n")
     sys.stdout.write("\trun steps called 'some name' mode ask|debug\n")
+    sys.stdout.write("\trun scenario called myscenario\n")
+    sys.stdout.write("\trun phase called given in myscenario\n")
+    sys.stdout.write("\trun op called 'this is the first op'  in myscenario phase given \n")
+    sys.stdout.write("\trun steps called 'some name' op 'this is the first op'  in myscenario phase given  mode run\n")
+    #description 'demo scenario' phase given op 'this is the first op' steps 'some name' from base\n")
+
 
 
 
@@ -524,7 +540,97 @@ def runRun(md,cmds):
         runRunHelp(md,cmds)
         return []
     if cmds[1] == "steps":
-        if "called" in cdict:
+        if "op" in cdict and "in" in cdict and "phase" in cdict and "called" in cdict:
+            sys.stdout.write("\trun steps in op \n\n")
+            try:
+                cin = fixUpString(cdict["in"])
+                #sys.stdout.write("\t seeing  scn {}\n".format(cin))
+                scn = md["scenarios"][cin]
+                #sys.stdout.write("\t     got scn \n")
+                cphase = cdict["phase"]
+                phase = scn[cphase]
+                #sys.stdout.write("\t     got phase \n")
+                cop = fixUpString(cdict["op"])
+                ix = 0
+                pix = -1
+                while ix < len(phase):
+                    if cop in phase[ix]:
+                        #sys.stdout.write("\t   found op in phase \n")
+                        pix = ix
+                    ix += 1
+                if pix >= 0:
+                    op = phase[pix][cop]
+                else:
+                    sys.stdout.write("\trun steps no op {} found \n".format(cop))
+                    return "Fail"
+
+                stix = op["steps"]
+                #sys.stdout.write("\t     got stix \n")
+
+                ix = 0
+                pix = -1
+                ccalled = fixUpString(cdict["called"])
+                while ix < len(stix):
+                    if ccalled in stix[ix]:
+                        pix = ix
+                    ix += 1
+                if pix >= 0:
+                    steps = stix[pix]
+                else:
+                    sys.stdout.write("\trun steps no op {} found \n".format(cop))
+                    return "Fail"
+                sys.stdout.write("\trunning  steps in seq \n")
+                return "Pass"
+
+            except:
+                sys.stdout.write("\trun steps  error  {}\n".format(cdict))
+                return "Fail"    
+
+        #run steps op 'this is the first op'  in myscenario phase given  mode run
+        elif "op" in cdict and "in" in cdict and "phase" in cdict:
+            sys.stdout.write("\trun steps in op \n\n")
+            try:
+                cin = fixUpString(cdict["in"])
+                #sys.stdout.write("\t seeing  scn {}\n".format(cin))
+                scn = md["scenarios"][cin]
+                #sys.stdout.write("\t     got scn \n")
+                cphase = cdict["phase"]
+                phase = scn[cphase]
+                #sys.stdout.write("\t     got phase \n")
+                cop = fixUpString(cdict["op"])
+                ix = 0
+                pix = -1
+                while ix < len(phase):
+                    if cop in phase[ix]:
+                        #sys.stdout.write("\t   found op in phase \n")
+                        pix = ix
+                    ix += 1
+                if pix >= 0:
+                    op = phase[pix][cop]
+                else:
+                    sys.stdout.write("\trun steps no op {} found \n".format(cop))
+                    return "Fail"
+
+                stix = op["steps"]
+                #sys.stdout.write("\t     got stix \n")
+
+                ix = 0
+                while ix < len(stix):
+                    xxx = stix[ix]
+                    for xxname in xxx:
+                        runc = "run steps op '{}'  in {} phase {}  called '{}' mode run".format(cop,cin,cphase,xxname)
+                        sys.stdout.write("\t     runc {} \n".format(runc))
+
+                        runCmd(md,runc)
+                    ix += 1
+                return "Pass"
+
+            except:
+                sys.stdout.write("\trun steps  error  {}\n".format(cdict))
+                return "Fail"      
+
+
+        elif "called" in cdict:
             ccalled = fixUpString(cdict["called"])
             sys.stdout.write("\trun steps called {}\n".format(ccalled))
             if ccalled in md["steps"]:
@@ -1574,11 +1680,15 @@ def runCmd(md, line):
 
             try:
                 xmd["system_host"] = docker.get_docker_id(cmds[1])
+            except:
+                return "Fail"
+            try:
                 xmd["system_id"] = cmds[1]
                 xmd["system_host"] = docker.get_docker_id(cmds[1])
                 xmd["system_ip"] = docker.get_docker_ip(xmd["system_host"])
                 xmd["system_path"]="docker"
                 xmd["system_name"]=xas
+
                 #sys.stdout.write(" host for :[{}] is : [{}] \n".format(xmd["system_id"],xmd["system_host"]))
                 md["system_id"] = xmd["system_id"]
                 md["system_host"] = xmd["system_host"]
@@ -1587,6 +1697,8 @@ def runCmd(md, line):
                 md["system_name"] = xmd["system_name"]
             except:
                 sys.stdout.write(" Not a docker system [{}] \n".format(cmds[1]))
+            return "Pass"
+
 
          #setip  clicfg from client")
 
@@ -1731,7 +1843,8 @@ def runCmd(md, line):
             quit = 1
         ## ps
         elif line == "ps" and md["system_host"] != "":
-            execRes(md["system_host"],"ps -ax")
+            res = execRes(md["system_host"],"ps -ax")
+            return res
         ## top
         elif line == "top" and md["system_host"] != "":
             execRes(md["system_host"],"top -b -n 1")
