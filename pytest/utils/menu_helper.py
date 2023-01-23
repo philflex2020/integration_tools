@@ -111,7 +111,7 @@ def runAddF(md,cmds,fAdd):
         cwhat = cdict["seek"]
     else:
         sys.stdout.write(" runAddF only works with add or seek  not   [{}] \n".format(cmds[0]))
-        return []
+        return "Fail"
 
     try:
         #cwhat = cdict["add"]
@@ -123,7 +123,7 @@ def runAddF(md,cmds,fAdd):
             else:
                 if cdesc:
                     obj["desc"] = fixUpString (cdesc) 
-                #return []
+                #return "Pass"
     except:
         sys.stdout.write("Error  in Add [{}]   \n".format(cdict))
 
@@ -157,12 +157,12 @@ def runAddF(md,cmds,fAdd):
         sys.stdout.write("Error  in Phase [{}] steps  [{}]   \n".format(cphase,csteps))
 
     if not fAdd:
-        return []
+        return "Fail"
  
     if "from" not in cdict:
         sys.stdout.write(" OK stopping at from Phase [{}] steps  [{}]   \n".format(cphase,csteps))
         md["steps"][csteps] = sobj
-        return []
+        return "Pass"
 
     try:
         cfrom = cdict["from"]
@@ -176,7 +176,7 @@ def runAddF(md,cmds,fAdd):
         sys.stdout.write("Error  in steps [{}]   \n".format(csteps))
     
 
-    return []
+    return "Pass"
 
 def runAddHelp(md,cmds):
     sys.stdout.write("add var called myvar value 234 type float\n")
@@ -216,7 +216,7 @@ def runUse(md,cmds):
     try:
         if cmds[1] == "-help":
             runUseHelp(md,cmds)
-            return []
+            return "Pass"
     except:
         pass
     cdict = myDict(cmds)
@@ -238,7 +238,7 @@ def runUse(md,cmds):
             except:
                 sys.stdout.write("unable to switch vars [{}] \n".format(cdict))
                 
-            return []
+            return "Pass"
         
         if cwhat == "host" or ccalled in md["hosts"]:
             xxmd = md["hosts"][ccalled]
@@ -249,7 +249,7 @@ def runUse(md,cmds):
         elif cwhat == "scenario" and ccalled not in md["scenarios"]:
             sys.stdout.write(" MakeScenario running   [{}] \n".format(ccalled))
             Scen.MakeScenario(md,cmds)
-            return []
+            return "Pass"
         elif cwhat == "scenario" and ccalled in md["scenarios"]:
             sys.stdout.write(" Use scenario [{}]  found \n".format(ccalled))
             xxmd = md["scenarios"][ccalled]
@@ -305,14 +305,14 @@ def runSteps(md,cmds):
         if cmds[1] in md["steps"]:
             sys.stdout.write(" doing runSteps cmds[1]\n")
             xrunSteps(md, cmds[1])
-            return []
+            return "Pass"
     except:
         pass
     try:
         acts = md["scen_steps"]["actions"]
     except:
         sys.stdout.write(" no actions found \n")
-        return []
+        return "Pass"
 
     sys.stdout.write(" runSteps  found actions \n")
     try:  
@@ -544,7 +544,7 @@ def runRun(md,cmds):
     cdict = myDict(cmds)
     if cmds[1] == "-help":
         runRunHelp(md,cmds)
-        return []
+        return "Pass"
     if cmds[1] == "steps":
         if "op" in cdict and "in" in cdict and "phase" in cdict and "called" in cdict:
             sys.stdout.write("\trun steps in op \n\n")
@@ -572,7 +572,7 @@ def runRun(md,cmds):
                 runStepsMode(md, cdict , md["steps"][ccalled])
 
 
-        return []
+        return "Pass"
 
 
     if "with" in cdict:
@@ -600,7 +600,7 @@ def runRun(md,cmds):
         cname = chosta[2]
     except:
         sys.stdout.write(" runRun unable to decode chost from {}\n".format(cdict)) 
-        return []
+        return "Pass"
     try:
         print(" runRun fcn =[{}] cfg = [{}] dir = [{}] cname [{}] ctype [{}]\n".format(cdict["run"],cwith,cin, cname, ctype)) 
         cconfigs="/home/docker/configs"
@@ -650,7 +650,7 @@ def runWait(md,cmds):
     #cdict = myDict(cmds)
     wtime=float(cmds[1])
     time.sleep(wtime)
-    return []
+    return "Pass"
 
 def runStopHelp(md,cmds):
     sys.stdout.write("\tstop - help\n")
@@ -663,7 +663,7 @@ def runStopHelp(md,cmds):
 def runStop(md,cmds):
     if cmds[1] == "-help":
         runStopHelp(md,cmds)
-        return []
+        return "Pass"
 
     cdict = myDict(cmds)
     try:
@@ -673,7 +673,7 @@ def runStop(md,cmds):
         #cname = chosta[2]
     except:
         sys.stdout.write(" runStop unable to decode chost from {}\n".format(cdict)) 
-        return []
+        return "Pass"
  
     cstop = cdict["stop"]
     cmd="pkill  {} ".format(cstop)
@@ -705,7 +705,7 @@ def runLog(md,cmds):
     cdict = myDict(cmds)
     if cmds[1] == "-help":
         runLogHelp(md,cmds)
-        return []
+        return "Pass"
 
     cvar = cdict["log"]
     cfrom = cvar
@@ -717,7 +717,7 @@ def runLog(md,cmds):
         #cname = chosta[2]
     except:
         sys.stdout.write(" runLog unable to decode chost from {}\n".format(cdict)) 
-        return []
+        return "Pass"
     res = []
 
     try:
@@ -840,7 +840,7 @@ def runShow(md,cmds):
     try:
         if cmds[1] == "-help":
             runShowHelp(md,cmds)
-            return []
+            return "Pass"
     except:
         pass
     cdict = myDict(cmds)
@@ -866,7 +866,7 @@ def runShow(md,cmds):
                 else:
                     if ccalled not in md[cwhat]:
                         sys.stdout.write("error show  {} called [{}] notfound  \n".format(cwhat, ccalled))
-                        return []
+                        return "Pass"
 
                     mdx = json.dumps(md[cwhat][ccalled],indent=4)
                     sys.stdout.write("show  {} called [{}]  [{}] \n".format(cwhat, ccalled, mdx))
@@ -909,7 +909,7 @@ def runSend(md,cmds):
         docker_id  = md["hosts"][cin]["system_host"]
     except:
         sys.stdout.write("Send failed getting vars[{}] \n".format(cdict))
-        return []
+        return "Pass"
 
     try:
         if cwhat == "var":
@@ -952,7 +952,7 @@ def runGet(md,cmds):
     try:
         if cmds[1] == "-help":
             runGetHelp(md,cmds)
-            return []
+            return "Pass"
     except:
         pass
 
@@ -966,7 +966,7 @@ def runGet(md,cmds):
         #cname = chosta[2]
     except:
         sys.stdout.write(" Get unable to decode chost from {}\n".format(cdict)) 
-        return []    #getChost
+        return "Pass"    #getChost
     
     try:
         cwhat      = cdict["get"]
@@ -977,7 +977,7 @@ def runGet(md,cmds):
         #md["hosts"][con]["system_host"]
     except:
         sys.stdout.write("Get dict failed getting vars[{}] \n".format(cdict))
-        return []
+        return "Pass"
 
     try:
         if cwhat == "var":
@@ -986,7 +986,7 @@ def runGet(md,cmds):
                 cas      = cdict["as"]
             except:
                 sys.stdout.write("Get failed getting as[{}] \n".format(cdict))
-                return []
+                return "Pass"
             if cas == "json":
                 fwname = "configs/var_{}.json".format(ccalled)
                 #helper.write_json(mdat, fwname)
@@ -1017,7 +1017,7 @@ def runGet(md,cmds):
                 cid  = cdict["id"]
             except:
                 sys.stdout.write(" Get unable to decode id from {}\n".format(cdict)) 
-                return []    #getChost
+                return "Pass"    #getChost
             cas = ""
             ctype = "string"
             if "saveas" in  cdict:
@@ -1042,6 +1042,19 @@ def runGet(md,cmds):
 
     return res
 
+def findConfigVar(md,ccalled):
+    csplit = ccalled.split(".")
+    if csplit[0] == "config":
+        csplit=csplit[1:]
+    mv = md
+    for citem in csplit[:-1]:
+        if citem in mv:
+            mv = mv[citem]
+        else:
+            mv[citem] = {}
+            mv = mv[citem]
+    #sys.stdout.write(" returning mv [{}] csplit [{}]\n".format(mv,csplit[-1]))
+    return mv,csplit[-1]
 
 def runSetHelp(md,cmds):
     sys.stdout.write("set - help\n")
@@ -1050,16 +1063,18 @@ def runSetHelp(md,cmds):
     sys.stdout.write("set uri called /components/pcs id myval from myvar [on <host>] [format single|naked|clothed] \n")
 
 
-#set field called connection.ip_address in mb_client_test_10_3  from config.hosts.client.ip_address saveas  mb_client_tmp") 
+#set config  scenarios.myscen.then.'some comp'.result value 1234  format float
+#set value called connection.ip_address in mb_client_test_10_3  from config.hosts.client.ip_address saveas  mb_client_tmp") 
 # format default single
 # format naked
 # format clothed
 
 
+
 def runSet(md,cmds):
     if cmds[1] == "-help":
         runSetHelp(md,cmds)
-        return []
+        return "Pass"
 
     res = []
     cdict = myDict(cmds)
@@ -1067,6 +1082,49 @@ def runSet(md,cmds):
     cformat = "single"
     if "format" in cdict:
         cformat = cdict["format"]
+    if cwhat == "config":
+        sys.stdout.write(" looking for value in config\n")
+        if "called" not in cdict or "value" not in cdict:
+            sys.stdout.write(" need \"called\" and \"value\" to be defined in command\n")
+            return "Fail"
+        ccalled = cdict["called"]
+        ctype = "float"
+        if "type" in cdict:
+            ctype = cdict["type"]
+        vDict,myVar = findConfigVar(md,ccalled)
+        if ctype == "float":
+            try:
+                vDict[myVar] = float(cdict["value"])
+            except:
+                sys.stdout.write(" bad type [{}] for [{}]\n".format(ctype,cdict["value"]))
+                return "Fail"
+        elif ctype == "int":
+            try:
+                vDict[myVar] = int(cdict["value"])
+            except:
+                sys.stdout.write(" bad type [{}] for [{}]\n".format(ctype,cdict["value"]))
+                return "Fail"
+        elif ctype == "bool":
+            cval = cdict["value"]
+            fval = 0
+            fvalok = True
+            try:
+                fval = float(cval)
+            except:
+                fvalok = False
+                pass
+            if cval == "false" or cval == "False":
+                vDict[myVar] = False     
+            elif cval == "true" or cval == "True":
+                vDict[myVar] = True
+            elif fvalok and fval > 0:                    
+                vDict[myVar] = True     
+            elif fvalok and fval <= 0:
+                vDict[myVar] = False    
+        else:
+            vDict[myVar] = cdict["value"]
+        return "Pass"
+
     if cwhat == "value":
         try:
             ccalled=cdict["called"]
@@ -1116,7 +1174,7 @@ def runSet(md,cmds):
             #cname = chosta[2]
         except:
             sys.stdout.write(" runSet unable to decode chost from {}\n".format(cdict)) 
-            return []
+            return "Pass"
         try:
             ccalled=cdict["called"]
             cid=cdict["id"]
@@ -1263,7 +1321,7 @@ def runIfRes(md, cdict, cthen):
                 runCmd(md, cmd)
             except:
                 sys.stdout.write("runIfVar unable run steps {} \n".format(csteps))
-            return []
+            return "Pass"
     elif cdict["run"]  == "cmd":
             if ccmd[0] == "'":
                 ccmd = ccmd[1:-1]
@@ -1271,7 +1329,7 @@ def runIfRes(md, cdict, cthen):
                 runCmd(md, ccmd)
             except:
                 sys.stdout.write("runIfVar unable run command {} \n".format(ccmd))
-            return []
+            return "Pass"
 
 # if var1 > var2 then var3 = var4
 # if var1 !> var2 then var3 = var4
@@ -1335,14 +1393,14 @@ def runIfVar(md,cmds):
 
     if cvar1 not in md["vars"]:
         sys.stdout.write("runIf error {} not in vars   \n".format(cvar1))
-        return []
+        return "Pass"
 
     try:
         cv2 = float(cvar2)
     except:
         if cvar2 not in md["vars"]:
             sys.stdout.write("runIf error {} not in vars   \n".format(cvar2))
-            return []
+            return "Pass"
         else:
             cv2 = md["vars"][cvar2]
  
@@ -1417,7 +1475,7 @@ def runIfVar(md,cmds):
                 #         cv4 = md["vars"][cvar4]
                 #     else:
                 #         sys.stdout.write("runIfVar unable to execute else {} on  {}  with {} var4 missing\n".format(ceq, cvar3,res))
-                #         return []
+                #         return "Pass"
                 # try:
                 #     if ceq == "=":
                 #         md["vars"][cvar3] = cv4
@@ -1427,14 +1485,14 @@ def runIfVar(md,cmds):
                 #         md["vars"][cvar3] -= cv4
                 # except:
                 #         sys.stdout.write("runIfVar unable to execute else {} on  {}  with {} \n".format(ceq, cvar3,cv4))
-                #         return []
+                #         return "Pass"
  
 
     except:
         sys.stdout.write("runIfVar unable to execute cdict {} cdicte {} \n".format(cdict,cdicte))
-        return []
+        return "Pass"
     #cres = md["vars"][cvar3]
-    return []
+    return "Pass"
 
 #find 'Inserted map entry' from clilog into clifind before 2 after 1
 #find pub from fims_listen_01 saveas fims_listen_02_pub after 1
@@ -1506,7 +1564,7 @@ def runFind(md,cmds):
 
     except:
         sys.stdout.write(" runFind not understood cdict [{}]".format(cdict))
-    return []
+    return "Pass"
 
 
 def init_menu(test_list):

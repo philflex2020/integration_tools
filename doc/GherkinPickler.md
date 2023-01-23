@@ -255,7 +255,7 @@ Here is an example of the help screen.
  Enter a command (help is good) :
  ```
 
-in addition each command has a -help option showing examples of the use of that command.
+In addition each command has (or will have) a -help option showing examples of the use of that command.
 
 ```
  Enter a command (help is good) :run -help
@@ -267,7 +267,7 @@ in addition each command has a -help option showing examples of the use of that 
         run fims_server with <config_file> on <client>
         run fims_server logs <log_file> on <client>
         run fims_server args 'special args' on <client>
-        run fims_server type <exec|script> on <client> -- run an executable or a script
+        run something_else type <exec|script> on <client> -- run an executable or a script
         run steps called 'some name' mode ask|debug
         run scenario called myscenario
         run phase called given in myscenario
@@ -294,6 +294,7 @@ Enter a command (help is good) : run fims_listen
 runRun fcn =[fims_listen] cfg = [] dir = [server] cname [server] ctype [exec]
 
 Enter a command (help is good) : run fims_listen
+
 Enter a command (help is good) :log fims_listen
 fcn =[fims_listen] cfg = [fims_listen] dir = [server]
 cmd = [cat /home/docker/configs/server/logs/fims_listen.log]
@@ -302,6 +303,35 @@ cmd = [cat /home/docker/configs/server/logs/fims_listen.log]
 fims_listen: Failed to make connection to FIMS.
 Connect failed.
  runLog completed OK
+
+```
+
+### Test Results
+The output from any command can be saved into a variable and then used for analysis to calculate test results.
+
+Here, for example, are some rules that extract data from a log file.
+
+```
+ "test3": {
+        "cmds": [
+            "run fims_listen for 5 logs listen_01 on client",
+            "wait 5 seconds",
+            "log listen_01 from listen_01 on client saveas fims_listen_01",
+            "find pub from fims_listen_01 saveas fims_listen_02_pub after 1",
+            "find comp2 from fims_listen_02_pub saveas fims_listen_temp countinto comp2_count",
+            "find comp1 from fims_listen_02_pub saveas fims_listen_temp countinto comp1_count"
+        ]
+    }
+```
+The variables comp2_count and comp1_count  contain the number of pubs detected in a 5 second period from high speed and low speed output from the modbus_client on the client node.
+
+The system can then extract the count values and direct those back in to the scenario result.
+
+```
+set config called scenarios.myscenario.then.'test fast pubs'.result value Fail
+set config called scenarios.myscenario.then.'test slow pubs'.result value Fail
+if comp2_count > 95 then run set config called scenarios.myscenario.then.'test fast pubs'.result = Pass
+if comp1_count > 9 then run set config called scenarios.myscenario.then.'test slow pubs'.result = Pass
 
 ```
 
