@@ -1056,6 +1056,39 @@ def findConfigVar(md,ccalled):
     #sys.stdout.write(" returning mv [{}] csplit [{}]\n".format(mv,csplit[-1]))
     return mv,csplit[-1]
 
+def setTypedValue(ctype,cval):
+    if ctype == "float":
+        try:
+            myVar = float(cval)
+        except:
+            sys.stdout.write(" bad type [{}] for [{}]\n".format(ctype,cval))
+            return cval,False
+    elif ctype == "int":
+        try:
+            myVar = int(cval)
+        except:
+            sys.stdout.write(" bad type [{}] for [{}]\n".format(ctype,cval))
+            return cval,False
+    elif ctype == "bool":
+        fval = 0
+        fvalok = True
+        try:
+            fval = float(cval)
+        except:
+            fvalok = False
+            pass
+        if cval == "false" or cval == "False":
+            myVar = False     
+        elif cval == "true" or cval == "True":
+            myVar = True
+        elif fvalok and fval > 0:                    
+            myVar = True     
+        elif fvalok and fval <= 0:
+            myVar = False    
+    else:
+        myVar = cval
+    return myVar,True
+
 def runSetHelp(md,cmds):
     sys.stdout.write("set - help\n")
     #set value called connection.ip_address in mb_server_test_10_3 from config.hosts.client.system_ip_ saveas  mb_server_tmp")
@@ -1091,39 +1124,10 @@ def runSet(md,cmds):
         ctype = "float"
         if "type" in cdict:
             ctype = cdict["type"]
-        vDict,myVar = findConfigVar(md,ccalled)
-        if ctype == "float":
-            try:
-                vDict[myVar] = float(cdict["value"])
-            except:
-                sys.stdout.write(" bad type [{}] for [{}]\n".format(ctype,cdict["value"]))
-                return "Fail"
-        elif ctype == "int":
-            try:
-                vDict[myVar] = int(cdict["value"])
-            except:
-                sys.stdout.write(" bad type [{}] for [{}]\n".format(ctype,cdict["value"]))
-                return "Fail"
-        elif ctype == "bool":
+        if "value" in cdict:
             cval = cdict["value"]
-            fval = 0
-            fvalok = True
-            try:
-                fval = float(cval)
-            except:
-                fvalok = False
-                pass
-            if cval == "false" or cval == "False":
-                vDict[myVar] = False     
-            elif cval == "true" or cval == "True":
-                vDict[myVar] = True
-            elif fvalok and fval > 0:                    
-                vDict[myVar] = True     
-            elif fvalok and fval <= 0:
-                vDict[myVar] = False    
-        else:
-            vDict[myVar] = cdict["value"]
-        return "Pass"
+        vDict,myVar = findConfigVar(md,ccalled)
+        vDict[myVar],err = setTypedValue(ctype,cval)
 
     if cwhat == "value":
         try:
@@ -1143,6 +1147,7 @@ def runSet(md,cmds):
                     min[citem] = {}
                 min = min[citem]
             mmd = md
+
             # look for from in md, skip config
             csplit2 = cfrom.split(".")
             for citem in csplit2[:-1]:
@@ -1207,37 +1212,12 @@ def runSet(md,cmds):
 
     return res
 
+
 def setVar(cname,cval,ctype):
     if cname == "" and cval == "":
         return "Fail"
-    if ctype == "float":
-        try:
-            md["vars"][cname] = float(cval)
-        except:
-            pass
-    elif ctype == "int":
-        try:
-            md["vars"][cname] = int(cval)
-        except:
-            pass
-    elif ctype == "bool":
-        fval = 0
-        fvalok = True
-        try:
-            fval = float(cval)
-        except:
-            fvalok = False
-            pass
-        if cval == "false":
-            md["vars"][cname] = False     
-        elif cval == "true":
-            md["vars"][cname] = True
-        elif fvalok and fval > 0:                    
-            md["vars"][cname] = True     
-        elif fvalok and fval <= 0:
-            md["vars"][cname] = False     
-    else:
-        md["vars"][cname] = cval
+    md["vars"][cname],err = setTypedValue(ctype, cval)
+
 
 # av foo 23 float
 # add var called abc value 234 type float 
@@ -1456,38 +1436,7 @@ def runIfVar(md,cmds):
 
         elif elseOK == True:
             runIfRes(md, cdicte, "else")
-                # cvar3 = cdicte["else"]
-                # if cvar3 in md["vars"]:
-                #     md["vars"][cvar3] = ""
-                # ceq = ""
-                # if "=" in cdicte:
-                #     ceq = "="
-                # elif "+=" in cdicte:
-                #     ceq = "+="
-                # elif "-=" in cdicte:
-                #     ceq = "-="
-                # cvar4 = cdicte[ceq]
-                # cv4 = 0
-                # try:
-                #     cv4 = float(cvar4)
-                # except:
-                #     if cvar4 in md["vars"]:
-                #         cv4 = md["vars"][cvar4]
-                #     else:
-                #         sys.stdout.write("runIfVar unable to execute else {} on  {}  with {} var4 missing\n".format(ceq, cvar3,res))
-                #         return "Pass"
-                # try:
-                #     if ceq == "=":
-                #         md["vars"][cvar3] = cv4
-                #     elif ceq == "+=":
-                #         md["vars"][cvar3] += cv4 
-                #     elif ceq == "-=":
-                #         md["vars"][cvar3] -= cv4
-                # except:
-                #         sys.stdout.write("runIfVar unable to execute else {} on  {}  with {} \n".format(ceq, cvar3,cv4))
-                #         return "Pass"
- 
-
+               
     except:
         sys.stdout.write("runIfVar unable to execute cdict {} cdicte {} \n".format(cdict,cdicte))
         return "Pass"
@@ -1569,51 +1518,17 @@ def runFind(md,cmds):
 
 def init_menu(test_list):
     Scen.setupMd(md)
-    #print (" setting up test menu\n")
-    # docker_host = ""
-    # system_id = "DNP3_test"
-    # servcfg = "/home/docker/configs/mb_server_test_10_3.json"
-    # clicfg = "/home/docker/configs/mb_client_test_10_3.json"
-    # servsh = "/home/docker/configs/mb_server_test_10_3.sh"
     md["system_host"] = docker.get_docker_id(md["system_id"])
- 
-    # for file in os.listdir(menu_dir):
-    #     if fnmatch.fnmatch(file, menu_file):
-    #         menu_list.append(os.path.join(menu_dir, file))
-    #         menu_cfg = cfg.read_test_cfg(menu_dir+"/"+file)
-
-    # #print (test_list)
-    # print("Menu Items")
-    # #print(menu_cfg)
-    # for each in menu_cfg["items"]:
-    #     #print(each)
-    #     print("Id {} name {}".format(each["id"], each["name"]))
-    #     #print()
-    # for testb in menu_cfg["testbeds"]:
-    #     for controller in testb["controllers"]:
-    #         print("Id {} name {}".format(controller["id"], controller["name"]))
-    #         controller["docker"] = docker.get_docker_id(controller["name"])
-
-    # print()
-    # print("Tests")
-    # for each in test_list:
-    #     print("Id {} name {}".format(each["id"], each["name"]))
-    #     #print()
-    
     quit = 0
     sys.stdout.write(" Interactive Gherkin Pickler \n")
 
     runCmd(md,"runsteps init")
-    # runCmd(md,"setHost DNP3_test test")
-    # runCmd(md,"setHost DNP3_client client")
     showMenu(md)
 
     while quit == 0:
         sys.stdout.write(" Enter a command (help is good) :")
         sys.stdout.flush()
         line = sys.stdin.readline()
-        #dline=bytes(line,"utf-8").decode("unicode_escape")
-        #dline=bytes(line,"utf-8")
         # here are some test commands until we workout how to do this.
         #
         if len(line) > 1 :
@@ -1674,6 +1589,41 @@ def myDict(res):
 
     return myd
 
+# setHost DNP3_test as client
+def runSetHost(md,cmds):
+    xmd = md
+    if len(cmds) > 2:
+        xas = cmds[2]
+        if xas == "as":
+            xas = cmds[3]                
+        try :
+            xmd = md["hosts"][xas]
+        except KeyError:
+            md["hosts"][xas]={}
+            xmd = md["hosts"][xas]
+    try:
+        xmd["system_host"] = docker.get_docker_id(cmds[1])
+    except:
+        return "Fail"
+    try:
+        xmd["system_id"] = cmds[1]
+        xmd["system_host"] = docker.get_docker_id(cmds[1])
+        xmd["system_ip"] = docker.get_docker_ip(xmd["system_host"])
+        xmd["system_path"]="docker"
+        xmd["system_name"]=xas
+
+        #sys.stdout.write(" host for :[{}] is : [{}] \n".format(xmd["system_id"],xmd["system_host"]))
+        md["system_id"] = xmd["system_id"]
+        md["system_host"] = xmd["system_host"]
+        md["system_ip"] = xmd["system_ip"]
+        md["system_path"] = xmd["system_path"]
+        md["system_name"] = xmd["system_name"]
+    except:
+        sys.stdout.write(" Not a docker system [{}] \n".format(cmds[1]))
+    return "Pass"
+
+
+
 def runCmd(md, line):
     quit = -1
     cmds = mySplit(line)
@@ -1682,43 +1632,7 @@ def runCmd(md, line):
 
     if len(cmds) > 1 :
         if cmds[0] == "setHost":
-            xmd = md
-            # setHost DNP3_test as client
-            if len(cmds) > 2:
-                xas = cmds[2]
-                if xas == "as":
-                    xas = cmds[3]                
-                try :
-                    xmd = md["hosts"][xas]
-                except KeyError:
-                    md["hosts"][xas]={}
-                    xmd = md["hosts"][xas]
-
-            try:
-                xmd["system_host"] = docker.get_docker_id(cmds[1])
-            except:
-                return "Fail"
-            try:
-                xmd["system_id"] = cmds[1]
-                xmd["system_host"] = docker.get_docker_id(cmds[1])
-                xmd["system_ip"] = docker.get_docker_ip(xmd["system_host"])
-                xmd["system_path"]="docker"
-                xmd["system_name"]=xas
-
-                #sys.stdout.write(" host for :[{}] is : [{}] \n".format(xmd["system_id"],xmd["system_host"]))
-                md["system_id"] = xmd["system_id"]
-                md["system_host"] = xmd["system_host"]
-                md["system_ip"] = xmd["system_ip"]
-                md["system_path"] = xmd["system_path"]
-                md["system_name"] = xmd["system_name"]
-            except:
-                sys.stdout.write(" Not a docker system [{}] \n".format(cmds[1]))
-            return "Pass"
-
-
-         #setip  clicfg from client")
-
-        #scen["given"]["steps"].append("run modbus_server with mbservcfg in client")
+            runSetHost(md,cmds)
         elif cmds[0] == "run":
             runRun(md,cmds)
         elif cmds[0] == "save":
