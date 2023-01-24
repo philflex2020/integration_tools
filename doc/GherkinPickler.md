@@ -330,8 +330,8 @@ The system can then extract the count values and direct those back in to the sce
 ```
 set config called scenarios.myscenario.then.'test fast pubs'.result value Fail
 set config called scenarios.myscenario.then.'test slow pubs'.result value Fail
-if comp2_count > 95 then run set config called scenarios.myscenario.then.'test fast pubs'.result = Pass
-if comp1_count > 9 then run set config called scenarios.myscenario.then.'test slow pubs'.result = Pass
+if comp2_count > 95 then run cmd 'set config called scenarios.myscenario.then.\'test fast pubs\'.result value Pass'
+if comp1_count > 9 then run cmd 'set config called scenarios.myscenario.then.\'test slow pubs\'.result value Pass'
 
 ```
 

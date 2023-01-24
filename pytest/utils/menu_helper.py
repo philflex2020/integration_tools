@@ -1521,7 +1521,10 @@ def init_menu(test_list):
     md["system_host"] = docker.get_docker_id(md["system_id"])
     quit = 0
     sys.stdout.write(" Interactive Gherkin Pickler \n")
-
+    #cmds =  mySplit("this is a good 'example of' a 'split \\'line for\\' test  ok'")
+    #for x in cmds:
+    #    sys.stdout.write("-->[{}]\n".format(x))
+    #sys.exit(0)
     runCmd(md,"runsteps init")
     showMenu(md)
 
@@ -1548,13 +1551,22 @@ def mySplit(line):
     res = []
     str=""
     esc = False
-    for i in line:
+    ix = 0
+    while ix < len(line):
+        i = line[ix]
         if i == " " and esc == False:
             if len(str) > 0:
                 res.append(str)
                 str = ""
+            ix += 1    
             continue
         elif i == "\n":
+            ix += 1
+            continue
+        elif i == '\\' and ix < len(line) and line[ix+1] == "'":
+            #sys.stdout.write(" found esc \n")
+            ix += 2
+            str+="'"
             continue
         elif i == "'" and esc == False:
             esc = True
@@ -1567,7 +1579,7 @@ def mySplit(line):
             esc = False
         else:
             str+=i
-
+        ix += 1
     if len(str) > 0:
         res.append(str)
 
