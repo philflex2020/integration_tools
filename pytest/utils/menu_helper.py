@@ -58,12 +58,6 @@ def showMenu(md):
     print (" (q)uit                           :- exit")
     print ()
 
-def execRes(dock,cmd):
-    sys.stdout.write(" running {}\n".format(cmd))
-    res = docker.exec_in(dock, cmd)
-    for x in  range(len(res)):
-        sys.stdout.write("{}\n".format(res[x]))
-    return res
 
 def xrunSteps(md, base):
     try:
@@ -424,22 +418,49 @@ def getChost(md,cdict):
         return ()
     return (chost,cin,cname)
 
-def runHost(chost,cmd):
+def execRes(cmd):
+    try:
+        chost = md["system_host"]
+
+        sys.stdout.write(" running {}\n".format(cmd))
+        res = docker.exec_in(chost, cmd)
+        for x in  range(len(res)):
+            sys.stdout.write("{}\n".format(res[x]))
+        return res
+    except:
+        return []
+
+def runSysHost(cmd):
     res = []
+    try:
+        chost = md["system_host"]
+        resa = docker.exec_in(chost, cmd)
+        for x in resa:
+            res.append(x)
+    except:
+        pass
+    return res
+
+def runHost(md,cdict,cmd):
+    res = []
+    chosta = getChost(md,cdict)
+    chost = chosta[0]   
     resa = docker.exec_in(chost, cmd)
-    print("res = [{}]\n".format(res) )
     for x in resa:
         res.append(x)
     return res
 
-def runCopyTo(chost,fwname,remote_path):
-    res = []
+def runCopyTo(md,cdict,fwname,remote_path):
+    chosta = getChost(md,cdict)
+    chost = chosta[0]
     docker.copy_to(chost, fwname, remote_path)
-    return res
-def runCopyFrom(chost,fwname,remote_path):
-    res = []
+    return "Pass"
+
+def runCopyFrom(md,cdict,fwname,remote_path):
+    chosta = getChost(md,cdict)
+    chost = chosta[0]
     docker.copy_from(chost, fwname, remote_path)
-    return res
+    return "Pass"
 
 def runStepsMode(md, cdict , steps):
     res = "Pass"
@@ -595,7 +616,7 @@ def runRun(md,cmds):
             cargs=cargs[1:-1]
     try:
         chosta = getChost(md,cdict)
-        chost = chosta[0]
+        #chost = chosta[0]
         cin = chosta[1]
         cname = chosta[2]
     except:
@@ -607,7 +628,7 @@ def runRun(md,cmds):
         cxlogs="/home/docker/configs/{}/logs".format(cin)
         logcmd = "sh -c \"mkdir -p  {}\"".format(cxlogs)
         try:
-            runHost(chost,logcmd)
+            runHost(md,cdict,logcmd)
         except:
             print(" runRun not able to make log dir")
   
@@ -635,7 +656,7 @@ def runRun(md,cmds):
         pass
     try:
        #                        0 modbus_server /home/docker/configs/client/ 
-        runHost(chost,cmd)
+        runHost(md,cdict,cmd)
     except:
         print(" run not understood")
     # try:
@@ -666,14 +687,6 @@ def runStop(md,cmds):
         return "Pass"
 
     cdict = myDict(cmds)
-    try:
-        chosta = getChost(md,cdict)
-        chost = chosta[0]
-        #cin = chosta[1]
-        #cname = chosta[2]
-    except:
-        sys.stdout.write(" runStop unable to decode chost from {}\n".format(cdict)) 
-        return "Pass"
  
     cstop = cdict["stop"]
     cmd="pkill  {} ".format(cstop)
@@ -681,14 +694,14 @@ def runStop(md,cmds):
         if cstop.isnumeric():
             cmd="kill  {} ".format(cstop)
     except:
-        print(" runStop error in {}".format(cstop))
+        sys.stdout.write(" runStop error in {}\n".format(cstop))
     
-    print("host [{}] cmd = [{}]\n".format(chost, cmd) )
-
     try:
-        runHost(chost,cmd)
+        runHost(md,cdict,cmd)
     except:
-        print(" runStop not understood")
+        sys.stdout.write(" runStop not understood\n")
+        return "Fail"
+    return "Pass"
 
 def runLogHelp(md,cmds):
     sys.stdout.write("log - help\n")
@@ -710,14 +723,7 @@ def runLog(md,cmds):
     cvar = cdict["log"]
     cfrom = cvar
     cin = md["system_name"]
-    try:
-        chosta = getChost(md,cdict)
-        chost = chosta[0]
-        #cin = chosta[1]
-        #cname = chosta[2]
-    except:
-        sys.stdout.write(" runLog unable to decode chost from {}\n".format(cdict)) 
-        return "Pass"
+
     res = []
 
     try:
@@ -731,7 +737,7 @@ def runLog(md,cmds):
         cmd="cat /home/docker/configs/{}/logs/{}.log".format(cin, cfrom)
         print("cmd = [{}]\n".format(cmd) )
         # use in to snag client
-        res = runHost(chost,cmd)
+        res = runHost(md,cdict,cmd)
         for x in  range(len(res)):
             sys.stdout.write("{}\n".format(res[x]))
         try:
@@ -928,21 +934,20 @@ def UnEscape(mdat):
 def runSend(md,cmds):
     res = []
     cdict = myDict(cmds)
+    if "configs" not in md:
+        md["configs"] = "configs"
+    cconfigs = md["configs"]
+ 
     try:
         cwhat      = cdict["send"]
         ccalled    = cdict["called"]
         cas        = cdict["as"]
         cto        = cdict["to"]
-        if "on" in cdict:
-            cin=cdict["on"]
-        if "in" in cdict:
-            cin=cdict["in"]
 
         cafter = ""
         if "after" in cdict:
             cafter = cdict["after"]
         mdat       = md["vars"][ccalled]
-        docker_id  = md["hosts"][cin]["system_host"]
     except:
         sys.stdout.write("Send failed getting vars[{}] \n".format(cdict))
         return "Pass"
@@ -951,22 +956,22 @@ def runSend(md,cmds):
         if cwhat == "var":
             if ccalled in md["vars"]:
                 if cas == "json":
-                    fwname = "configs/var_{}.json".format(ccalled)
+                    fwname = "{}/var_{}.json".format(cconfigs, ccalled)
                     helper.write_json(mdat, fwname)
                     remote_path = "home/docker/configs/{}".format(cto)
-                    runCopyTo(docker_id, fwname, remote_path)
+                    runCopyTo(md, cdict, fwname, remote_path)
                 elif cas == "file":
                     sys.stdout.write("Send file called [{}] \n".format(cdict))
 
                     if cafter == "unescape":
                         mdat = UnEscape(mdat)
 
-                    fwname = "configs/var_{}".format(ccalled)
+                    fwname = "{}/var_{}".format(cconfigs,ccalled)
                     sys.stdout.write("Send file write [{}] \n".format(fwname))
 
                     remote_path = "home/docker/configs/{}".format(cto)
                     helper.write(mdat, fwname)
-                    runCopyTo(docker_id, fwname, remote_path)
+                    runCopyTo(md, cdict, fwname, remote_path)
 
 
                 sys.stdout.write("Send called [{}] \n".format(cdict))
@@ -995,34 +1000,24 @@ def runGet(md,cmds):
     res = []
     cdict = myDict(cmds)
     sys.stdout.write("Get called [{}] \n".format(cdict))
-    try:
-        chosta = getChost(md,cdict)
-        chost = chosta[0]
-        #cin = chosta[1]
-        #cname = chosta[2]
-    except:
-        sys.stdout.write(" Get unable to decode chost from {}\n".format(cdict)) 
-        return "Pass"    #getChost
     
     try:
         cwhat      = cdict["get"]
         ccalled    = cdict["called"]
-        #cin        = cdict["in"]
-        #mdat       = md["vars"][ccalled]
-        #docker_id  = chost 
-        #md["hosts"][con]["system_host"]
     except:
         sys.stdout.write("Get dict failed getting vars[{}] \n".format(cdict))
         return "Pass"
 
     try:
         if cwhat == "var":
-            try:
-                cfrom        = cdict["from"]
+            cas = "json"
+            if "as" in cdict: 
                 cas      = cdict["as"]
+            try:
+                cfrom    = cdict["from"]
             except:
-                sys.stdout.write("Get failed getting as[{}] \n".format(cdict))
-                return "Pass"
+                sys.stdout.write("Get failed getting from [{}] \n".format(cdict))
+                return "Fail"
             if cas == "json":
                 if "configs" not in md:
                     md["configs"] = "configs"
@@ -1030,7 +1025,7 @@ def runGet(md,cmds):
                 fwname = "{}/var_{}.json".format(cconfigs,ccalled)
                 #helper.write_json(mdat, fwname)
                 remote_path = "home/docker/configs/{}".format(cfrom)
-                runCopyFrom(chost, fwname, remote_path)
+                runCopyFrom(md, cdict, fwname, remote_path)
                 mdx = helper.read_json(fwname)
                 sys.stdout.write("get  {} read from [{}] \n".format(cwhat, fwname))
                 #json_string = json.dumps(mdx,indent=4)
@@ -1046,7 +1041,7 @@ def runGet(md,cmds):
                 fwname = "{}/var_{}.file".format(cconfigs,ccalled)
                 #helper.write_json(mdat, fwname)
                 remote_path = "home/docker/configs/{}".format(cfrom)
-                runCopyFrom(chost, fwname, remote_path)
+                runCopyFrom(md, cdict, fwname, remote_path)
                 mdx = helper.read(fwname)
                 sys.stdout.write("get  {} called {} read from [{}] \n".format(cwhat, ccalled, remote_path))
                 #json_string = json.dumps(mdx,indent=4)
@@ -1069,7 +1064,7 @@ def runGet(md,cmds):
 
             cmd= "fims_send -m get -r/me -u {}/{} ".format(ccalled, cid)
             sys.stdout.write("Get uri cmd [{}]\n".format(cmd))
-            res = runHost(chost,cmd)
+            res = runHost(md,cdict,cmd)
             for x in  range(len(res)):
                 sys.stdout.write("{}\n".format(res[x]))
 
@@ -1215,14 +1210,6 @@ def runSet(md,cmds):
             sys.stdout.write("Set value failed [{}]\n".format(cdict))
     elif cwhat == "uri":
         try:
-            chosta = getChost(md,cdict)
-            chost = chosta[0]
-            #cin = chosta[1]
-            #cname = chosta[2]
-        except:
-            sys.stdout.write(" runSet unable to decode chost from {}\n".format(cdict)) 
-            return "Pass"
-        try:
             ccalled=cdict["called"]
             cid=cdict["id"]
             #cin=cdict["in"]
@@ -1246,7 +1233,7 @@ def runSet(md,cmds):
                 elif cformat == "clothed":
                     cmd= "fims_send -m set -u {} \"{{\\\"{}\\\":{{\\\"value\\\":{}}}}}\"".format(ccalled,cid,cval)
                 sys.stdout.write("Set uri cmd [{}]\n".format(cmd))
-                res = runHost(chost,cmd)
+                res = runHost(md, cdict, cmd)
                 for x in  range(len(res)):
                     sys.stdout.write("{}\n".format(res[x]))
         except:
@@ -1748,21 +1735,21 @@ def runCmd(md, line):
                comp=md["vars"][cmds[1]]
                cmd = "fims_send -m set -r /{} -u {} {}".format(os.getpid(), comp, cmds[2])
                print(cmd)
-               runHost(md["system_host"], cmd)
+               runSysHost(cmd)
 
         elif cmds[0] == "pubVar" or cmds[0]== "pv":
             if len(cmds) > 2:
                comp=md["vars"][cmds[1]]
                cmd = "fims_send -m pub  -u {} {}".format(comp, cmds[2])
                print(cmd)
-               runHost(md["system_host"], cmd)
+               runSysHost(cmd)
 
         elif cmds[0] == "getVar" or cmds[0]== "gv":
             if len(cmds) > 1:
                comp=md["vars"][cmds[1]]
                cmd = "fims_send -m get -r /{} -u {}".format(os.getpid(),comp)
                print(cmd)
-               runHost(md["system_host"], cmd)
+               runSysHost( cmd)
 
         elif cmds[0] == "logfims":
             ltime="5"
@@ -1770,13 +1757,13 @@ def runCmd(md, line):
                 ltime = cmds[1]
             sys.stdout.write(" ltime [{}] \n".format(ltime))
 
-            runHost(md["system_host"],"{}/runlog.sh {} fims_listen {}{}".format(md["scripts"],ltime, md["logdir"], md["fimslog"]))
+            runSysHost("{}/runlog.sh {} fims_listen {}{}".format(md["scripts"],ltime, md["logdir"], md["fimslog"]))
 
         elif cmds[0] == "pkill":
             pkill="fims_server"
             if len(cmds) > 1:
                 pkill = cmds[1]
-            execRes(md["system_host"],"pkill {}".format(pkill))
+            execRes("pkill {}".format(pkill))
 
         elif cmds[0] == "getlog":
             plog=md["fimslog"]
@@ -1790,7 +1777,7 @@ def runCmd(md, line):
                     plog=md["srvlog"]
 
             xxcmd="cat {}{}".format(md["logdir"],plog)
-            execRes(md["system_host"],xxcmd)
+            execRes(xxcmd)
 
         elif cmds[0] == "sstep":
             if len(cmds) > 1:
@@ -1805,19 +1792,22 @@ def runCmd(md, line):
         print (line)
         # quit
         if line == "todo":
-            sys.stdout.write("\tsets send varlist via fim_send\n")
+            sys.stdout.write("\tmake execRes multi host\n")
+            sys.stdout.write("DONE \tsend varlist\n")
             sys.stdout.write("\tgets via fim_send\n")
             sys.stdout.write("\tsend fixup object navigator\n")
             sys.stdout.write("\tcmd:: use scenario called setup_system id given name 'Set up the Client' step 'set up configs'\n") 
-            sys.stdout.write("\tfix as file / as json\n")
+            sys.stdout.write("\tcmd:: set scenarios.setup_system.given.results.'Set up the Client'.'set up configs'.value\n") 
+            sys.stdout.write("\tcmd:: set scenarios.setup_system.given.results.'Set up the Client'.'set up configs'.expected\n") 
+            sys.stdout.write("DONE \tfix as file / as json\n")
             sys.stdout.write("\tuse and add\n")
             sys.stdout.write("\tadd scenario called setup_system id given name 'Set up the Client' step 'kill processes'\n") 
             sys.stdout.write("\tafter use , edit actions\n")
-            sys.stdout.write("\ton / in client\n")
+            sys.stdout.write("DONE\ton/in client\n")
             
             sys.stdout.write("DONE \tfims_send -m set but add send var list\n")
             sys.stdout.write("\ttidy up dm scens\n")
-            sys.stdout.write("\tfims_listen\n")
+            sys.stdout.write("DONE\tfims_listen\n")
             sys.stdout.write("DONE \tVar Lists; Use Vars from varlist\n") 
             sys.stdout.write("DONE\tlog file processing\n")
             sys.stdout.write("DONE\tuse con selected host for runRun\n")
@@ -1828,20 +1818,20 @@ def runCmd(md, line):
             sys.exit(0)
         ## ps
         elif line == "ps" and md["system_host"] != "":
-            res = execRes(md["system_host"],"ps -ax")
+            res = execRes("ps -ax")
             return res
         ## top
         elif line == "top" and md["system_host"] != "":
-            execRes(md["system_host"],"top -b -n 1")
+            execRes("top -b -n 1")
         ## logs
         elif line == "logs" and md["system_host"] != "":
-            execRes(md["system_host"],"top -b -n 1")
+            execRes("top -b -n 1")
             sys.stdout.write( "modbus_server ---------------------------------------\n")
             cmd = "cat {}{}".format(md["logdir"],md["srvlog"])
-            execRes(md["system_host"], cmd)
+            execRes(cmd)
             sys.stdout.write( "modbus_client ---------------------------------------\n")
             cmd = "cat {}{}".format(md["logdir"],md["clilog"])
-            execRes(md["system_host"], cmd)
+            execRes(cmd)
 
             # res = runHost(system_host, "ps -ax")
             # for x in  range(len(res)):
@@ -1867,7 +1857,7 @@ def runCmd(md, line):
             sys.stdout.write(" steps [{}] \n".format(json_string))
 
         elif cmds[0] == "runfims":
-            runHost(md["system_host"],"{}/runlog.sh 0 fims_server {}/fims.log".format(md["scripts"],md["logdir"]))
+            runSysHost("{}/runlog.sh 0 fims_server {}/fims.log".format(md["scripts"],md["logdir"]))
 
         elif cmds[0] == "logfims":
             ltime="5"
@@ -1875,20 +1865,20 @@ def runCmd(md, line):
                 ltime = cmds[1]
             sys.stdout.write(" ltime [{}] \n".format(ltime))
 
-            runHost(md["system_host"],"{}/runlog.sh {} fims_listen {}/fims_listen.log".format(md["scripts"],ltime, md["logdir"]))
+            runSysHost("{}/runlog.sh {} fims_listen {}/fims_listen.log".format(md["scripts"],ltime, md["logdir"]))
 
         elif cmds[0] == "pkill":
             pkill="fims_server"
             if len(cmds) > 1:
                 pkill = cmds[1]
-            execRes(md["system_host"],"pkill {}".format(pkill))
+            execRes("pkill {}".format(pkill))
 
         elif cmds[0] == "getlog":
             plog="fims_listen.log"
             if len(cmds) > 1:
                 plog = cmds[1]
             xxcmd="cat {}/{}&".format(md["logdir"],plog)
-            execRes(md["system_host"],xxcmd)
+            execRes(xxcmd)
 
         elif cmds[0] == "runSteps":
             print ("runsteps single")
