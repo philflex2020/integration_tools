@@ -1818,13 +1818,16 @@ def runCmd(md, line):
             sys.exit(0)
         ## ps
         elif line == "ps" and md["system_host"] != "":
+            sys.stdout.write(" host - {}\n".format(md["system_name"]))
             res = execRes("ps -ax")
             return res
         ## top
         elif line == "top" and md["system_host"] != "":
+            sys.stdout.write(" host - {}\n".format(md["system_name"]))
             execRes("top -b -n 1")
         ## logs
         elif line == "logs" and md["system_host"] != "":
+            sys.stdout.write(" host - {}\n".format(md["system_name"]))
             execRes("top -b -n 1")
             sys.stdout.write( "modbus_server ---------------------------------------\n")
             cmd = "cat {}{}".format(md["logdir"],md["srvlog"])
