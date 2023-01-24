@@ -328,21 +328,42 @@ The variables comp2_count and comp1_count  contain the number of pubs detected i
 The system can then extract the count values and direct those back in to the scenario result.
 
 ```
-set config called scenarios.myscenario.then.'test fast pubs'.result value Fail
-set config called scenarios.myscenario.then.'test slow pubs'.result value Fail
-if comp2_count > 95 then run 'set config called scenarios.myscenario.then.'test fast pubs'.result value Pass'
-if comp1_count > 9 then run 'set config called scenarios.myscenario.then.'test slow pubs'.result value Pass'
+set config called 'scenarios.myscenario.then.\'test fast pubs\'.result' value Fail
+set config called 'scenarios.myscenario.then.\'test slow pubs\'.result' value Fail
+if comp2_count > 95 then run 'set config called scenarios.myscenario.then.\'test fast pubs\'.result value Pass'
+if comp1_count > 9 then run 'set config called scenarios.myscenario.then.\'test slow pubs\'.result value Pass'
 
 ```
 
 ### Save/Load
 
 The save/load commands allow the user to save and load variables from files in the config directory.
+Variables can be saved and loaded  as text object as an array of strings.
+Variables can also be saved/loaded  as json objects.
 
+Log files from operations on target hosts are saved as text arrays. 
+They can be saved in system variables and the "find" command used to extract data from these files or variables.
+The find command can work much like a simple version of the "grep" utility.
 
+Data extracted from a "find" operation can be saved into another variable.
 
+When the "json" save/load option is used the data targets can be config files.
+Data, like ip_addresses or port numbers, can be modified after loading to allow the changed files to be transferred to target hosts.
 
+Here are some examples of load commands coupled with some data manipulation options.
 
+The default load directory is the configs directory specified at startup. This defaults to the local "configs" directory. 
+
+```
+"load var called mb_server_test_10_3 from mb_server_test as json",
+"load var called mb_server_test_10_3_echo from mb_server_test_echo.sh as file",
+"load var called mb_client_test_10_3 from mb_client_test as json",
+"set value called connection.ip_address in mb_client_test_10_3 from config.hosts.server.system_ip saveas  mb_client_tmp",
+"set value called connection.ip_address in mb_server_test_10_3 from config.hosts.server.system_ip_ saveas  mb_server_tmp",
+"send var called mb_client_tmp as json to client/mb_client_test_10_3.json in client",
+"send var called mb_server_tmp as json to server/mb_server_test_10_3.json in server",
+"send var called mb_server_test_10_3_echo as file to server/mb_server_test_10_3_echo.sh in server"
+```
 
 
 

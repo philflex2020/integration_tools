@@ -746,11 +746,31 @@ def runLog(md,cmds):
         print(" runLog not understood")
     return res
 
+def runSaveHelp(md,cmds):
+    sys.stdout.write("save -help\n")
+    sys.stdout.write("save steps called base to somefile (as json)\n")
+    sys.stdout.write("save var called myvar to somefile (default as json)\n")
+    sys.stdout.write("save varlist called myvarlist to somefile (default as json)\n")
+    sys.stdout.write("save vars  to somefile (default as json)\n")
+    sys.stdout.write("save steps (called mysteps) to somefile (default as json)\n")
+    sys.stdout.write("save hosts (called myhost) to somefile (default as json)\n")
+    sys.stdout.write("save scenarios (called myscenario) to somefile (default as json)\n")
+    sys.stdout.write("save config (called a.b.c) to somefile (as json)\n")
+
+
 #save steps called base to somename (as json)
 #save var called myvar to somename (as json)
 #steps scenarios
 def runSave(md,cmds):
     cdict = myDict(cmds)
+    try:
+        if cmds[1] == "-help":
+            runSaveHelp(md,cmds)
+            return "Pass"
+    except:
+        sys.stdout.write("try save -help\n")
+        return "Fail"
+
     ccalled=""
     cas="json"
     cto = ""
@@ -763,15 +783,26 @@ def runSave(md,cmds):
         cto = cdict["to"]
     cwhat = cdict["save"]
     quit = 0
-    fname = "configs/{}_{}".format(cwhat,cto)
-    if cwhat in ["steps","scenarios","hosts","config","var"]:
+    ## TODO fix configs dir
+    if "configs" not in md:
+        md["configs"] = "configs"
+    cconfigs = md["configs"]
+    fname = "{}/{}_{}".format(cconfigs, cwhat,cto)
+    if cwhat in ["steps","scenarios","hosts","config","var", "varlists"]:
         try:
             if cwhat == "var":
                 fmd = md["vars"][ccalled]
             elif cwhat == "config":
                 fmd = md
+                if ccalled != "":
+                    vDict,myVar = findConfigVar(md,ccalled)
+                    fmd = vDict[myVar]
             else:
-                fmd = md[cwhat][ccalled]
+                if ccalled != "":
+                    fmd = md[cwhat][ccalled]
+                else:
+                    fmd = md[cwhat]
+                
             if cas == "json":
                 helper.write_json(fmd, fname)
             else:
@@ -798,7 +829,11 @@ def runLoad(md,cmds):
     if "called" in cdict:
         ccalled = cdict["called"]
     quit = 0
-    fname = "configs/{}_{}".format(cwhat,cfrom)
+    if "configs" not in md:
+        md["configs"] = "configs"
+    cconfigs = md["configs"]
+    fname = "{}/{}_{}".format(cconfigs, cwhat,cfrom)
+
     if cwhat in ["steps","scenarios","hosts","config","var"]:
         try:            
             if cwhat == "config":
@@ -832,6 +867,7 @@ def runLoad(md,cmds):
 def runShowHelp(md,cmds):
     sys.stdout.write("show  hosts\n")
     sys.stdout.write("show  vars\n")
+    sys.stdout.write("show  varlists\n")
     sys.stdout.write("show  steps\n")
     sys.stdout.write("show  scenarios|scn\n")
     sys.stdout.write("show  config|cfg\n")
@@ -850,7 +886,7 @@ def runShow(md,cmds):
         ccalled = cdict["called"]
     cwhat = cdict["show"]
     quit = 0
-    if cwhat in ["steps","scenarios","hosts","config","cfg","scn","vars"]:
+    if cwhat in ["steps","scenarios","hosts","config","cfg","scn","vars","varlists"]:
         try:
             if cwhat == "cfg":
                 cwhat = "config"            
@@ -988,12 +1024,15 @@ def runGet(md,cmds):
                 sys.stdout.write("Get failed getting as[{}] \n".format(cdict))
                 return "Pass"
             if cas == "json":
-                fwname = "configs/var_{}.json".format(ccalled)
+                if "configs" not in md:
+                    md["configs"] = "configs"
+                cconfigs = md["configs"]
+                fwname = "{}/var_{}.json".format(cconfigs,ccalled)
                 #helper.write_json(mdat, fwname)
                 remote_path = "home/docker/configs/{}".format(cfrom)
                 runCopyFrom(chost, fwname, remote_path)
                 mdx = helper.read_json(fwname)
-                sys.stdout.write("get  {} read from [{}] \n".format(cwhat, fname))
+                sys.stdout.write("get  {} read from [{}] \n".format(cwhat, fwname))
                 #json_string = json.dumps(mdx,indent=4)
                 #sys.stdout.write(" read [{}] \n".format(json_string))
                 md["vars"][ccalled] = mdx
@@ -1001,7 +1040,10 @@ def runGet(md,cmds):
             #get var called mb_client_tmp as file from client/mb_client_test_10_3.json on client
             elif cas == "file":
                 sys.stdout.write("Get file almost available  maybe use log called [{}] \n".format(cdict))
-                fwname = "configs/var_{}.file".format(ccalled)
+                if "configs" not in md:
+                    md["configs"] = "configs"
+                cconfigs = md["configs"]
+                fwname = "{}/var_{}.file".format(cconfigs,ccalled)
                 #helper.write_json(mdat, fwname)
                 remote_path = "home/docker/configs/{}".format(cfrom)
                 runCopyFrom(chost, fwname, remote_path)
